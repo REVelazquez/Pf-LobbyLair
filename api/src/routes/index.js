@@ -1,4 +1,6 @@
 const { Router } = require('express');
+const { body } = require('express-validator');
+const { getGames, getGamesById } = require('../controllers/games.js');
 const { getGames, getGamesById, getGamesByName, postGames, deleteGame } = require('../controllers/games.js');
 const { getPosts } = require('../controllers/post.js');
 const { getAllUsers, getUserById, getUserByName, createUser, updateUser, deleteUser} = require('../controllers/users.js');
@@ -32,7 +34,18 @@ router.get('/users/:id', getUserById);
 router.get('/users/:name', getUserByName);       
 
 // Endpoint para crear un usuario
-router.post('/users/', createUser);
+router.post(
+    '/users',
+    [
+      body('email').isEmail().withMessage('Invalid email'),
+      body('password')
+        .isLength({ min: 6 })
+        .withMessage('Password must be at least 6 characters long')
+        .matches(/^(?=.*[!@#$%^&*])(?=.*[A-Z])/)
+        .withMessage('Password must contain special characters and uppercase letters'),
+    ],
+    createUser
+  );
 
 // Endpoint para actualizar un usuario
 router.put('/users/:id', updateUser);
