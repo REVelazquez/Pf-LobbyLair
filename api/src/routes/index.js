@@ -1,8 +1,10 @@
 const { Router } = require('express');
 const { body } = require('express-validator');
-const { getGames, getGamesById, getGamesByName, postGames, deleteGame } = require('../controllers/games.js');
+const { getGamesWithPagination, getGames, getGamesById, getGamesByName, postGames, deleteGame } = require('../controllers/games.js');
 const { getPosts } = require('../controllers/post.js');
-const { getAllUsers, getUserById, getUserByName, createUser, updateUser, deleteUser} = require('../controllers/users.js');
+const { getFavorites, createFavorite, removeFavoriteGame } = require('../controllers/favorite.js');
+const { getUsersWithPagination, getAllUsers, getUserById, getUserByName, getUserByEmail, createUser, updateUser, deleteUser} = require('../controllers/users.js');
+
 
 const router = Router();
 
@@ -21,6 +23,8 @@ router.get('/games/name/:name', getGamesByName);
 // Endpoint para crear un game
 router.post('/Games', postGames);
 
+router.get('/games/page', getGamesWithPagination); // Ruta para obtener juegos con paginación y filtros
+
 router.get('/Posts', getPosts);
 
 // Endpoint para obtener todos los usuarios
@@ -32,6 +36,8 @@ router.get('/users/:id', getUserById);
 // Endpoint para obtener un usuario por nombre
 router.get('/users/:name', getUserByName);       
 
+// Endpoint para obtener un usuario por email
+router.get('/users/email/:email', getUserByEmail);
 // Endpoint para crear un usuario
 router.post(
     '/users',
@@ -51,4 +57,18 @@ router.put('/users/:id', updateUser);
 
 // Endpoint para eliminar un usuario
 router.delete('/users/:id', deleteUser);
+
+// Endpoint para obtener los favoritos de un usuario
+router.get('/favorite/:userId', getFavorites)
+
+// Endpoint para eliminar un juego de los favoritos de un usuario
+router.delete('/favorite/:userId/:gameId', removeFavoriteGame)
+
+// Endpoint para agregar un juego a los favoritos de un usuario
+router.post('/favorite', createFavorite)
+
+// Endpoint para obtener usuarios con paginación y filtros
+router.get('/users/page/:page', getUsersWithPagination); // Ruta para obtener usuarios con paginación y filtros
+
 module.exports = router;
+
