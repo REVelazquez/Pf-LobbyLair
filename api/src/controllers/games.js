@@ -52,11 +52,8 @@ async function getGames(req, res) {
           },
         ],
       });
-      
-      console.log(await GameMode.findAll());
       return res.status(200).json(games);
     }
-    console.log(await GameMode.findAll());
     return res.status(200).json(games);
   } catch (error) {
     return res.status(500).json({ error: error.message });
