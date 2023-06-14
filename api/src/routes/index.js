@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { body } = require('express-validator');
-const { getGames, getGamesById, getGamesByName, postGames, deleteGame } = require('../controllers/games.js');
+const { getGamesWithPagination, getGames, getGamesById, getGamesByName, postGames, deleteGame } = require('../controllers/games.js');
 const { getPosts } = require('../controllers/post.js');
 const { getFavorites, createFavorite, removeFavoriteGame } = require('../controllers/favorite.js');
 const { getUsersWithPagination, getAllUsers, getUserById, getUserByName, getUserByEmail, createUser, updateUser, deleteUser} = require('../controllers/users.js');
@@ -22,6 +22,8 @@ router.get('/games/name/:name', getGamesByName);
 
 // Endpoint para crear un game
 router.post('/Games', postGames);
+
+router.get('/games/page', getGamesWithPagination); // Ruta para obtener juegos con paginación y filtros
 
 router.get('/Posts', getPosts);
 
