@@ -5,3 +5,4 @@ import Profile from "./Profile/Profile";
 import Register from "./Register/Register";
 
 export { Home, Login, Payment, Profile, Register };
+

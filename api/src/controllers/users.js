@@ -1,7 +1,7 @@
 const axios = require('axios');
 const { User } = require('../db');
 const { Op } = require("sequelize");
-
+const { validationResult } = require('express-validator');
 
 // Función para obtener todos los usuarios de la base de datos
 const getAllUsers = async (req, res) => {
@@ -61,22 +61,30 @@ const getUserById = async (req, res) => {
   };
   const createUser = async (req, res) => {
     const { name, email, password } = req.body;
-    let new_user = null;
-    try{
-        new_user = await User.create({
-          name: name,
-          email: email,
-          password: password,
-          isAdmin: false, // Set a default value for isAdmin
-          perfilUrl: '', // Set a default value for perfilUrl
-          isPremium: false,
-        });
-        res.json(new_user);
-    } catch (error) {   
-        console.error(error);
-        return res.status(500).json({ message: 'Error creating user' });
+  
+    // Validaciones utilizando express-validator
+    
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
-    };
+  
+    let new_user = null;
+    try {
+      new_user = await User.create({
+        name: name,
+        email: email,
+        password: password,
+        isAdmin: false,
+        perfilUrl: '',
+        isPremium: false,
+      });
+      res.json(new_user);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Error creating user' });
+    }
+  };
     const updateUser = async (req, res) => {
         const { id } = req.params;
         const { name, email, password } = req.body;
