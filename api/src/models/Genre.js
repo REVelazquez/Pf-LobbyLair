@@ -1,7 +1,7 @@
 const {DataTypes} = require ('sequelize')
 
-module.exports= (sequelize) =>{
-    sequelize.define('Game', {
+module.exports = (sequelize) =>{
+    sequelize.define('Genre', {
         id:{
             allowNull:false,
             autoIncrement:true,
@@ -10,8 +10,6 @@ module.exports= (sequelize) =>{
         },
         name:{
             type:DataTypes.STRING,
-            allowNull:false
-        },
-        
+        }
     })
 }
