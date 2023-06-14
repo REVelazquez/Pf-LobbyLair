@@ -1,18 +1,15 @@
 const { Router } = require('express');
+const { getGames, getGamesById } = require('../controllers/games.js');
+const { getPosts } = require('../controllers/post.js');
+const { getUsers } = require('../controllers/users.js');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
-const Games = require('./Game.js');
-const User = require('./User.js');
-const Post = require('./Post.js');
-
 const router = Router();
 
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
-
-router.use('/Games', Games);
-router.use('/Users', User);
-router.use('/Posts', Post);
+router.get('/Games', getGames);
+router.get('/Games/:id', getGamesById);
+router.get('/Posts', getPosts);
+router.get('/Users', getUsers);
 
 module.exports = router;
