@@ -51,4 +51,5 @@ router.put('/users/:id', updateUser);
 
 // Endpoint para eliminar un usuario
 router.delete('/users/:id', deleteUser);
+
 module.exports = router;
