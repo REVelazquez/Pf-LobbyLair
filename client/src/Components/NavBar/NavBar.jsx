@@ -17,6 +17,14 @@ const NavBar = () =>{
                     <NavLink to='/profile'>PERFIL</NavLink>
                 </button>
 
+                <button>
+                    <NavLink to='/Login'>INGRESAR</NavLink>
+                </button>
+
+                <button>
+                    <NavLink to='/logout'>SALIR</NavLink>
+                </button>
+
             </div>
          </nav>
     )
