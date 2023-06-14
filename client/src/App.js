@@ -1,12 +1,11 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import { Home, Login, Payment, Profile, Register } from './Views';
 import NavBar from './Components/NavBar/NavBar';
 
 function App() {
   return (
     <div className="App">
-      <Router>
         <NavBar />
           <Routes>
             <Route path='/' element={  <Home/> }/>
@@ -16,7 +15,6 @@ function App() {
             <Route exact path='/register' element={ <Register/> }/>
             
           </Routes>
-      </Router>
     </div>
   );
 }

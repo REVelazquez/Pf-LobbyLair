@@ -2,6 +2,7 @@ import {
     GET_ALL_GAMES, 
     GET_GAMES_BY_NAME,
     GET_GAME_BY_ID,  
+    POST_GAME
 } from './action-types';
 import axios from 'axios';
 
@@ -37,3 +38,17 @@ export const getGamesByName = (name) => async(dispatch) => {
         alert('Game does not exist!')
     }
 };
+export const postGames= (payload)=>{
+    return async (dispatch)=>{
+        try {
+            let newGame = await axios.post('http://localhost:3001/games', payload);
+            return dispatch({
+                type:POST_GAME,
+                payload: newGame.data
+            })
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+    
+}
