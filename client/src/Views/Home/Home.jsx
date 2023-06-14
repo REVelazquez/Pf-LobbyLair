@@ -1,12 +1,16 @@
 import React from "react";
+import NavBar from '../../Components/NavBar/NavBar';
+import SearchBar from '../../Components/SearchBar/Searchbar';
 
 
 const Home = () => {
     return (
         <>
-    
             <div>
-                Aquí va el Home, con la barra de navegacion y.....
+               <ul>
+                <li><SearchBar/></li>
+                <li><NavBar/></li>
+               </ul>
             </div>
         </>
     )
