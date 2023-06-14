@@ -1,7 +1,7 @@
 const {DataTypes} = require ('sequelize')
 
 module.exports = (sequelize) =>{
-    sequelize.define('Game', {
+    sequelize.define('Favorite', {
         id:{
             allowNull:false,
             autoIncrement:true,
@@ -12,13 +12,13 @@ module.exports = (sequelize) =>{
             type:DataTypes.STRING,
             allowNull:false
         },
-        thumbnail:{
-            type:DataTypes.STRING,
-            allowNull:false
-        },
-    },
-    {
-        timestamps:false
-    }
-    )
+        favorite: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+          },
+        insignia: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+          },
+    })
 }

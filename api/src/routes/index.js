@@ -28,6 +28,9 @@ router.get('/Posts', getPosts);
 //Endpoint para crear posts
 router.post('/Posts', createPost);
 
+//Endpoint para obtener los posts por usuarios
+router.get('/Posts/user/:id', getPostsbyUser);
+
 // Endpoint para obtener todos los usuarios
 router.get('/users/', getAllUsers);
 
