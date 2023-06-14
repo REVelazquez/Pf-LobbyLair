@@ -86,6 +86,9 @@ const getUserById = async (req, res) => {
                     name: name,
                     email: email,
                     password: password,
+                    isAdmin: false, // Set a default value for isAdmin
+                    perfilUrl: '', // Set a default value for perfilUrl
+                    isPremium: false,
                 },
                 {
                     where: {
