@@ -34,6 +34,15 @@ Genre.belongsToMany(Game, {through: 'Game_Genre'})
 Game.belongsToMany(GameMode, {through: 'Game_GameMode'})
 GameMode.belongsToMany(Game, {through: 'Game_GameMode'})
 
+Game.belongsToMany(Post, {through: 'Game_Post'})
+Post.belongsToMany(Game, {through: 'Game_Post'})
+Game.belongsToMany(Genre, {through: 'Game_Genre'})
+Genre.belongsToMany(Game, {through: 'Game_Genre'})
+Game.belongsToMany(GameMode, {through: 'Game_GameMode'})
+GameMode.belongsToMany(Game, {through: 'Game_GameMode'})
+
+Game.belongsToMany(User, {through: 'Favorite'})
+User.belongsToMany(Game, {through: 'Favorite'})
 Game.belongsToMany(User, {through: 'Favorite'})
 User.belongsToMany(Game, {through: 'Favorite'})
 

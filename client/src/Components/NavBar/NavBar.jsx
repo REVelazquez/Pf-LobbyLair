@@ -1,17 +1,14 @@
-import { useLocation, NavLink } from "react-router-dom";
+
+import { NavLink } from "react-router-dom";
 
 const NavBar = () =>{
-    const location = useLocation();
 
-    if (location.pathname === "/") {
-        return null; // Retorna null si la ubicación actual es "/"
-    }
 
     return (
          <nav>
             <div>
                 <button>
-                    <NavLink to='/home'>INICIO</NavLink>
+                    <NavLink to='/'>INICIO</NavLink>
                 </button>
 
                 <button>
@@ -21,7 +18,13 @@ const NavBar = () =>{
                 <button>
                     <NavLink to='/profile'>PERFIL</NavLink>
                 </button>
+                <button>
+                    <NavLink to='/Login'>INGRESAR</NavLink>
+                </button>
 
+                <button>
+                    <NavLink to='/logout'>SALIR</NavLink>
+                </button>
             </div>
          </nav>
     )
