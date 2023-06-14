@@ -67,6 +67,9 @@ const getUserById = async (req, res) => {
           name: name,
           email: email,
           password: password,
+          isAdmin: false, // Set a default value for isAdmin
+          perfilUrl: '', // Set a default value for perfilUrl
+          isPremium: false,
         });
         res.json(new_user);
     } catch (error) {   
@@ -78,7 +81,7 @@ const getUserById = async (req, res) => {
         const { id } = req.params;
         const { name, email, password } = req.body;
         try{
-            await Users.update(
+            await User.update(
                 {
                     name: name,
                     email: email,
