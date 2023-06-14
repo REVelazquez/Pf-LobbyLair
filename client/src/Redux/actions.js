@@ -8,10 +8,10 @@ import axios from 'axios';
 
 export const getAllGames = () => {
     return async (dispatch) => {
-        const dogs = await axios.get('http://localhost:3001/games');
+        const games = await axios.get('http://localhost:3001/games');
         dispatch({
             type: GET_ALL_GAMES,
-            payload: dogs.data
+            payload: games.data
         })
     }
 };
