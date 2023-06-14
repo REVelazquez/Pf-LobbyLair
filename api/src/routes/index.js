@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const { body } = require('express-validator');
-const { getGames, getGamesById } = require('../controllers/games.js');
 const { getGames, getGamesById, getGamesByName, postGames, deleteGame } = require('../controllers/games.js');
 const { getPosts } = require('../controllers/post.js');
 const { getAllUsers, getUserById, getUserByName, createUser, updateUser, deleteUser} = require('../controllers/users.js');
