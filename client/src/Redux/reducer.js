@@ -1,7 +1,9 @@
-import { GET_ALL_GAMES,
-         GET_GAMES_BY_NAME,
-         GET_GAME_BY_ID,
-         } from './action-types';
+import { 
+    GET_ALL_GAMES, 
+    GET_GAMES_BY_NAME,
+    GET_GAME_BY_ID,  
+    POST_GAME
+} from './action-types/';
 
 const initialState = {
     games: [],
@@ -27,6 +29,7 @@ const reducer = (state = initialState, action) => {
                  ...state,
                  games: action.payload,
                 }
+
         default:
                 return {
                     ...state
