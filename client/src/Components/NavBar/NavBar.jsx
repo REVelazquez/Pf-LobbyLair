@@ -4,7 +4,7 @@ const NavBar = () =>{
     const location = useLocation();
 
     if (location.pathname === "/") {
-        return null; // Retorna null si la ubicación actual es "/"
+        return null; // 
     }
 
     return (
