@@ -35,17 +35,6 @@ const { Post, User, Game, Genre, GameMode, Favorite } = sequelize.models;
 // Product.hasMany(Reviews);
 User.hasMany(Post)
 Post.belongsTo(User)
-//---------game
-Game.belongsToMany(Post, {through: 'Game_Post'})
-Post.belongsToMany(Game, {through: 'Game_Post'})
-Game.belongsToMany(Genre, {through: 'Game_Genre'})
-Genre.belongsToMany(Game, {through: 'Game_Genre'})
-Game.belongsToMany(GameMode, {through: 'Game_GameMode'})
-GameMode.belongsToMany(Game, {through: 'Game_GameMode'})
-
-//---------Favorite
-// User.hasMany(Favorite)
-// Favorite.belongsTo(User)
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
