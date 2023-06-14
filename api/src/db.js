@@ -5,7 +5,6 @@ const path = require('path');
 const {
   DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
-
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/lobbylair`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
@@ -30,7 +29,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Game, User, Post, Genre, GameMode } = sequelize.models;
+const { Post, User, Game, Genre, GameMode, Favorite } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
@@ -44,7 +43,9 @@ Genre.belongsToMany(Game, {through: 'Game_Genre'})
 Game.belongsToMany(GameMode, {through: 'Game_GameMode'})
 GameMode.belongsToMany(Game, {through: 'Game_GameMode'})
 
-
+//---------Favorite
+// User.hasMany(Favorite)
+// Favorite.belongsTo(User)
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
