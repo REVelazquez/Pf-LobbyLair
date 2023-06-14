@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { body } = require('express-validator');
 const { getGames, getGamesById, getGamesByName, postGames, deleteGame } = require('../controllers/games.js');
 const { getPosts } = require('../controllers/post.js');
-const { getAllUsers, getUserById, getUserByName, createUser, updateUser, deleteUser} = require('../controllers/users.js');
+const { getAllUsers, getUserById, getUserByName, getUserByEmail, createUser, updateUser, deleteUser} = require('../controllers/users.js');
 
 const router = Router();
 
@@ -32,6 +32,8 @@ router.get('/users/:id', getUserById);
 // Endpoint para obtener un usuario por nombre
 router.get('/users/:name', getUserByName);       
 
+// Endpoint para obtener un usuario por email
+router.get('/users/email/:email', getUserByEmail);
 // Endpoint para crear un usuario
 router.post(
     '/users',
@@ -51,4 +53,5 @@ router.put('/users/:id', updateUser);
 
 // Endpoint para eliminar un usuario
 router.delete('/users/:id', deleteUser);
+
 module.exports = router;

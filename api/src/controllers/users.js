@@ -2,7 +2,7 @@ const axios = require('axios');
 const { User } = require('../db');
 const { Op } = require("sequelize");
 const { validationResult } = require('express-validator');
-
+const usersData = require('../../usersdata')
 // Función para obtener todos los usuarios de la base de datos
 const getAllUsers = async (req, res) => {
   try {
@@ -59,6 +59,30 @@ const getUserById = async (req, res) => {
       return res.status(500).json({ message: 'Error when searching for the user' });
     }
   };
+  // Función para buscar un usuario por su email
+  const getUserByEmail = async (req, res) => {
+    const { email } = req.params;
+    console.log("Email received from params:", email);
+    try {
+      // Se busca el usuario en la base de datos por su email
+      const user = await User.findAll({
+        where: {
+          email: {
+            [Op.iLike]: '%'+email+'%',
+          },
+        },
+      });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      res.json(user);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Error when searching for the user' });
+    }
+  };
+  // Función para eliminar un usuario
   const createUser = async (req, res) => {
     const { name, email, password } = req.body;
   
@@ -130,6 +154,7 @@ module.exports = {
   getAllUsers,
   getUserById,
   getUserByName,
+  getUserByEmail,
   createUser,
   updateUser,
   deleteUser
