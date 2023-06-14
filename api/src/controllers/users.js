@@ -2,7 +2,6 @@ const axios = require('axios');
 const { User } = require('../db');
 const { Op } = require("sequelize");
 const { validationResult } = require('express-validator');
-const usersData = require('../../usersdata')
 // Función para obtener todos los usuarios de la base de datos
 const getAllUsers = async (req, res) => {
   try {
@@ -148,7 +147,41 @@ const getUserById = async (req, res) => {
             return res.status(500).json({ message: 'Error deleting user' });
         }
     };
-
+    const getUsersWithPagination = async (req, res) => {
+      const { page } = req.params;
+      const { name, email } = req.query;
+      const pageSize = 10; // Tamaño de página (cantidad de usuarios por página)
+    
+      try {
+        let whereClause = {};
+        if (name) {
+          whereClause.name = { [Op.iLike]: `%${name}%` };
+        }
+        if (email) {
+          whereClause.email = { [Op.iLike]: `%${email}%` };
+        }
+    
+        const totalCount = await User.count({ where: whereClause });
+        const totalPages = Math.ceil(totalCount / pageSize);
+    
+        const users = await User.findAll({
+          where: whereClause,
+          limit: pageSize,
+          offset: (page - 1) * pageSize,
+        });
+    
+        res.json({
+          totalCount,
+          totalPages,
+          currentPage: parseInt(page),
+          users,
+        });
+      } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Error getting users with pagination' });
+      }
+    };
+    
   
 module.exports = {
   getAllUsers,
@@ -157,5 +190,6 @@ module.exports = {
   getUserByEmail,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  getUsersWithPagination,
 };

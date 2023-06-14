@@ -27,6 +27,12 @@ let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].s
 sequelize.models = Object.fromEntries(capsEntries);
 
 const { Post, User, Game, Genre, GameMode, Favorite } = sequelize.models;
+Game.belongsToMany(Post, {through: 'Game_Post'})
+Post.belongsToMany(Game, {through: 'Game_Post'})
+Game.belongsToMany(Genre, {through: 'Game_Genre'})
+Genre.belongsToMany(Game, {through: 'Game_Genre'})
+Game.belongsToMany(GameMode, {through: 'Game_GameMode'})
+GameMode.belongsToMany(Game, {through: 'Game_GameMode'})
 
 Game.belongsToMany(Post, {through: 'Game_Post'})
 Post.belongsToMany(Game, {through: 'Game_Post'})
@@ -37,9 +43,8 @@ GameMode.belongsToMany(Game, {through: 'Game_GameMode'})
 
 Game.belongsToMany(User, {through: 'Favorite'})
 User.belongsToMany(Game, {through: 'Favorite'})
-
-User.hasMany(Post)
-Post.belongsTo(User)
+Game.belongsToMany(User, {through: 'Favorite'})
+User.belongsToMany(Game, {through: 'Favorite'})
 
 module.exports = {
   ...sequelize.models, 
