@@ -1,3 +1,4 @@
+const {DataTypes} = require ('sequelize')
 
 module.exports = (sequelize) =>{
     sequelize.define('Genre', {
@@ -9,6 +10,7 @@ module.exports = (sequelize) =>{
         },
         name:{
             type:DataTypes.STRING,
+            allowNull:false,
         }
     })
 }
