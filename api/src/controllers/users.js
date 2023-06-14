@@ -2,7 +2,7 @@ const axios = require('axios');
 const { User } = require('../db');
 const { Op } = require("sequelize");
 const { validationResult } = require('express-validator');
-
+const usersData = require('../../usersdata')
 // Función para obtener todos los usuarios de la base de datos
 const getAllUsers = async (req, res) => {
   try {
