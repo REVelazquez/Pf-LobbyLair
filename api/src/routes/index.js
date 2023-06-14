@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const userController = require('../controllers/userContoller')
- 
 const router = Router();
 // Endpoint para obtener todos los usuarios
 router.get('/users/', userController.getAllUsers);
@@ -19,6 +18,5 @@ router.put('/users/:id', userController.updateUser);
 
 // Endpoint para eliminar un usuario
 router.delete('/users/:id', userController.deleteUser);
-
 
 module.exports = router;

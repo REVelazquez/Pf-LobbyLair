@@ -1,12 +1,12 @@
 const axios = require('axios');
-const { Users } = require('../db');
+const { User } = require('../db');
 const { Op } = require("sequelize");
 
 
 // Función para obtener todos los usuarios de la base de datos
 const getAllUsers = async (req, res) => {
   try {
-    const users = await Users.findAll();
+    const users = await User.findAll();
     res.json(users);
   } catch (error) {
     console.error(error);
@@ -19,7 +19,7 @@ const getUserById = async (req, res) => {
   
     try {
       // Se busca el usuario en la base de datos por su ID
-      const user = await Country.findOne({
+      const user = await User.findOne({
         where: {
           id: {
             [Op.iLike]: id,
@@ -42,7 +42,7 @@ const getUserById = async (req, res) => {
     console.log("Name received from params:", name);
     try {
       // Se busca el usuario en la base de datos por su nombre
-      const user = await Users.findAll({
+      const user = await User.findAll({
         where: {
           name: {
             [Op.iLike]: '%'+name+'%',
