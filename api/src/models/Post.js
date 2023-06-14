@@ -1,18 +1,20 @@
-const {DataTypes} = require ('sequelize')
+const {DataTypes} = require('sequelize')
 
-module.exports= (sequelize) =>{
-    sequelize.define('Post', {
+module.exports = (sequelize)=>{
+    sequelize.define('Post',{
         id:{
             allowNull:false,
             autoIncrement:true,
             primaryKey:true,
             type: DataTypes.INTEGER
         },
-        title:{
-            type:DataTypes.STRING,
-        },
         text:{
-            type:DataTypes.STRING,
+            type: DataTypes.TEXT,
+            allowNull:false
+        },
+        date:{
+            type: DataTypes.DATE,
+            allowNull:false
         }
     })
 }
