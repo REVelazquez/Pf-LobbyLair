@@ -63,7 +63,7 @@ const getUserById = async (req, res) => {
     const { name, email, password } = req.body;
     let new_user = null;
     try{
-        new_user = await Users.create({
+        new_user = await User.create({
           name: name,
           email: email,
           password: password,
@@ -99,7 +99,7 @@ const getUserById = async (req, res) => {
     const deleteUser = async (req, res) => {
         const { id } = req.params;
         try{
-            await Users.destroy({
+            await User.destroy({
                 where: {
                     id: id,
                 },
