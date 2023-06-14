@@ -30,7 +30,6 @@ async function getPosts (req, res){
     }
   }
 
-
   async function createPost(req, res) {
     const {  text, date, userid, gameid } = req.body;
     try {
