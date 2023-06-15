@@ -1,10 +1,6 @@
 import './App.css';
-
 import { Home, Login, Payment, Profile, Register, Chat } from './Views';
-
 import {Routes, Route, useLocation} from 'react-router-dom';
-
-
 import NavBar from './Components/NavBar/NavBar';
 import GamesBar from './Components/GamesBar/GamesBar';
 
