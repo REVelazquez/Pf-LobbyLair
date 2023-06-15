@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { logOut } from "../../Redux/actions";
 import SearchBar from '../SearchBar/SearchBar';
 
+
 const NavBar = () => {
   const dispatch = useDispatch();
   const [theme, setTheme] = useState("light");
