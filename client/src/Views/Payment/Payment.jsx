@@ -21,7 +21,7 @@ const PaymentComponent = () => {
           <img
             src="../img/paypal.jpeg"
             alt="PayPal"
-            className="w-12 h-12 mr-4"
+            className="w-12 h-12 mr-4 cursor-pointer"
           />
           <span className="font-bold">PayPal</span>
         </div>
@@ -35,7 +35,7 @@ const PaymentComponent = () => {
           <img
             src="../img/mercadopago.png"
             alt="MercadoPago"
-            className="w-12 h-12 mr-4"
+            className="w-12 h-12 mr-4 cursor-pointer"
           />
           <span className="font-bold">MercadoPago</span>
         </div>
