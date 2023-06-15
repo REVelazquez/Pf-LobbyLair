@@ -4,6 +4,7 @@ import { auth, signOut } from "../../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import { WiDaySunny, WiMoonAltNew } from "react-icons/wi";
 import LobbyLogo from "../../Flight lobbylair.gif";
+import SearchBar from '../SearchBar/SearchBar';
 
 const NavBar = () => {
   const [theme, setTheme] = useState("light");
@@ -62,6 +63,7 @@ const NavBar = () => {
               Home
             </NavLink>
           </button>
+          <SearchBar/>
           <button>
             <NavLink
               to="/payment"
