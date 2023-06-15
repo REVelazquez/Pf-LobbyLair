@@ -1,8 +1,7 @@
 import React from "react";
 import styles from './Profile.module.css';
 
-
-const Profile = ({ user }) => {
+const Profile = () => {
   return (
     <div className={styles.container}>
         <div className={styles.imageBox}>
@@ -12,8 +11,8 @@ const Profile = ({ user }) => {
             style={{ borderRadius: "50%", cursor: "pointer" }}
           />
         </div>
-            <div>
-              <h2>Perfil de Usuario</h2>
+            <div className={styles.datosUsuario}>
+              <p>Perfil de Usuario</p>
               <p>Email: </p>
               <p>Fecha de registro </p>
             </div>
