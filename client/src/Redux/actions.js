@@ -133,7 +133,6 @@ export const deleteUser = (id) => async(dispatch) => {
     }
 }
 
-};
 export const updateUser = (id, payload) => async(dispatch) => {
     try {
         const userId = await axios(`http://localhost:3001/users/${id}`, payload);
