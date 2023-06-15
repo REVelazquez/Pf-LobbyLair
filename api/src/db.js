@@ -34,7 +34,6 @@ Genre.belongsToMany(Game, {through: 'Game_Genre'})
 Game.belongsToMany(GameMode, {through: 'Game_GameMode'})
 GameMode.belongsToMany(Game, {through: 'Game_GameMode'})
 
-
 Game.belongsToMany(User, {through: 'Favorite'})
 User.belongsToMany(Game, {through: 'Favorite'})
 

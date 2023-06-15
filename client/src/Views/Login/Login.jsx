@@ -2,9 +2,12 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, signInWithEmailAndPassword } from '../../firebase/firebase';
+import { useDispatch } from 'react-redux';
+import { getUserByEmail } from '../../Redux/actions';
 
 const Login = () => {
-    const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [data, setData] = useState({
     email: '',
@@ -21,7 +24,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    dispatch(getUserByEmail(data.email));
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
 
