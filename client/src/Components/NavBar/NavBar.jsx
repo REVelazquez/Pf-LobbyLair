@@ -6,7 +6,7 @@ import { WiDaySunny, WiMoonAltNew } from "react-icons/wi";
 import LobbyLogo from "../../Flight lobbylair.gif";
 import { useDispatch } from "react-redux";
 import { logOut } from "../../Redux/actions";
-import SearchBar from '../SearchBar/SearchBar';
+import SearchBar from '../SearchBar/Searchbar';
 
 
 const NavBar = () => {
