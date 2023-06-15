@@ -1,7 +1,7 @@
 import { 
-    GET_ALL_GAMES, 
+    GET_ALL_GAMES,
     GET_GAMES_BY_NAME,
-    GET_GAME_BY_ID,  
+    GET_GAME_BY_ID,
     POST_GAME,
     CREATE_USER,
     GET_USER_BY_ID,
@@ -40,7 +40,7 @@ const reducer = (state = initialState, action) => {
         case CREATE_USER:
             return {
                 ...state,
-                user: action.payload,
+                user: action.payload
             }
         case GET_USER_BY_ID:
             return {
