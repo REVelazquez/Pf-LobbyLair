@@ -17,11 +17,13 @@ const PaymentComponent = () => {
             selectedOption === 'paypal' ? 'bg-blue-200' : 'bg-white'
           }`}
           onClick={() => handlePaymentOption('paypal')}
+          style={{ cursor: "pointer" }}
         >
           <img
-            src="../img/paypal.jpeg"
+            src="https://onx.la/c4cfc"
             alt="PayPal"
             className="w-12 h-12 mr-4"
+            style={{ cursor: "pointer" }}
           />
           <span className="font-bold">PayPal</span>
         </div>
@@ -30,12 +32,14 @@ const PaymentComponent = () => {
           className={`p-4 border rounded-md shadow-md flex items-center ${
             selectedOption === 'mercadopago' ? 'bg-green-200' : 'bg-white'
           }`}
+          style={{ cursor: "pointer" }}
           onClick={() => handlePaymentOption('mercadopago')}
         >
           <img
-            src="../img/mercadopago.png"
+            src="https://onx.la/b301d"
             alt="MercadoPago"
             className="w-12 h-12 mr-4"
+            style={{ cursor: "pointer" }}
           />
           <span className="font-bold">MercadoPago</span>
         </div>

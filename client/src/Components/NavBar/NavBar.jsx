@@ -4,7 +4,7 @@ import { auth, signOut } from "../../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import { WiDaySunny, WiMoonAltNew } from "react-icons/wi";
 import LobbyLogo from "../../Flight lobbylair.gif";
-import SearchBar from '../SearchBar/SearchBar';
+import SearchBar from '../SearchBar/Searchbar';
 
 const NavBar = () => {
   const [theme, setTheme] = useState("light");
