@@ -1,5 +1,3 @@
-
-
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { auth, signOut } from "../../firebase/firebase";

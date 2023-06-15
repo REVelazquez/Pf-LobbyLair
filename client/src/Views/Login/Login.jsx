@@ -14,6 +14,7 @@ const Login = () => {
   useEffect(() => {
     const user = auth.currentUser;
     if (user) {
+
       navigate('/');
     }
   }, [navigate]);
@@ -23,6 +24,7 @@ const Login = () => {
 
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
+
       navigate('/');
     } catch (err) {
       console.log(err);
@@ -112,6 +114,7 @@ const Login = () => {
             </button>
             <p style={{ marginTop: '10px', fontSize: '14px', color: '#333' }}>
               Don’t have an account yet?{' '}
+
               <a href="/register" style={{ fontWeight: 'bold', color: '#000' }}>
                 Sign up
               </a>
@@ -125,5 +128,6 @@ const Login = () => {
     </section>
   );
 };
+
 
 export default Login;
