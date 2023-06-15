@@ -84,6 +84,7 @@ const getUserById = async (req, res) => {
     const { name, email, password } = req.body;
     const allUsers = await User.findAll();
     const userExists = allUsers.find((user) => user.email === email);
+    console.log(userExists);
     if (userExists) {
       return res.status(400).json({ message: 'User already exists' });
     }

@@ -2,36 +2,33 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, signInWithEmailAndPassword } from '../../firebase/firebase';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUserByEmail } from '../../Redux/actions';
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const user = useSelector((state) => state) || [];
   const [data, setData] = useState({
     email: '',
     password: '',
   });
 
-  useEffect(() => {
-    const user = auth.currentUser;
-    if (user) {
-
-      navigate('/');
-    }
-  }, [navigate]);
-
   const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch(getUserByEmail(data.email));
+    const userValidation = dispatch(getUserByEmail(data.email));
     try {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
-
-      navigate('/');
+      console.log(userValidation);
+      if (userValidation > 0) {
+        console.log("a");
+        if (data.email === userValidation.email && data.password === userValidation.password) {
+          console.log("a");
+        }
+      }
     } catch (err) {
       console.log(err);
     }
+    console.log(user.user);
   };
 
   const handleSignInWithGoogle = async () => {
