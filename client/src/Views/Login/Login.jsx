@@ -4,27 +4,24 @@ import { useNavigate } from 'react-router-dom';
 import { auth, signInWithEmailAndPassword } from '../../firebase/firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserByEmail } from '../../Redux/actions';
-
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { FcGoogle } from 'react-icons/fc';
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state) || [];
-  const [data, setData] = useState({
-    email: '',
-    password: '',
-  });
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    const userValidation = dispatch(getUserByEmail(data.email));
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (user) {
+      navigate('/');
+    }
+  }, [navigate]);
+
+  const handleLogin = async (values) => {
+    dispatch(getUserByEmail(values.email));
     try {
-      console.log(userValidation);
-      if (userValidation > 0) {
-        console.log("a");
-        if (data.email === userValidation.email && data.password === userValidation.password) {
-          console.log("a");
-        }
-      }
+      await signInWithEmailAndPassword(auth, values.email, values.password);
+      navigate('/');
     } catch (err) {
       console.log(err);
     }
@@ -43,84 +40,79 @@ const Login = () => {
   };
 
   return (
-    <section style={{ backgroundColor: '#F7FAFC', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <div style={{ width: '300px', padding: '20px', backgroundColor: '#FFF', borderRadius: '4px', boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.24)' }}>
-        <a href="/" style={{ display: 'flex', alignItems: 'center', marginBottom: '20px', fontSize: '20px', fontWeight: 'bold', color: '#333' }}>
-          LobbyLair
-        </a>
+    <section className="bg-gray-100 min-h-screen flex justify-center items-center">
+      <div className="w-72 p-4 bg-white rounded shadow-md">
+   
+      <div className="max-w-180 mx-auto text-center flex items-center justify-center">
+
+</div>
         <div>
-          <h1 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '20px', color: '#333' }}>
+          <h1 className="text-xl font-bold mb-4 text-gray-800">
             Sign in to your account
           </h1>
-          <form onSubmit={handleLogin}>
-            <div style={{ marginBottom: '10px' }}>
-              <label htmlFor="email" style={{ marginBottom: '5px', fontSize: '14px', fontWeight: 'bold', color: '#333' }}>
-                Your email
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="name@company.com"
-                required
-                style={{ width: '100%', padding: '10px', border: '1px solid #CCC', borderRadius: '4px' }}
-                value={data.email}
-                onChange={(e) =>
-                  setData({
-                    ...data,
-                    email: e.target.value,
-                  })
-                }
-              />
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <label htmlFor="password" style={{ marginBottom: '5px', fontSize: '14px', fontWeight: 'bold', color: '#333' }}>
-                Password
-              </label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="••••••••"
-                required
-                style={{ width: '100%', padding: '10px', border: '1px solid #CCC', borderRadius: '4px' }}
-                value={data.password}
-                onChange={(e) =>
-                  setData({
-                    ...data,
-                    password: e.target.value,
-                  })
-                }
-              />
-            </div>
-            <div style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
-              <div style={{ marginRight: '5px' }}>
-                <input
-                  id="remember"
-                  aria-describedby="remember"
-                  type="checkbox"
-                  required
-                  style={{ width: '16px', height: '16px', border: '1px solid #CCC' }}
-                />
-              </div>
-              <div style={{ fontSize: '14px', color: '#333' }}>
-                <label htmlFor="remember">
-                  Remember me
-                </label>
-              </div>
-            </div>
-            <button type="submit" style={{ width: '100%', backgroundColor: '#000', color: '#FFF', border: 'none', borderRadius: '4px', padding: '10px', fontSize: '16px', fontWeight: 'bold', cursor: 'pointer' }}>
-              Sign in
-            </button>
-            <p style={{ marginTop: '10px', fontSize: '14px', color: '#333' }}>
-              Don’t have an account yet?{' '}
+          <Formik
+            initialValues={{
+              email: '',
+              password: '',
+            }}
+            validate={(values) => {
+              const errors = {};
 
-              <a href="/register" style={{ fontWeight: 'bold', color: '#000' }}>
-                Sign up
-              </a>
-            </p>
-          </form>
-          <button onClick={handleSignInWithGoogle} style={{ width: '100%', backgroundColor: '#4285F4', color: '#FFF', border: 'none', borderRadius: '4px', padding: '10px', fontSize: '16px', fontWeight: 'bold', marginTop: '10px', cursor: 'pointer' }}>
+              if (!values.email) {
+                errors.email = 'Email is required';
+              }
+
+              if (!values.password) {
+                errors.password = 'Password is required';
+              }
+
+              return errors;
+            }}
+            onSubmit={handleLogin}
+          >
+            <Form>
+              <div className="mb-4">
+                <label htmlFor="email" className="mb-1 text-sm font-bold text-gray-800">
+                  Your email
+                </label>
+                <Field
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="name@company.com"
+                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
+                  required
+                />
+                <ErrorMessage name="email" component="div" className="text-red-500 text-sm" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="password" className="mb-1 text-sm font-bold text-gray-800">
+                  Password
+                </label>
+                <Field
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Write your password"
+                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
+                  required
+                />
+                <ErrorMessage name="password" component="div" className="text-red-500 text-sm" />
+              </div>
+              <button type="submit" className="w-full bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer">
+                Sign in
+              </button>
+              <p className="mt-3 text-sm text-gray-800">
+                Don’t have an account yet?{' '}
+                <a href="/register" className="font-bold text-black">
+                  Sign up
+                </a>
+              </p>
+            </Form>
+          </Formik>
+          <p className="text-sm text-gray-800 mt-1">Or sign in with</p>
+          <button onClick={handleSignInWithGoogle} className="w-full bg-black text-white border-none rounded-[5rem] p-3 text-xl font-bold cursor-pointer hover:bg-white hover:text-black hover:shadow-md">
+          <FcGoogle className="inline-block mr-2" />
             Sign in with Google
           </button>
         </div>
@@ -128,6 +120,5 @@ const Login = () => {
     </section>
   );
 };
-
 
 export default Login;

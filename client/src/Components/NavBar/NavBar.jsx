@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { WiDaySunny, WiMoonAltNew } from "react-icons/wi";
 import LobbyLogo from "../../Flight lobbylair.gif";
 
+
 const NavBar = () => {
   const [theme, setTheme] = useState("light");
   const [showMenu, setShowMenu] = useState(false);
