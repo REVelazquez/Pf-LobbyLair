@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import { getAllGames } from "../../Redux/actions";
+import Style from './GamesBar.module.css'
 
 const GamesBar = ()=>{
     const dispatch = useDispatch()
@@ -45,19 +46,38 @@ const GamesBar = ()=>{
         }
     }, [currentPage, maxPage])
     
+    const handleDown= (event)=>{
+        if (currentPage !== maxPage){
+            const nextPage=currentPage+1;
+            const newIndex=nextPage*gamesPerPage
+            setCurrentPage(nextPage);
+            setIndexOfFirstGame(newIndex)
+            setIndexOfLastGame(newIndex+gamesPerPage)
+        }
+    }
+    const handleUp= (event)=>{
+        if(currentPage>1){
+            const prevPage=currentPage-1;
+            const newIndex=(prevPage-1)*gamesPerPage;
+            setCurrentPage(prevPage)
+            setIndexOfFirstGame(newIndex)
+            setIndexOfLastGame(newIndex+gamesPerPage)
+        }
+    }
+
     return(
-        <div>
-            <button disabled={upButton}>^</button>
+        <div className={Style.container}>
+            <button className={Style.btn} onClick={handleUp} disabled={upButton}>^</button>
            {currentGames?.map(({id, thumbnail, name})=>{
             return(
                 <button key={id}>
                     <NavLink to={`/game/${id}`} >
-                    <img src={thumbnail} alt="" />
+                    <img className={Style.imag} src={thumbnail} alt="" />
                     </NavLink>
                 </button>
             )
         })}     
-        <button>v</button>
+        <button className={Style.bt} onClick={handleDown} disabled={downButton} >v</button>
         </div>
     )
 }
