@@ -4,6 +4,7 @@ import {
     GET_GAMES_BY_NAME,
     GET_GAME_BY_ID,
     POST_GAME,
+    CREATE_USER,
     GET_USER_BY_ID,
     GET_USER_BY_NAME,
     GET_USER_BY_EMAIL,

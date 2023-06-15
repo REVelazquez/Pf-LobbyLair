@@ -3,10 +3,10 @@ import {
     GET_GAMES_BY_NAME,
     GET_GAME_BY_ID,
     POST_GAME,
+    CREATE_USER,
     GET_USER_BY_ID,
     GET_USER_BY_NAME,
-    GET_USER_BY_EMAIL,
-    CREATE_USER
+    GET_USER_BY_EMAIL
 } from './action-types';
 
 const initialState = {
@@ -38,7 +38,7 @@ const reducer = (state = initialState, action) => {
         case CREATE_USER:
             return {
                 ...state,
-                 user: action.payload,
+                user: action.payload
             }
         case GET_USER_BY_ID:
             return {
