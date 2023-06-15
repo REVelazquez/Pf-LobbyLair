@@ -7,3 +7,5 @@ export const GET_USER_BY_ID = 'GET_USER_BY_ID';
 export const GET_USER_BY_EMAIL = 'GET_USER_BY_EMAIL';
 export const GET_USER_BY_NAME = 'GET_USER_BY_NAME';
 export const LOG_OUT = 'LOG_OUT';
+export const DELETE_USER = ' DELETE_USER';
+export const UPDATE_USER = 'UPDATE_USER';

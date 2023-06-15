@@ -6,16 +6,15 @@ import { WiDaySunny, WiMoonAltNew } from "react-icons/wi";
 import LobbyLogo from "../../Flight lobbylair.gif";
 import { useDispatch } from "react-redux";
 import { logOut } from "../../Redux/actions";
-import { useSelector } from "react-redux";
+import SearchBar from '../SearchBar/SearchBar';
+
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const [theme, setTheme] = useState("light");
   const [showMenu, setShowMenu] = useState(false);
-  const user2 = useSelector((state) => state.user);
   const navigate = useNavigate();
   const user = auth.currentUser;
-  console.log(user2);
   const handleThemeChange = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
@@ -68,6 +67,7 @@ const NavBar = () => {
               Home
             </NavLink>
           </button>
+          <SearchBar/>
           <button>
             <NavLink
               to="/payment"

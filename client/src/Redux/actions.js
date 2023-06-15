@@ -4,11 +4,14 @@ import {
     GET_GAMES_BY_NAME,
     GET_GAME_BY_ID,
     POST_GAME,
+    CREATE_USER,
     GET_USER_BY_ID,
     GET_USER_BY_NAME,
     GET_USER_BY_EMAIL,
     CREATE_USER,
     LOG_OUT,
+    DELETE_USER,
+    UPDATE_USER
 } from './action-types';
 
 export const getAllGames = () => {
@@ -106,13 +109,34 @@ export const getUserByEmail = (email) => async(dispatch) => {
     }
 };
 
+
 export const logOut = () => async(dispatch) => {
     try {
         return dispatch({
             type: LOG_OUT,
             payload: {}
+
+export const deleteUser = (id) => async(dispatch) => {
+    try {
+        const userId = await axios(`http://localhost:3001/users/${id}`);
+        return dispatch({
+            type: DELETE_USER,
+            payload: userId.data
         });
     } catch (error) {
         throw new Error(error);
     }
 }
+
+};
+export const updateUser = (id, payload) => async(dispatch) => {
+    try {
+        const userId = await axios(`http://localhost:3001/users/${id}`, payload);
+        return dispatch({
+            type: UPDATE_USER,
+            payload: userId.data
+        });
+    } catch (error) {
+        throw new Error(error);
+    }
+};
