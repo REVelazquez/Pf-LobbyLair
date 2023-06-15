@@ -1,0 +1,15 @@
+.container{
+    width: 6.5em;
+    height: 100% fixed;
+    display: flex;
+    flex-direction: column;
+}
+
+.imag{
+    width: 6.5em;
+}
+
+.btn{
+    font-weight: bolder;
+    font-size: larger;
+}

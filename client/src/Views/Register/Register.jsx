@@ -27,7 +27,13 @@ const Register = () => {
     // }
 
     // console.log(data);
-    dispatch(createUser(data));
+
+    try {
+      dispatch(createUser(data));
+    } catch (error) {
+      alert(error);
+    }
+
   };
 
   return (

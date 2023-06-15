@@ -22,8 +22,10 @@ const PaymentComponent = () => {
           <img
             src="https://onx.la/c4cfc"
             alt="PayPal"
+
             className="w-12 h-12 mr-4"
             style={{ cursor: "pointer" }}
+            className="w-12 h-12 mr-4 cursor-pointer"
           />
           <span className="font-bold">PayPal</span>
         </div>
@@ -40,6 +42,9 @@ const PaymentComponent = () => {
             alt="MercadoPago"
             className="w-12 h-12 mr-4"
             style={{ cursor: "pointer" }}
+
+            className="w-12 h-12 mr-4 cursor-pointer"
+
           />
           <span className="font-bold">MercadoPago</span>
         </div>
