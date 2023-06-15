@@ -25,7 +25,6 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 games: action.payload,
-                filter: true
             }
         case GET_GAME_BY_ID:
             return {

@@ -36,7 +36,7 @@ export const getGameById = (id) => async(dispatch) => {
 };
 export const getGamesByName = (name) => async(dispatch) => {
     try {
-        const gameName = await axios(`http://localhost:3001/games?name=${name}`);
+        const gameName = await axios(`http://localhost:3001/games/name/${name}`);
         return dispatch({
             type: GET_GAMES_BY_NAME,
             payload: gameName.data
