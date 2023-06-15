@@ -86,7 +86,7 @@ export const getUserById = (id) => async(dispatch) => {
 };
 export const getUserByName = (name) => async(dispatch) => {
     try {
-        const userName = await axios(`http://localhost:3001/users?name=${name}`);
+        const userName = await axios(`http://localhost:3001/users/name=${name}`);
         return dispatch({
             type: GET_USER_BY_NAME,
             payload: userName.data
@@ -97,7 +97,7 @@ export const getUserByName = (name) => async(dispatch) => {
 };
 export const getUserByEmail = (email) => async(dispatch) => {
     try {
-        const userEmail = await axios(`http://localhost:3001/users?email=${email}`);
+        const userEmail = await axios(`http://localhost:3001/users/email=${email}`);
         return dispatch({
             type: GET_USER_BY_EMAIL,
             payload: userEmail.data
