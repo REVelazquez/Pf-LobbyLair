@@ -3,7 +3,8 @@ const { body } = require('express-validator');
 const { getGames, getGamesById, getGamesByName, postGames, deleteGame } = require('../controllers/games.js');
 const { getPosts } = require('../controllers/post.js');
 const { getFavorites, createFavorite, removeFavoriteGame } = require('../controllers/favorite.js');
-const { getAllUsers, getUserById, getUserByName, createUser, updateUser, deleteUser} = require('../controllers/users.js');
+const { getUsersWithPagination, getAllUsers, getUserById, getUserByName, getUserByEmail, createUser, updateUser, deleteUser} = require('../controllers/users.js');
+
 
 const router = Router();
 
@@ -33,6 +34,8 @@ router.get('/users/:id', getUserById);
 // Endpoint para obtener un usuario por nombre
 router.get('/users/:name', getUserByName);       
 
+// Endpoint para obtener un usuario por email
+router.get('/users/email/:email', getUserByEmail);
 // Endpoint para crear un usuario
 router.post(
     '/users',
@@ -62,4 +65,8 @@ router.delete('/favorite/:userId/:gameId', removeFavoriteGame)
 // Endpoint para agregar un juego a los favoritos de un usuario
 router.post('/favorite', createFavorite)
 
+// Endpoint para obtener usuarios con paginación y filtros
+router.get('/users/page/:page', getUsersWithPagination); // Ruta para obtener usuarios con paginación y filtros
+
 module.exports = router;
+
