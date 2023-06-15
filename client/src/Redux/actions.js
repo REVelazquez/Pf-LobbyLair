@@ -8,12 +8,8 @@ import {
     GET_USER_BY_ID,
     GET_USER_BY_NAME,
     GET_USER_BY_EMAIL,
-<<<<<<< HEAD
     DELETE_USER,
     UPDATE_USER
-=======
-    CREATE_USER,
->>>>>>> f80f0bd158f101154994b9e410ae7f9c2d5ce967
 } from './action-types';
 
 export const getAllGames = () => {
