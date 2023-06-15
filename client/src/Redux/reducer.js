@@ -6,7 +6,9 @@ import {
     CREATE_USER,
     GET_USER_BY_ID,
     GET_USER_BY_NAME,
-    GET_USER_BY_EMAIL
+    GET_USER_BY_EMAIL,
+    DELETE_USER,
+    UPDATE_USER
 } from './action-types';
 
 const initialState = {
@@ -55,6 +57,16 @@ const reducer = (state = initialState, action) => {
              ...state,
                 user: action.payload,
             }
+        case  DELETE_USER:
+            return {
+              ...state,
+                user: action.payload,
+            }   
+        case UPDATE_USER:
+            return {
+             ...state,
+                user: action.payload,
+            }    
         default:
                 return {
                     ...state
