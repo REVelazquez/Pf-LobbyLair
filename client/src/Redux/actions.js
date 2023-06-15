@@ -6,7 +6,8 @@ import {
     POST_GAME,
     GET_USER_BY_ID,
     GET_USER_BY_NAME,
-    GET_USER_BY_EMAIL
+    GET_USER_BY_EMAIL,
+    CREATE_USER,
 } from './action-types';
 
 export const getAllGames = () => {
