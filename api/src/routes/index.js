@@ -9,23 +9,23 @@ const { getUsersWithPagination, getAllUsers, getUserById, getUserByName, getUser
 const router = Router();
 
 // Endpoint para obtener todos los games
-router.get('/Games', getGames);
+router.get('/games', getGames);
 
 // Endpoint para eliminar un game
-router.delete('/Games/:id', deleteGame);
+router.delete('/games/:id', deleteGame);
 
 // Endpoint para obtener un game por id
-router.get('/Games/:id', getGamesById);
+router.get('/games/:id', getGamesById);
 
 // Endpoint para obtener un usuario por game
 router.get('/games/name/:name', getGamesByName);
 
 // Endpoint para crear un game
-router.post('/Games', postGames);
+router.post('/games', postGames);
 
 router.get('/games/page', getGamesWithPagination); // Ruta para obtener juegos con paginación y filtros
 
-router.get('/Posts', getPosts);
+router.get('/posts', getPosts);
 
 // Endpoint para obtener todos los usuarios
 router.get('/users/', getAllUsers);
