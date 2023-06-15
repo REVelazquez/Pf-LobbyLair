@@ -7,7 +7,9 @@ import {
     CREATE_USER,
     GET_USER_BY_ID,
     GET_USER_BY_NAME,
-    GET_USER_BY_EMAIL
+    GET_USER_BY_EMAIL,
+    DELETE_USER,
+    UPDATE_USER
 } from './action-types';
 
 export const getAllGames = () => {
@@ -99,6 +101,28 @@ export const getUserByEmail = (email) => async(dispatch) => {
         return dispatch({
             type: GET_USER_BY_EMAIL,
             payload: userEmail.data
+        });
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+export const deleteUser = (id) => async(dispatch) => {
+    try {
+        const userId = await axios(`http://localhost:3001/users/${id}`);
+        return dispatch({
+            type: DELETE_USER,
+            payload: userId.data
+        });
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+export const updateUser = (id, payload) => async(dispatch) => {
+    try {
+        const userId = await axios(`http://localhost:3001/users/${id}`, payload);
+        return dispatch({
+            type: UPDATE_USER,
+            payload: userId.data
         });
     } catch (error) {
         throw new Error(error);
