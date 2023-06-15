@@ -4,23 +4,10 @@ async function getPosts(req, res) {
   try {
     let posts = await Post.findAll({
       include: [
-        {
-          model: User,
-          attributes: ['id'],
-        },
-        {
-          model: Game,
-          through: { attributes: [] },
-          include: [
-            {
-              model: GameMode,
-              attributes: [],
-              through: { attributes: [] },
-            },
-          
-          ],
-        },
-      ],
+        { model: User, attributes: ['id'] },
+        { model: Game, attributes: ['id', 'name', 'thumbnail'] },
+        { model: GameMode, attributes: ['id', 'name'] }
+      ]
     });
 
     return res.status(200).json(posts);
@@ -29,21 +16,24 @@ async function getPosts(req, res) {
   }
 }
 
+async function getPostsByUserId(req, res) {
+  const userId = req.params.userid;
 
-  async function getPostsbyUser(req, res) {
-    const { userId } = req.params;
-    try {
-      const posts = await Post.findAndCountAll({
-        where: {
-          userId: userId,
-        },
-        include: [Game],
-      });
-      return res.status(200).json(posts);
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
-    }
+  try {
+    let posts = await Post.findAll({
+      where: { userId: userId }, 
+      include: [
+        { model: User, attributes: ['id', 'name'] },
+        { model: Game, attributes: ['id', 'name', 'thumbnail'] },
+        { model: GameMode, attributes: ['id', 'name'] }
+      ]
+    });
+
+    return res.status(200).json(posts);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
   }
+}
 
   async function createPost(req, res) {
     const { text, userid, gameid, gamemodeid } = req.body;
@@ -53,42 +43,43 @@ async function getPosts(req, res) {
         date: new Date(),
       });
   
-      let game = await Game.findByPk(gameid);
-      console.log(game);
-  
+      let game = await Game.findByPk(gameid);  
       if (!game) {
         return res.status(404).json({ error: 'El juego no existe' });
       }
   
-      await newPost.addGame(game, {
-        through: { gamemodeid: gamemodeid }
-      });
+      let gameMode = await GameMode.findByPk(gamemodeid);
+     
   
-      let user = await User.findByPk(userid);
-      if (!user) {
-        return res.status(404).json({ error: 'El usuario no existe' });
+      if (!gameMode) {
+        return res.status(404).json({ error: 'El modo de juego no existe' });
       }
   
-      await newPost.setUser(user);
+      await newPost.setUser(userid);
+      await newPost.setGame(gameid)
+      await newPost.setGameMode(gamemodeid);
   
       return res.status(200).json(newPost);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
   }
-  
+
   async function deletePost(req, res) {
-    const postId = req.params.id;
+    const { id } = req.params; 
+    console.log(id);
     try {
-      const post = await Post.findByPk(postId);
+      const post = await Post.findOne({ where: { id: id } })
       if (!post) {
         return res.status(404).json({ error: 'El post no existe' });
       }
+      await post.setGame([]); 
+      await post.setUser(null); 
+      await post.setGameMode(null); 
   
-      await post.setGames([]); 
-      await post.setUser(null);
-  
+
       await post.destroy(); 
+  
       return res.status(200).json({ message: 'Post eliminado exitosamente' });
     } catch (error) {
       return res.status(500).json({ error: error.message });
@@ -103,10 +94,9 @@ async function getPosts(req, res) {
 
 
 
-
 module.exports = {
   getPosts,
-  getPostsbyUser,
+  getPostsByUserId,
   createPost,
   deletePost
 

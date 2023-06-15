@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { body } = require('express-validator');
 
 const { getGames, getGamesById, getGamesByName, postGames, deleteGame } = require('../controllers/games.js');
-const { getPosts, getPostsbyUser, createPost, deletePost  } = require('../controllers/post.js');
+const { getPosts, getPostsByUserId, createPost, deletePost  } = require('../controllers/post.js');
 const { getAllUsers, getUserById, getUserByName, createUser, updateUser, deleteUser} = require('../controllers/users.js');
 
 const router = Router();
@@ -29,7 +29,7 @@ router.get('/Posts', getPosts);
 router.post('/Posts', createPost);
 
 //Endpoint para obtener los posts por usuarios
-router.get('/Posts/user/:id', getPostsbyUser);
+router.get('/Posts/user/:id', getPostsByUserId);
 
 //Endpoint para borrar los posts por id
 router.delete('/Posts/:id', deletePost);
