@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
         <NavBar />
-          {location.pathname !== ('/profile') && <GamesBar/>}
+          {location.pathname !== ('/profile') || location.pathname !== ('payment') && <GamesBar/>}
           <Routes>
             <Route path='/' element={  <Home/> }/>
             <Route exact path='/login' element={ <Login/> }/>
