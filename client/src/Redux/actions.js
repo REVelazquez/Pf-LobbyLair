@@ -8,7 +8,6 @@ import {
     GET_USER_BY_ID,
     GET_USER_BY_NAME,
     GET_USER_BY_EMAIL,
-    CREATE_USER,
     LOG_OUT,
     DELETE_USER,
     UPDATE_USER
