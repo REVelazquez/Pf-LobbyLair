@@ -1,11 +1,13 @@
-import { 
-    GET_ALL_GAMES, 
-    GET_GAMES_BY_NAME,
-    GET_GAME_BY_ID,  
-    POST_GAME,
-    CREATE_USER,
-} from './action-types';
 import axios from 'axios';
+import {
+    GET_ALL_GAMES,
+    GET_GAMES_BY_NAME,
+    GET_GAME_BY_ID,
+    POST_GAME,
+    GET_USER_BY_ID,
+    GET_USER_BY_NAME,
+    GET_USER_BY_EMAIL
+} from './action-types';
 
 export const getAllGames = () => {
     return async (dispatch) => {
@@ -67,3 +69,37 @@ export const createUser = (payload) => {
         }
     }
 }
+
+export const getUserById = (id) => async(dispatch) => {
+    try {
+        const userId = await axios(`http://localhost:3001/users/${id}`);
+        return dispatch({
+            type: GET_USER_BY_ID,
+            payload: userId.data
+        });
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+export const getUserByName = (name) => async(dispatch) => {
+    try {
+        const userName = await axios(`http://localhost:3001/users?name=${name}`);
+        return dispatch({
+            type: GET_USER_BY_NAME,
+            payload: userName.data
+        });
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+export const getUserByEmail = (email) => async(dispatch) => {
+    try {
+        const userEmail = await axios(`http://localhost:3001/users?email=${email}`);
+        return dispatch({
+            type: GET_USER_BY_EMAIL,
+            payload: userEmail.data
+        });
+    } catch (error) {
+        throw new Error(error);
+    }
+};
