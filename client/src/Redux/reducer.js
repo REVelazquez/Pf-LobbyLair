@@ -2,7 +2,8 @@ import {
     GET_ALL_GAMES, 
     GET_GAMES_BY_NAME,
     GET_GAME_BY_ID,  
-    POST_GAME
+    POST_GAME,
+    GET_USER_BY_ID
 } from './action-types';
 
 const initialState = {
@@ -29,7 +30,21 @@ const reducer = (state = initialState, action) => {
                  ...state,
                  games: action.payload,
                 }
-
+        case GET_USER_BY_ID:
+            return {
+              ...state,
+                user: action.payload,
+            }
+        case GET_USER_BY_NAME:
+            return {
+              ...state,
+                user: action.payload,
+            }
+        case GET_USER_BY_EMAIL:
+            return {
+             ...state,
+                user: action.payload,
+            }
         default:
                 return {
                     ...state
