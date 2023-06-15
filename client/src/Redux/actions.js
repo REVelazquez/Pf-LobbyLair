@@ -1,3 +1,4 @@
+import { async } from '@firebase/util';
 import axios from 'axios';
 import {
     GET_ALL_GAMES,
@@ -10,7 +11,8 @@ import {
     GET_USER_BY_EMAIL,
     LOG_OUT,
     DELETE_USER,
-    UPDATE_USER
+    UPDATE_USER,
+    GET_GAMES_WITH_PAGINATION
 } from './action-types';
 
 export const getAllGames = () => {
@@ -34,6 +36,20 @@ export const getGameById = (id) => async(dispatch) => {
         throw new Error(error);
     }
 };
+export const getGamesWithPagination= (currentPage)=>
+    async (dispatch) =>{
+        try{
+            const gamesPaginated = await axios.get(`http://localhost:3001/games/page?page=${currentPage}`)
+            return dispatch({
+                type: GET_GAMES_WITH_PAGINATION,
+                payload: gamesPaginated.data
+            })
+        }catch(error){
+            return {error:error.message}
+        }
+    }
+
+
 export const getGamesByName = (name) => async(dispatch) => {
     try {
         const gameName = await axios(`http://localhost:3001/games/name/${name}`);
@@ -45,6 +61,7 @@ export const getGamesByName = (name) => async(dispatch) => {
         alert('Game does not exist!')
     }
 };
+
 export const postGames= (payload)=>{
     return async (dispatch)=>{
         try {
@@ -98,7 +115,7 @@ export const getUserByName = (name) => async(dispatch) => {
 };
 export const getUserByEmail = (email) => async(dispatch) => {
     try {
-        const userEmail = await axios(`http://localhost:3001/users/email/${email}`);
+        const userEmail = await axios.get(`http://localhost:3001/users/email/${email}`);
         return dispatch({
             type: GET_USER_BY_EMAIL,
             payload: userEmail.data
