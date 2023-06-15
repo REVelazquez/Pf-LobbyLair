@@ -2,7 +2,8 @@ import {
     GET_ALL_GAMES, 
     GET_GAMES_BY_NAME,
     GET_GAME_BY_ID,  
-    POST_GAME
+    POST_GAME,
+    CREATE_USER,
 } from './action-types';
 import axios from 'axios';
 
@@ -51,4 +52,18 @@ export const postGames= (payload)=>{
         }
     }
     
+}
+
+export const createUser = (payload) => {
+    return async (dispatch) => {
+        try {
+            let newUser = await axios.post('http://localhost:3001/users', payload);
+          return dispatch({
+            type:CREATE_USER,
+            payload: newUser.data
+        })
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
 }

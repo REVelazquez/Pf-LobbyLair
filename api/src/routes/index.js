@@ -28,7 +28,7 @@ router.get('/games/page', getGamesWithPagination); // Ruta para obtener juegos c
 router.get('/posts', getPosts);
 
 // Endpoint para obtener todos los usuarios
-router.get('/users/', getAllUsers);
+router.get('/users', getAllUsers);
 
 // Endpoint para obtener un usuario por id
 router.get('/users/:id', getUserById);
