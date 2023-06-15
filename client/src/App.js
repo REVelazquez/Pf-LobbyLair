@@ -1,21 +1,20 @@
 import './App.css';
-
-import { Home, Login, Payment, Profile, Register, Chat } from './Views';
+import { Home, Login, Payment, Profile, Register, Chat, LandingPage } from './Views';
+import GamePosts from './Components/GamePosts/GamePosts';
 
 import {Routes, Route, useLocation} from 'react-router-dom';
-
-
 import NavBar from './Components/NavBar/NavBar';
-import GamesBar from './Components/GamesBar/GamesBar';
+
 
 function App() {
   const location= useLocation()
   return (
     <div className="App">
-        <NavBar />
-          {location.pathname !== ('/profile') || location.pathname !== ('payment') && <GamesBar/>}
+        {location.pathname !== '/' && <NavBar />}
           <Routes>
-            <Route path='/' element={  <Home/> }/>
+            <Route path='/' element={<LandingPage/>} />
+            <Route path='/home' element={  <Home/> }/>
+            <Route path='/game/:id' element={<GamePosts />} />
             <Route exact path='/login' element={ <Login/> }/>
             <Route exact path='/payment' element={ <Payment/> }/>
             <Route exact path='/profile' element={ <Profile/> }/>
