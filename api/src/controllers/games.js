@@ -154,7 +154,7 @@ async function deleteGame (req, res) {
 }
 
 async function getGamesWithPagination(req, res) {
-  const { page, name, genre } = req.query;
+  const { page, name, genre, gameMode } = req.query;
   const pageSize = 5; 
   let offset = 0; 
   
@@ -164,6 +164,9 @@ async function getGamesWithPagination(req, res) {
   }
   if (genre) {
     whereClause['$Genres.name$'] = { [Op.iLike]: `%${genre}%` };
+  }
+  if (gameMode) {
+    whereClause['$GameModes.name$'] = { [Op.iLike]: `%${gameMode}%` };
   }
 
   try {
