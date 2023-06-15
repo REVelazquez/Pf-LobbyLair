@@ -1,0 +1,30 @@
+import { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { getGamesByName } from '../../Redux/actions';
+
+const SearchBar = () => {
+    const dispatch = useDispatch();
+
+    const [searchName, setSearchName] = useState({
+     name: '',
+    });
+ 
+    const handleChange = (event) =>{
+       setSearchName({name: event.target.value})
+    }
+    
+   const handleSubmit = () => {
+    const name = searchName.name
+    if(name.length > 0){
+        dispatch(getGamesByName(name));
+    }
+   }
+   return (
+    <div >
+        <input type='search' value={searchName.name} onChange={handleChange}  class="rounded-full mr-2 text-center placeholder-center font-semibold"/>
+        <button onChange={handleSubmit} className="text-white text-lg font-semibold no-underline hover:text-gray-500">Search Game</button>
+    </div>
+   )
+}
+
+export default SearchBar;
