@@ -3,7 +3,7 @@ import {
     GET_GAMES_BY_NAME,
     GET_GAME_BY_ID,  
     POST_GAME
-} from './action-types/';
+} from './action-types';
 
 const initialState = {
     games: [],

@@ -6,7 +6,7 @@ import NavBar from '../../Components/NavBar/NavBar';
 const Home = () => {
     return (
             <div>
-                <h1>Aquí va el Home, con la barra de navegacion invisible</h1>
+                <h1>Aquí va el Home</h1>
                <ul>
                 {/* <li><SearchBar/></li> */}
                 <li><NavBar/></li>
