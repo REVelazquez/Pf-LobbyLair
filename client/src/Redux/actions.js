@@ -115,6 +115,11 @@ export const logOut = () => async(dispatch) => {
         return dispatch({
             type: LOG_OUT,
             payload: {}
+        });
+    } catch (error) {
+        throw new Error(error);
+    }
+}
 
 export const deleteUser = (id) => async(dispatch) => {
     try {
