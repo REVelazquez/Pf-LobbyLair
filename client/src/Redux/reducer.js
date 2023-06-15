@@ -9,13 +9,15 @@ import {
     CREATE_USER,
     LOG_OUT,
     DELETE_USER,
-    UPDATE_USER
+    UPDATE_USER,
+    GET_GAMES_WITH_PAGINATION
 } from './action-types';
 
 const initialState = {
     games: [],
     game: [],
     post: [],
+    pageGames:[],
     user: {},
 };
 
@@ -36,6 +38,11 @@ const reducer = (state = initialState, action) => {
                  ...state,
                  games: action.payload,
                 }
+        case GET_GAMES_WITH_PAGINATION:
+            return {
+                ...state,
+                pageGames: action.payload
+            }
 
         case CREATE_USER:
             return {
