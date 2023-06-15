@@ -16,8 +16,7 @@ const Home = () => {
     <GamesBar/>
     <div className="home-container">
       <main className="content">
-        Aqui irian los posteos
-       
+  
       </main>
       <button className="join-button" onClick={handleJoinChat}>Start Now</button>
     
