@@ -7,8 +7,6 @@ import LobbyLogo from "../../Flight lobbylair.gif";
 import { useDispatch } from "react-redux";
 import { logOut } from "../../Redux/actions";
 import SearchBar from '../SearchBar/SearchBar';
-import { useSelector } from "react-redux";
-
 
 const NavBar = () => {
   const dispatch = useDispatch();
