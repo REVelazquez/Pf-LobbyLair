@@ -1,10 +1,13 @@
 import { 
-    GET_ALL_GAMES, 
+    GET_ALL_GAMES,
     GET_GAMES_BY_NAME,
-    GET_GAME_BY_ID,  
+    GET_GAME_BY_ID,
     POST_GAME,
+    GET_USER_BY_ID,
+    GET_USER_BY_NAME,
+    GET_USER_BY_EMAIL,
     CREATE_USER,
-    GET_USER_BY_ID
+    LOG_OUT,
 } from './action-types';
 
 const initialState = {
@@ -36,6 +39,8 @@ const reducer = (state = initialState, action) => {
         case CREATE_USER:
             return {
                 ...state,
+                user: action.payload,
+            }
         case GET_USER_BY_ID:
             return {
               ...state,
@@ -49,6 +54,11 @@ const reducer = (state = initialState, action) => {
         case GET_USER_BY_EMAIL:
             return {
              ...state,
+                user: action.payload,
+            }
+        case LOG_OUT:
+            return {
+                ...state,
                 user: action.payload,
             }
         default:
