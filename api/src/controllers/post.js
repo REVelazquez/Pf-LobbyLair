@@ -46,7 +46,7 @@ async function getPosts(req, res) {
   }
 
   async function createPost(req, res) {
-    const { text, userid, gameid } = req.body;
+    const { text, userid, gameid, gamemodeid } = req.body;
     try {
       let newPost = await Post.create({
         text: text,
@@ -55,13 +55,15 @@ async function getPosts(req, res) {
   
       let game = await Game.findByPk(gameid);
       console.log(game);
-
+  
       if (!game) {
         return res.status(404).json({ error: 'El juego no existe' });
       }
   
-      await newPost.addGame(game);
-    
+      await newPost.addGame(game, {
+        through: { gamemodeid: gamemodeid }
+      });
+  
       let user = await User.findByPk(userid);
       if (!user) {
         return res.status(404).json({ error: 'El usuario no existe' });
@@ -74,7 +76,7 @@ async function getPosts(req, res) {
       return res.status(500).json({ error: error.message });
     }
   }
-
+  
   async function deletePost(req, res) {
     const postId = req.params.id;
     try {
