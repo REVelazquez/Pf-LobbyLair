@@ -153,8 +153,7 @@ const getUserById = async (req, res) => {
     const getUsersWithPagination = async (req, res) => {
       const { page } = req.params;
       const { name, email } = req.query;
-      const pageSize = 10; // Tamaño de página (cantidad de usuarios por página)
-    
+      const pageSize = 10;
       try {
         let whereClause = {};
         if (name) {
