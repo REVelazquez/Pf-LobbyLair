@@ -34,8 +34,6 @@ router.get('/Posts/user/:id', getPostsbyUser);
 //Endpoint para borrar los posts por id
 router.delete('/Posts/:id', deletePost);
 
-
-
 // Endpoint para obtener todos los usuarios
 router.get('/users/', getAllUsers);
 

@@ -1,15 +1,26 @@
-const { Post, Game, User } = require('../db.js');
-
-
-
+const { Post, Game, User, GameMode } = require('../db.js');
 
 async function getPosts(req, res) {
   try {
     let posts = await Post.findAll({
-      include: {
-        model: User,
-        attributes: ['id'],
-      },
+      include: [
+        {
+          model: User,
+          attributes: ['id'],
+        },
+        {
+          model: Game,
+          through: { attributes: [] },
+          include: [
+            {
+              model: GameMode,
+              attributes: [],
+              through: { attributes: [] },
+            },
+          
+          ],
+        },
+      ],
     });
 
     return res.status(200).json(posts);
@@ -35,27 +46,22 @@ async function getPosts(req, res) {
   }
 
   async function createPost(req, res) {
-    const { text, date, userid, gameid, gamemodeid } = req.body;
+    const { text, userid, gameid } = req.body;
     try {
       let newPost = await Post.create({
         text: text,
-        date: date,
+        date: new Date(),
       });
   
       let game = await Game.findByPk(gameid);
+      console.log(game);
+
       if (!game) {
         return res.status(404).json({ error: 'El juego no existe' });
       }
   
-      await newPost.setGame(game);
-  
-      let gameMode = await GameMode.findByPk(gamemodeid);
-      if (!gameMode) {
-        return res.status(404).json({ error: 'El modo de juego no existe' });
-      }
-  
-      await newPost.setGameModes([gameMode]);
-  
+      await newPost.addGame(game);
+    
       let user = await User.findByPk(userid);
       if (!user) {
         return res.status(404).json({ error: 'El usuario no existe' });
@@ -70,8 +76,7 @@ async function getPosts(req, res) {
   }
 
   async function deletePost(req, res) {
-    const postId = req.params.id; // Obtener el ID del post desde los parámetros de la solicitud
-  
+    const postId = req.params.id;
     try {
       const post = await Post.findByPk(postId);
       if (!post) {
