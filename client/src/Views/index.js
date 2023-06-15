@@ -5,5 +5,8 @@ import Profile from "./Profile/Profile";
 import Register from "./Register/Register";
 import Chat from "./Chat/Chat";
 
+
 export { Home, Login, Payment, Profile, Register, Chat };
+
+
 

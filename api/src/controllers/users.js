@@ -38,7 +38,6 @@ const getUserById = async (req, res) => {
   // Función para buscar un usuario por su nombre
   const getUserByName = async (req, res) => {
     const { name } = req.params;
-    console.log("Name received from params:", name);
     try {
       // Se busca el usuario en la base de datos por su nombre
       const user = await User.findAll({
@@ -54,7 +53,6 @@ const getUserById = async (req, res) => {
   
       res.json(user);
     } catch (error) {
-      console.error(error);
       return res.status(500).json({ message: 'Error when searching for the user' });
     }
   };
@@ -84,10 +82,15 @@ const getUserById = async (req, res) => {
   // Función para eliminar un usuario
   const createUser = async (req, res) => {
     const { name, email, password } = req.body;
-  
+    const allUsers = await User.findAll();
+    const userExists = allUsers.find((user) => user.email === email);
+    if (userExists) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
     // Validaciones utilizando express-validator
     
     const errors = validationResult(req);
+    console.log(errors);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }

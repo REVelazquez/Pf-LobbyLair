@@ -1,18 +1,20 @@
-
-
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { auth, signOut } from "../../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import { WiDaySunny, WiMoonAltNew } from "react-icons/wi";
 import LobbyLogo from "../../Flight lobbylair.gif";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../Redux/actions";
+import SearchBar from '../SearchBar/SearchBar';
+
 
 const NavBar = () => {
+  const dispatch = useDispatch();
   const [theme, setTheme] = useState("light");
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
   const user = auth.currentUser;
-
   const handleThemeChange = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
@@ -28,6 +30,7 @@ const NavBar = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      dispatch(logOut());
       navigate("/login");
     } catch (error) {
       console.log(error);
@@ -64,6 +67,7 @@ const NavBar = () => {
               Home
             </NavLink>
           </button>
+          <SearchBar/>
           <button>
             <NavLink
               to="/payment"

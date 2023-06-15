@@ -1,4 +1,5 @@
 import React from "react";
+
 import "./Home.css"; 
 import Games from "../../Components/Games/Games";
 import { useNavigate } from 'react-router-dom';
@@ -26,5 +27,7 @@ const Home = () => {
     </>
   );
 };
+
+
 
 export default Home;
