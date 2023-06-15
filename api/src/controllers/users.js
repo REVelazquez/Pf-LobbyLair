@@ -82,7 +82,11 @@ const getUserById = async (req, res) => {
   // Función para eliminar un usuario
   const createUser = async (req, res) => {
     const { name, email, password } = req.body;
-  
+    const allUsers = await User.findAll();
+    const userExists = allUsers.find((user) => user.email === email);
+    if (userExists) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
     // Validaciones utilizando express-validator
     
     const errors = validationResult(req);

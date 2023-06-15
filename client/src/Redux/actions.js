@@ -8,6 +8,8 @@ import {
     GET_USER_BY_ID,
     GET_USER_BY_NAME,
     GET_USER_BY_EMAIL,
+    CREATE_USER,
+    LOG_OUT,
     DELETE_USER,
     UPDATE_USER
 } from './action-types';
@@ -68,7 +70,7 @@ export const createUser = (payload) => {
             payload: newUser.data
         })
         } catch (error) {
-            throw new Error(error);
+            alert('User already exists!');
         }
     }
 }
@@ -86,7 +88,7 @@ export const getUserById = (id) => async(dispatch) => {
 };
 export const getUserByName = (name) => async(dispatch) => {
     try {
-        const userName = await axios(`http://localhost:3001/users/name=${name}`);
+        const userName = await axios(`http://localhost:3001/users/${name}`);
         return dispatch({
             type: GET_USER_BY_NAME,
             payload: userName.data
@@ -97,7 +99,7 @@ export const getUserByName = (name) => async(dispatch) => {
 };
 export const getUserByEmail = (email) => async(dispatch) => {
     try {
-        const userEmail = await axios(`http://localhost:3001/users/email=${email}`);
+        const userEmail = await axios(`http://localhost:3001/users/email/${email}`);
         return dispatch({
             type: GET_USER_BY_EMAIL,
             payload: userEmail.data
@@ -106,6 +108,14 @@ export const getUserByEmail = (email) => async(dispatch) => {
         throw new Error(error);
     }
 };
+
+
+export const logOut = () => async(dispatch) => {
+    try {
+        return dispatch({
+            type: LOG_OUT,
+            payload: {}
+
 export const deleteUser = (id) => async(dispatch) => {
     try {
         const userId = await axios(`http://localhost:3001/users/${id}`);
@@ -116,6 +126,8 @@ export const deleteUser = (id) => async(dispatch) => {
     } catch (error) {
         throw new Error(error);
     }
+}
+
 };
 export const updateUser = (id, payload) => async(dispatch) => {
     try {

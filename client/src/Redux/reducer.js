@@ -3,7 +3,11 @@ import {
     GET_GAMES_BY_NAME,
     GET_GAME_BY_ID,
     POST_GAME,
+    GET_USER_BY_ID,
+    GET_USER_BY_NAME,
+    GET_USER_BY_EMAIL,
     CREATE_USER,
+    LOG_OUT,
     GET_USER_BY_ID,
     GET_USER_BY_NAME,
     GET_USER_BY_EMAIL,
@@ -55,6 +59,11 @@ const reducer = (state = initialState, action) => {
         case GET_USER_BY_EMAIL:
             return {
              ...state,
+                user: action.payload,
+            }
+        case LOG_OUT:
+            return {
+                ...state,
                 user: action.payload,
             }
         case  DELETE_USER:
