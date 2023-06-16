@@ -9,8 +9,7 @@ const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  console.log(user);
-  const [ setUser] = useState(null);
+  const [ setUser ] = useState(null);
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -18,24 +17,11 @@ const Register = () => {
   });
   const handleRegister = async (e) => {
     e.preventDefault();
-    
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      );
-      setUser(userCredential.user);
-
-    } catch (err) {
-      console.log(err);
-    }
-
-    console.log(data);
-
     try {
       dispatch(createUser(data));
-      navigate("/");
+      if (user) { 
+        navigate("/home");
+      }
     } catch (error) {
       alert(error);
     }

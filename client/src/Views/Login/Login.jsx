@@ -9,6 +9,7 @@ import { FcGoogle } from 'react-icons/fc';
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -18,14 +19,18 @@ const Login = () => {
   }, [navigate]);
 
   const handleLogin = async (values) => {
-    dispatch(getUserByEmail(values.email));
     try {
-      await signInWithEmailAndPassword(auth, values.email, values.password);
-      navigate('/');
+      const user_Db = await dispatch(getUserByEmail(values.email));
+      console.log(user_Db);
+      if (user_Db.payload.length === 0 || user_Db.payload[0].password !== values.password) {
+        alert('Email does not exist');
+        return;
+      }else{
+        navigate('/home');
+      }
     } catch (err) {
       console.log(err);
     }
-    console.log(user.user);
   };
 
   const handleSignInWithGoogle = async () => {
