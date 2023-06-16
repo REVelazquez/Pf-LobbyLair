@@ -20,7 +20,7 @@ const Register = () => {
     try {
       dispatch(createUser(data));
       if (user) { 
-        navigate("/home");
+        navigate("/");
       }
     } catch (error) {
       alert(error);
