@@ -11,8 +11,7 @@ import {
     DELETE_USER,
     UPDATE_USER,
     GET_GAMES_WITH_PAGINATION,
-    GET_POST_BY_USER_ID,
-    DELETE_POST
+    GET_GAME_MODE
 } from './action-types';
 
 const initialState = {
@@ -21,7 +20,7 @@ const initialState = {
     post: [],
     pageGames:[],
     user: [],
-    acces: false,
+    gameMode:[],
 };
 
 const reducer = (state = initialState, action) => {
@@ -82,21 +81,11 @@ const reducer = (state = initialState, action) => {
              ...state,
                 user: action.payload,
             }    
-        case GET_POST_BY_USER_ID:
-            return {
-              ...state,
-                post: action.payload
-            }    
-        case DELETE_POST:
-            return {
-              ...state,
-                post: action.payload
-            }    
-        case POST_GAME:
-            return {
-              ...state,
-                game: action.payload
-            }    
+        case GET_GAME_MODE:
+            return{
+                ...state,
+                gameMode:action.payload
+            }
         default:
                 return {
                     ...state

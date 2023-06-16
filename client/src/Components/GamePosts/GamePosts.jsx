@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import "./GamePosts.module.css";
+
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { useSelector } from "react-redux";
+import GamesBar from "../GamesBar/GamesBar";
 
 const GamePosts = () => {
   const location = useLocation();
@@ -39,8 +40,8 @@ const GamePosts = () => {
   };
 
   return (
-    <div>
-      {/* ...otros elementos del componente GamePosts */}
+    <div style={{display:'flex', flexDirection:'row'}}>
+      <GamesBar/>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
