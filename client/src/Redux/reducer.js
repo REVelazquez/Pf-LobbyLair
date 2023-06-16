@@ -18,7 +18,8 @@ const initialState = {
     game: [],
     post: [],
     pageGames:[],
-    user: {},
+    user: [],
+    acces: false,
 };
 
 const reducer = (state = initialState, action) => {
