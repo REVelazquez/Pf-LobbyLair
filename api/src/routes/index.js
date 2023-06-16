@@ -27,7 +27,6 @@ router.get('/games/name/:name', getGamesByName);
 router.post('/games', postGames);
 
 router.get('/games/mode',getGameMode);
-router.get('/posts', getPosts);
 
 // Endpoint para obtener todos los usuarios
 router.get('/users', getAllUsers);
