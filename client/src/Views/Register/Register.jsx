@@ -2,10 +2,14 @@ import { useState } from "react";
 import { auth, createUserWithEmailAndPassword } from "../../firebase/firebase";
 import { createUser } from "../../Redux/actions";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Register = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [ setUser] = useState(null);
+  const user = useSelector((state) => state.user);
+  const [ setUser ] = useState(null);
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -13,23 +17,11 @@ const Register = () => {
   });
   const handleRegister = async (e) => {
     e.preventDefault();
-    
-    // try {
-    //   const userCredential = await createUserWithEmailAndPassword(
-    //     auth,
-    //     data.email,
-    //     data.password
-    //   );
-    //   setUser(userCredential.user);
-
-    // } catch (err) {
-    //   console.log(err);
-    // }
-
-    // console.log(data);
-
     try {
       dispatch(createUser(data));
+      if (user) { 
+        navigate("/");
+      }
     } catch (error) {
       alert(error);
     }

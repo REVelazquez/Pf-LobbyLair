@@ -2,13 +2,14 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, signInWithEmailAndPassword } from '../../firebase/firebase';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUserByEmail } from '../../Redux/actions';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { FcGoogle } from 'react-icons/fc';
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -18,10 +19,14 @@ const Login = () => {
   }, [navigate]);
 
   const handleLogin = async (values) => {
-    dispatch(getUserByEmail(values.email));
     try {
-      await signInWithEmailAndPassword(auth, values.email, values.password);
-      navigate('/');
+      const user_Db = await dispatch(getUserByEmail(values.email));
+      if (user_Db.payload.length === 0 || user_Db.payload[0].password !== values.password) {
+        alert('Email does not exist');
+        return;
+      }else{
+        navigate('/home');
+      }
     } catch (err) {
       console.log(err);
     }

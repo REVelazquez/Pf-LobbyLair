@@ -20,9 +20,7 @@ const getUserById = async (req, res) => {
       // Se busca el usuario en la base de datos por su ID
       const user = await User.findOne({
         where: {
-          id: {
-            [Op.iLike]: id,
-          },
+          id:  id,
         },
       });
       if (!user) {
@@ -83,18 +81,11 @@ const getUserById = async (req, res) => {
   const createUser = async (req, res) => {
     const { name, email, password } = req.body;
     const allUsers = await User.findAll();
+    console.log(allUsers);
     const userExists = allUsers.find((user) => user.email === email);
     if (userExists) {
       return res.status(400).json({ message: 'User already exists' });
     }
-    // Validaciones utilizando express-validator
-    
-    const errors = validationResult(req);
-    console.log(errors);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-  
     let new_user = null;
     try {
       new_user = await User.create({
