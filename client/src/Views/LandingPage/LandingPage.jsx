@@ -10,7 +10,7 @@ const LandingPage = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}>
           <img
-            src="https://i.pinimg.com/564x/e2/ae/ba/e2aeba4354bad8808f067458d62ffb41.jpg"
+            src="https://i.pinimg.com/564x/f3/d6/53/f3d653019e8ed9af3c7d26d8aad9938d.jpg"
             alt="img-login"
             width={1000}
             height={500}
