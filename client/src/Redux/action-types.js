@@ -9,4 +9,4 @@ export const GET_USER_BY_NAME = 'GET_USER_BY_NAME';
 export const LOG_OUT = 'LOG_OUT';
 export const DELETE_USER = ' DELETE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
-export const GET_GAMES_WITH_PAGINATION= 'GET_GAMES_WITH_PAGINATION'
+export const GET_GAME_MODE = 'GET_GAME_MODE';
