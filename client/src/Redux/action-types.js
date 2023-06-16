@@ -10,3 +10,5 @@ export const LOG_OUT = 'LOG_OUT';
 export const DELETE_USER = ' DELETE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const GET_GAME_MODE = 'GET_GAME_MODE';
+export const GET_POST_BY_USER_ID = 'GET_POST_BY_USER_ID';
+export const DELETE_POST = 'DELETE_POST';

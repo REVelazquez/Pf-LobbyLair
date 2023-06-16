@@ -5,6 +5,8 @@ import {
     GET_GAMES_BY_NAME,
     GET_GAME_BY_ID,
     POST_GAME,
+    GET_POST_BY_USER_ID,
+    DELETE_POST,
     GET_GAME_MODE,
     CREATE_USER,
     GET_USER_BY_ID,
@@ -76,6 +78,32 @@ export const postGames= (payload)=>{
         }
     }
     
+}
+export const getPostByUserId = (payload) =>{
+    return async (dispatch)=>{
+        try {
+            let newGame = await axios.post('http://localhost:3001/games/post', payload);
+            return dispatch({
+                type:GET_POST_BY_USER_ID,
+                payload: newGame.data
+            })
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+}
+export const deletePost = (payload) => {
+    return async (dispatch)=>{
+        try {
+            let newGame = await axios.post('http://localhost:3001/games/delete', payload);
+            return dispatch({
+                type:DELETE_POST,
+                payload: newGame.data
+            })
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
 }
 export const gameMode = (payload)=>{
     return async (dispatch)=>{
