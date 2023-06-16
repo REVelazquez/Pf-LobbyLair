@@ -40,7 +40,7 @@ const SearchBar = () => {
         type="search"
         value={searchName.name}
         onChange={handleChange}
-        className="rounded-full mr-2 text-center placeholder-center font-semibold"
+        className="rounded-full mr-2 text-center placeholder-center font-semibold text-black"
       />
       <NavLink>
       <button className="text-white text-lg font-semibold no-underline hover:text-gray-500">
@@ -58,7 +58,7 @@ const SearchBar = () => {
               </NavLink>
             ))
           ) : (
-            <button className="rounded-lg text-black italic font-bold text-sm pr-4 pt-4 hover:bg-gray-200 w-full hover:text-black text-center">
+            <button className="rounded-lg text-black italic font-bold text-sm p-3 hover:bg-gray-200 w-full hover:text-black text-center">
               No results
             </button>
           )}
