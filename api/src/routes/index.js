@@ -26,9 +26,6 @@ router.get('/games/name/:name', getGamesByName);
 // Endpoint para crear un game
 router.post('/games', postGames);
 
-
-router.get('/posts', getPosts);
-
 // Endpoint para obtener todos los usuarios
 router.get('/users', getAllUsers);
 

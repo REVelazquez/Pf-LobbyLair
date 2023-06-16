@@ -1,4 +1,5 @@
 const { Post, Game, User, GameMode } = require('../db.js');
+const { Op } = require('sequelize');
 
 async function getPosts(req, res) {
   try {
@@ -90,13 +91,13 @@ async function getPostsByUserId(req, res) {
   
     let whereClause = {};
     if (userid) {
-      whereClause.userid = userid;
+      whereClause['$User.id$'] = userid;
     }
     if (gameid) {
-      whereClause.gameid = gameid;
+      whereClause['$Game.id$'] = gameid;
     }
     if (gamemodeid) {
-      whereClause['$Game.GameModes.id$'] = gamemodeid;
+      whereClause['$GameMode.id$'] = gamemodeid;
     }
   
 
@@ -140,13 +141,10 @@ async function getPostsByUserId(req, res) {
             },
             {
               model: Game,
-              include: [
-                {
-                  model: GameMode,
-                  through: { attributes: [] },
-                },
-              ],
             },
+            {
+              model: GameMode,
+            }
           ],
           distinct: true,
         });
