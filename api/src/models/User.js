@@ -38,6 +38,10 @@ module.exports = (sequelize) =>{
         updatedAt: {
           allowNull: false,
           type: DataTypes.DATE
-        }
-      });
+        },
+      },
+      {
+        paranoid:true,
+      }
+    );
     }

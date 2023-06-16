@@ -10,7 +10,9 @@ import {
     LOG_OUT,
     DELETE_USER,
     UPDATE_USER,
-    GET_GAMES_WITH_PAGINATION
+    GET_GAMES_WITH_PAGINATION,
+    GET_POST_BY_USER_ID,
+    DELETE_POST
 } from './action-types';
 
 const initialState = {
@@ -79,6 +81,21 @@ const reducer = (state = initialState, action) => {
             return {
              ...state,
                 user: action.payload,
+            }    
+        case GET_POST_BY_USER_ID:
+            return {
+              ...state,
+                post: action.payload
+            }    
+        case DELETE_POST:
+            return {
+              ...state,
+                post: action.payload
+            }    
+        case POST_GAME:
+            return {
+              ...state,
+                game: action.payload
             }    
         default:
                 return {
