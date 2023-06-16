@@ -12,7 +12,7 @@ function App() {
         {location.pathname !== '/' && <NavBar />}
           <Routes>
             <Route path='/' element={<LandingPage/>} />
-            <Route path='/home' element={  <Chat/> }/>
+            <Route path='/home' element={  <Home/> }/>
             <Route path='/game/:id' element={<GamePosts />} />
             <Route path='/favorites' element={<Favorites/>} />
             <Route exact path='/login' element={ <Login/> }/>
