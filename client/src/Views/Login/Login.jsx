@@ -21,7 +21,6 @@ const Login = () => {
   const handleLogin = async (values) => {
     try {
       const user_Db = await dispatch(getUserByEmail(values.email));
-      console.log(user_Db);
       if (user_Db.payload.length === 0 || user_Db.payload[0].password !== values.password) {
         alert('Email does not exist');
         return;
