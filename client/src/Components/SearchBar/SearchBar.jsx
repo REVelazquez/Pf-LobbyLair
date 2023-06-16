@@ -42,15 +42,17 @@ const SearchBar = () => {
         onChange={handleChange}
         className="rounded-full mr-2 text-center placeholder-center font-semibold"
       />
+      <NavLink>
       <button className="text-white text-lg font-semibold no-underline hover:text-gray-500">
         <img src={glass} alt=""/>
       </button>
+      </NavLink>
       {searchName.name.length !== 0 && (
         <div className="absolute w-full top-8 right-14.2 bg-gray-50 bg-opacity-6 rounded-lg grid grid-cols-1 gap-x-1">
           {game.length !== 0 ? (
             game.map((match) => (
               <NavLink key={match.id} to={`/games/${match.id}`}>
-                <button className="rounded-lg text-black italic font-bold text-sm pr-4 pt-4 hover:bg-gray-200 w-full hover:text-black text-center">
+                <button className="rounded-lg text-black italic font-bold text-sm p-3 hover:bg-gray-200 w-full hover:text-black text-center">
                   {match.name}
                 </button>
               </NavLink>
