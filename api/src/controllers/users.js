@@ -20,9 +20,7 @@ const getUserById = async (req, res) => {
       // Se busca el usuario en la base de datos por su ID
       const user = await User.findOne({
         where: {
-          id: {
-            [Op.iLike]: id,
-          },
+          id: id,
         },
       });
       if (!user) {
