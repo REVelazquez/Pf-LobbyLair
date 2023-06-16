@@ -23,7 +23,6 @@ const GamesBar = ()=>{
     }, [currentPage, dispatch])
 
     let games=useSelector(state=>state.pageGames)
-    console.log(games);
     let gamesInPages= games.games
 
 
