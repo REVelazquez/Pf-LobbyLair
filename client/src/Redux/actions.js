@@ -5,6 +5,7 @@ import {
     GET_GAMES_BY_NAME,
     GET_GAME_BY_ID,
     POST_GAME,
+    GET_GAME_MODE,
     CREATE_USER,
     GET_USER_BY_ID,
     GET_USER_BY_NAME,
@@ -76,7 +77,19 @@ export const postGames= (payload)=>{
     }
     
 }
-
+export const gameMode = (payload)=>{
+    return async (dispatch)=>{
+        try {
+            let newGame = await axios.post('http://localhost:3001/games/mode', payload);
+            return dispatch({
+                type:GET_GAME_MODE,
+                payload: newGame.data
+            })
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+}
 export const createUser = (payload) => {
     return async (dispatch) => {
         try {
