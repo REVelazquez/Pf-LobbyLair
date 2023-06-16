@@ -15,6 +15,9 @@ module.exports = (sequelize)=>{
         date:{
             type: DataTypes.DATE,
             allowNull:false
-        }
+        },
+    },
+    {
+        paranoid:true,
     })
 }
