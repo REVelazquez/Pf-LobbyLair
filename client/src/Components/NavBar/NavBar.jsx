@@ -19,7 +19,7 @@ const NavBar = () => {
 
   const user= useSelector(state=>state.user)
   console.log(user)
-  const id=user[0].id
+  const id=user[0]?.id
   console.log(id);
   const handleThemeChange = () => {
     const newTheme = theme === "light" ? "dark" : "light";
