@@ -29,7 +29,6 @@ const SearchBar = () => {
     setSearchName({ name: event.target.value })
     const response = await axios.get(`http://localhost:3001/games/page?name=${event.target.value}`);
     setGame(response.data.games)
-    console.log(response.data.games)
   }
 
   return (
