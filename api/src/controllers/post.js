@@ -83,7 +83,89 @@ async function getPostsByUserId(req, res) {
 
 
 
+  async function getPostsWithPagination(req, res) {
+    const { page, userid, gameid, gamemodeid } = req.query;
+    const pageSize = 5;
+    let offset = 0;
+  
+    let whereClause = {};
+    if (userid) {
+      whereClause.userid = userid;
+    }
+    if (gameid) {
+      whereClause.gameid = gameid;
+    }
+    if (gamemodeid) {
+      whereClause['$Game.GameModes.id$'] = gamemodeid;
+    }
+  
 
+    try {
+      let posts;
+      let count;
+      let totalPages;
+  
+      if (page) {
+        offset = (parseInt(page) - 1) * pageSize;
+        const result = await Post.findAndCountAll({
+          where: whereClause,
+          include: [
+            {
+              model: User,
+            },
+            {
+              model: Game,
+              include: [
+                {
+                  model: GameMode,
+                  through: { attributes: [] },
+                },
+              ],
+            },
+          ],
+          limit: pageSize,
+          offset: offset,
+          distinct: true,
+        });
+  
+        count = result.count;
+        posts = result.rows;
+        totalPages = Math.ceil(count / pageSize);
+      } else {
+        const result = await Post.findAndCountAll({
+          where: whereClause,
+          include: [
+            {
+              model: User,
+            },
+            {
+              model: Game,
+              include: [
+                {
+                  model: GameMode,
+                  through: { attributes: [] },
+                },
+              ],
+            },
+          ],
+          distinct: true,
+        });
+  
+        count = result.count;
+        posts = result.rows;
+        totalPages = 1;
+      }
+  
+      res.json({
+        totalCount: count,
+        totalPages,
+        currentPage: parseInt(page) || 1,
+        posts,
+      });
+    } catch (error) {
+      return res.status(500).json({ error: 'Error getting posts with pagination' });
+    }
+  }
 
 
 
@@ -93,6 +175,7 @@ module.exports = {
   getPosts,
   getPostsByUserId,
   createPost,
+  getPostsWithPagination,
   deletePost
 
 

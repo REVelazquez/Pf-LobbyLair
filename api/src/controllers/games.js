@@ -152,10 +152,89 @@ async function deleteGame (req, res) {
   }
 }
 
+async function getGamesWithPagination(req, res) {
+  const { page, name, genre, gameMode } = req.query;
+  const pageSize = 5; 
+  let offset = 0; 
+  
+  let whereClause = {};
+  if (name) {
+    whereClause.name = { [Op.iLike]: `%${name}%` };
+  }
+  if (genre) {
+    whereClause['$Genres.name$'] = { [Op.iLike]: `%${genre}%` };
+  }
+  if (gameMode) {
+    whereClause['$GameModes.name$'] = { [Op.iLike]: `%${gameMode}%` };
+  }
+
+  try {
+    let games;
+    let count;
+    let totalPages;
+    
+    if (page) {
+      offset = (parseInt(page) - 1) * pageSize;
+      const result = await Game.findAndCountAll({
+        where: whereClause,
+        include: [
+          {
+            model: GameMode,
+            through: { attributes: [] },
+          },
+          {
+            model: Genre,
+            through: { attributes: [] },
+          },
+        ],
+        limit: pageSize,
+        offset: offset,
+        distinct: true,
+      });
+  
+      count = result.count;
+      games = result.rows;
+      console.log(count);
+      totalPages = Math.ceil(count / pageSize);
+    } else {
+      const result = await Game.findAndCountAll({
+        where: whereClause,
+        include: [
+          {
+            model: GameMode,
+            through: { attributes: [] },
+          },
+          {
+            model: Genre,
+            through: { attributes: [] },
+          },
+        ],
+        distinct: true,
+      });
+  
+      count = result.count;
+      games = result.rows;
+      totalPages = 1;
+    }
+
+    res.json({
+      totalCount: count,
+      totalPages,
+      currentPage: parseInt(page) || 1,
+      games,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Error getting games with pagination' });
+  }
+}
+
+
 module.exports = {
   getGames,
   getGamesById,
   getGamesByName,
   postGames,
   deleteGame,
+  getGamesWithPagination,
 };
