@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./Home.css"; 
+import Style from "./Home.css"; 
 import { useNavigate } from 'react-router-dom';
 import GamesBar from "../../Components/GamesBar/GamesBar";
 
@@ -12,18 +12,13 @@ const Home = () => {
       };
     
   return (
-    <>
+    <div className={Style.container}>
     <GamesBar/>
-    <div className="home-container">
-      <main className="content">
-  
-      </main>
-      <button className="join-button" onClick={handleJoinChat}>Start Now</button>
-    
-    </div>
-    
+    <div>
+        
+    </div>   
 
-    </>
+    </div>
   );
 };
 

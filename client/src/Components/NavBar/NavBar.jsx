@@ -1,17 +1,26 @@
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { auth, signOut } from "../../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import { WiDaySunny, WiMoonAltNew } from "react-icons/wi";
-import LobbyLogo from "../../Flight lobbylair.gif";
+import LobbyFlight from "../../Multimedia/Flight lobbylair.gif"
+import LobbyLogo from '../../Multimedia/Logo Lobbylair.gif'
+import { useDispatch, useSelector } from "react-redux";
+import { getUserById, logOut } from "../../Redux/actions";
+import SearchBar from '../SearchBar/SearchBar';
 
 
 const NavBar = () => {
+  const dispatch = useDispatch();
   const [theme, setTheme] = useState("light");
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
-  const user = auth.currentUser;
+  // const user = auth.currentUser;
 
+  const user= useSelector(state=>state.user)
+  console.log(user)
+  const id=user[0]?.id
+  console.log(id);
   const handleThemeChange = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
@@ -24,10 +33,12 @@ const NavBar = () => {
     }
   };
 
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate("/login");
+      dispatch(logOut());
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -36,6 +47,20 @@ const NavBar = () => {
   const handleMenuToggle = () => {
     setShowMenu(!showMenu);
   };
+
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      setMousePosition({ x: event.clientX, y: event.clientY });
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
 
   return (
     <nav style={{ backgroundColor: "#1f2937", padding: "1rem" }}>
@@ -48,14 +73,28 @@ const NavBar = () => {
     activeClassName="text-gray-300"
     exact
   >
-    <div style={{ maxWidth: "100px" }}>
-      <img src={LobbyLogo} alt="LOBBYL" style={{ backgroundColor: "white", borderRadius: "50px" }} />
+    <div style={{width:'50px', height:'50px', justifyContent:'center', backgroundColor:"white", borderRadius:'100%',}}>
+      <img src={LobbyLogo} alt='LOBBYL' style={{ transform:'scale(1)', marginTop:'2px'}} />
+    </div>
+    <div
+              style={{
+                maxWidth: "100px",
+                position: "absolute",
+                top: mousePosition.y -30,
+                left: mousePosition.x -30,
+                transform: "translate(-50%, -50%)",
+                zIndex:1,
+                transition: "transform 1.2s ease" ,
+                pointerEvents:"none",
+              }}
+            >
+      <img src={LobbyFlight} alt="LOBBYF" style={{ transform:"scale(2)" }} />
     </div>
   </NavLink>
 </button>
           <button>
             <NavLink
-              to="/"
+              to="/home"
               style={{ color: "white", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
               activeClassName="text-gray-300"
               exact
@@ -63,6 +102,7 @@ const NavBar = () => {
               Home
             </NavLink>
           </button>
+          <SearchBar/>
           <button>
             <NavLink
               to="/payment"
@@ -74,11 +114,11 @@ const NavBar = () => {
           </button>
           <button>
             <NavLink
-              to="/profile"
+              to="/favorites"
               style={{ color: "white", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
               activeClassName="text-gray-300"
             >
-              Profile
+              Favorites
             </NavLink>
           </button>
         </div>
@@ -93,8 +133,6 @@ const NavBar = () => {
               {theme === "light" ? "Light" : "Dark"}
             </span>
           </div>
-          {user ? (
-            <>
               <div style={{ position: "relative" }}>
                 <img
                   src="https://source.unsplash.com/64x64/?person"
@@ -108,7 +146,7 @@ const NavBar = () => {
                   <ul style={{ position: "absolute", top: "100%", left: 0, backgroundColor: "white", padding: "0.5rem", borderRadius: "4px", boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", zIndex: 1 }}>
                     <li>
                       <NavLink
-                        to="/profile"
+                        to={`/profile/${id}`}
                         style={{ color: "black", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
                         activeClassName="text-gray-300"
                       >
@@ -120,26 +158,14 @@ const NavBar = () => {
               </div>
               <button>
                 <NavLink
-                  to="/logout"
+                  to="/"
                   style={{ color: "white", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
                   activeClassName="text-gray-300"
-                  onClick={handleLogout}
-                >
+                  onClick={handleLogout}>
                   Log Out
                 </NavLink>
               </button>
-            </>
-          ) : (
-            <button>
-              <NavLink
-                to="/login"
-                style={{ color: "white", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
-                activeClassName="text-gray-300"
-              >
-                Log In
-              </NavLink>
-            </button>
-          )}
+
         </div>
       </div>
     </nav>

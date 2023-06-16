@@ -47,7 +47,7 @@ import './Chat.css';
   
     return (
       <div className="forum-container">
-        <GamesBar/>
+        <GamesBar />
         <div className="posts-container mt-4">
           <form onSubmit={handlePostSubmit} className="flex">
             <textarea
@@ -65,7 +65,7 @@ import './Chat.css';
           ))}
         </div>
         <div className="chat-container">
-      <div className="message-list">
+      <div className="flex flex-col mt-5">
         {messages.map(message => (
           <div key={message.id} className="message">
             <p>{message.content}</p>
@@ -78,8 +78,9 @@ import './Chat.css';
           value={newMessage}
           onChange={handleInputChange}
           placeholder="Escribe tu mensaje..."
+          className="w-full bg-gray-300 py-5 px-3 rounded-xl"
         />
-        <button type="submit">Enviar</button>
+        <button type="submit" className="bg-gray-800 text-white font-bold py- px-3 rounded-[2rem]">Enviar</button>
       </form>
     </div>
       </div>
