@@ -47,6 +47,7 @@ import './Chat.css';
   
     return (
       <div className="forum-container">
+        <GamesBar />
         <div className="posts-container mt-4">
           <form onSubmit={handlePostSubmit} className="flex">
             <textarea

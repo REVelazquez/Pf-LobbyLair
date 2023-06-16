@@ -1,23 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getUserById } from "../../Redux/actions";
 import styles from './Profile.module.css';
 
 const Profile = () => {
+ 
+  const {id} = useParams()
+
+  const userDetail=useSelector(state=>state.user)
+
+  console.log(userDetail)
+
   return (
-    <div className={styles.container}>
-        <div className={styles.imageBox}>
-          <img
-            src="https://source.unsplash.com/64x64/?person"
-            alt=""
-            style={{ borderRadius: "50%", cursor: "pointer" }}
-          />
-        </div>
-            <div className={styles.datosUsuario}>
-              <p>Perfil de Usuario</p>
-              <p>Email: </p>
-              <p>Fecha de registro </p>
-            </div>
+    <div>
+      <h2>Name:holi</h2>
     </div>
-  );
+  )
 };
 
 export default Profile;
