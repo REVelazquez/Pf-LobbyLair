@@ -52,7 +52,7 @@ const GamesBar = ({ onSelectGame }) => {
   };
 
   const handleGameSelect = (gameId) => {
-    onSelectGame(gameId);
+    // onSelectGame(gameId);
   };
 
   return (
@@ -61,7 +61,7 @@ const GamesBar = ({ onSelectGame }) => {
       {loading && <Loader />}
       {gamesInPages?.map(({ id, thumbnail }) => (
         <button key={id} onClick={() => handleGameSelect(id)}>
-          <NavLink to={`/game/${id}`}>
+          <NavLink to={`/games/${id}`}>
             <img className={Style.imag} src={thumbnail} alt="" />
           </NavLink>
         </button>
