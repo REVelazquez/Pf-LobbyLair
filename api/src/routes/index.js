@@ -73,19 +73,19 @@ router.post('/favorite', createFavorite)
 router.get('/users/page/:page', getUsersWithPagination); // Ruta para obtener usuarios con paginación y filtros
 
 //Endpoint para obtener todos los posts
-router.get('/Posts', getPosts);
+router.get('/posts', getPosts);
 
 //Endpoint para crear posts
-router.post('/Posts', createPost);
+router.post('/posts', createPost);
 
 //Endpoint para obtener los posts por usuarios
-router.get('/Posts/user/:id', getPostsByUserId);
+router.get('/posts/user/:id', getPostsByUserId);
 
 //Endpoint para borrar los posts por id
-router.delete('/Posts/:id', deletePost);
+router.delete('/posts/:id', deletePost);
 
 //Endpoint para conseguir los posts con Paginacion
-router.get('/Posts/page/', getPostsWithPagination );
+router.get('/posts/page/', getPostsWithPagination );
 
 module.exports = router;
 
