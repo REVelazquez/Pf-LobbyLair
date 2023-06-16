@@ -17,7 +17,7 @@ function App() {
             <Route path='/favorites' element={<Favorites/>} />
             <Route exact path='/login' element={ <Login/> }/>
             <Route exact path='/payment' element={ <Payment/> }/>
-            <Route exact path='/profile' element={ <Profile/> }/>
+            <Route exact path='/profile/:id' element={ <Profile/> }/>
             <Route exact path='/register' element={ <Register/> }/>
             <Route exact path='/chat' element={ <Chat/> }/>
             

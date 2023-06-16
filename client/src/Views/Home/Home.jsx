@@ -15,8 +15,7 @@ const Home = () => {
     <div className={Style.container}>
     <GamesBar/>
     <div>
-        <h1>Posteos irian aqui</h1>
-        <h2>Saque el chat, pero iria en la derecha</h2>
+        
     </div>   
 
     </div>

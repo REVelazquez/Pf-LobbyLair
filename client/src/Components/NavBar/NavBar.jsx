@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { WiDaySunny, WiMoonAltNew } from "react-icons/wi";
 import LobbyFlight from "../../Multimedia/Flight lobbylair.gif"
 import LobbyLogo from '../../Multimedia/Logo Lobbylair.gif'
-import { useDispatch } from "react-redux";
-import { logOut } from "../../Redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserById, logOut } from "../../Redux/actions";
 import SearchBar from '../SearchBar/SearchBar';
 
 
@@ -15,8 +15,12 @@ const NavBar = () => {
   const [theme, setTheme] = useState("light");
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
-  const user = auth.currentUser;
+  // const user = auth.currentUser;
 
+  const user= useSelector(state=>state.user)
+  console.log(user)
+  const id=user[0]?.id
+  console.log(id);
   const handleThemeChange = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
@@ -28,6 +32,7 @@ const NavBar = () => {
       document.documentElement.setAttribute("data-theme", "light");
     }
   };
+
 
   const handleLogout = async () => {
     try {
@@ -141,7 +146,7 @@ const NavBar = () => {
                   <ul style={{ position: "absolute", top: "100%", left: 0, backgroundColor: "white", padding: "0.5rem", borderRadius: "4px", boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", zIndex: 1 }}>
                     <li>
                       <NavLink
-                        to="/profile"
+                        to={`/profile/${id}`}
                         style={{ color: "black", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
                         activeClassName="text-gray-300"
                       >
