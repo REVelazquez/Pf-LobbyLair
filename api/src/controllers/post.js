@@ -67,19 +67,14 @@ async function getPostsByUserId(req, res) {
 
   async function deletePost(req, res) {
     const { id } = req.params; 
-    console.log(id);
     try {
-      const post = await Post.findOne({ where: { id: id } })
+      const post = await Post.findByPk(id);
       if (!post) {
         return res.status(404).json({ error: 'El post no existe' });
       }
-      await post.setGame([]); 
-      await post.setUser(null); 
-      await post.setGameMode(null); 
-  
+     
 
       await post.destroy(); 
-  
       return res.status(200).json({ message: 'Post eliminado exitosamente' });
     } catch (error) {
       return res.status(500).json({ error: error.message });
