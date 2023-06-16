@@ -18,8 +18,11 @@ const GamesBar = ({ onSelectGame }) => {
     dispatch(getGamesWithPagination(currentPage)).then(() => setLoading(false));
   }, [currentPage, dispatch]);
 
-  let games = useSelector(state => state.pageGames);
-  let gamesInPages = games.games;
+
+
+    let games=useSelector(state=>state.pageGames)
+    let gamesInPages= games.games
+
 
   useEffect(() => {
     if (currentPage === 1) {

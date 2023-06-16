@@ -1,4 +1,5 @@
 const { Post, Game, User, GameMode } = require('../db.js');
+const { Op } = require('sequelize');
 
 async function getPosts(req, res) {
   try {
@@ -15,7 +16,17 @@ async function getPosts(req, res) {
     return res.status(500).json({ error: error.message });
   }
 }
+async function getGameMode (req,res){
+  const gameModeId = req.params.gamemodeid;
 
+  try {
+    let gameMode = await GameMode.findByPk(gameModeId);
+
+    return res.status(200).json(gameMode);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
 async function getPostsByUserId(req, res) {
   const userId = req.params.userid;
 
@@ -90,13 +101,13 @@ async function getPostsByUserId(req, res) {
   
     let whereClause = {};
     if (userid) {
-      whereClause.userid = userid;
+      whereClause['$User.id$'] = userid;
     }
     if (gameid) {
-      whereClause.gameid = gameid;
+      whereClause['$Game.id$'] = gameid;
     }
     if (gamemodeid) {
-      whereClause['$Game.GameModes.id$'] = gamemodeid;
+      whereClause['$GameMode.id$'] = gamemodeid;
     }
   
 
@@ -140,13 +151,10 @@ async function getPostsByUserId(req, res) {
             },
             {
               model: Game,
-              include: [
-                {
-                  model: GameMode,
-                  through: { attributes: [] },
-                },
-              ],
             },
+            {
+              model: GameMode,
+            }
           ],
           distinct: true,
         });
@@ -176,7 +184,8 @@ module.exports = {
   getPostsByUserId,
   createPost,
   getPostsWithPagination,
-  deletePost
-
+  deletePost,
+  getGameMode
+  
 
 };
