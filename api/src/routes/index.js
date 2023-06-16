@@ -17,6 +17,7 @@ router.delete('/games/:id', deleteGame);
 // Ruta para obtener juegos con paginación y filtros
 router.get('/games/page', getGamesWithPagination); 
 
+router.get('/games/mode/',getGameMode);
 // Endpoint para obtener un game por id
 router.get('/games/:id', getGamesById);
 
@@ -26,7 +27,6 @@ router.get('/games/name/:name', getGamesByName);
 // Endpoint para crear un game
 router.post('/games', postGames);
 
-router.get('/games/mode',getGameMode);
 
 // Endpoint para obtener todos los usuarios
 router.get('/users', getAllUsers);

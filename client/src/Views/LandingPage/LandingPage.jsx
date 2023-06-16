@@ -8,7 +8,6 @@ const LandingPage = ()=>{
         <div>
             <Login/>
 
-            <button><NavLink to={'/home'}>Join to the lair!</NavLink> </button>
         </div>
     )
 }

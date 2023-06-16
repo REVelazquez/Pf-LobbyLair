@@ -17,10 +17,10 @@ async function getPosts(req, res) {
   }
 }
 async function getGameMode (req,res){
-  const gameModeId = req.params.gamemodeid;
+  const gameModeId = req.params;
 
   try {
-    let gameMode = await GameMode.findByPk(gameModeId);
+    let gameMode = await GameMode.findAll();
 
     return res.status(200).json(gameMode);
   } catch (error) {

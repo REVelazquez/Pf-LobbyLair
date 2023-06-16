@@ -1,6 +1,6 @@
 import './App.css';
 import { Home, Login, Payment, Profile, Register, Chat, LandingPage, Favorites } from './Views';
-import GamePosts from './Components/GamePosts/GamePosts';
+import GameDetail from './Components/GameDetail/GameDetail';
 import {Routes, Route, useLocation} from 'react-router-dom';
 import NavBar from './Components/NavBar/NavBar';
 
@@ -13,7 +13,7 @@ function App() {
           <Routes>
             <Route path='/' element={<LandingPage/>} />
             <Route path='/home' element={  <Home/> }/>
-            <Route path='/game/:id' element={<GamePosts />} />
+            <Route path='/games/:id' element={<GameDetail />} />
             <Route path='/favorites' element={<Favorites/>} />
             <Route exact path='/login' element={ <Login/> }/>
             <Route exact path='/payment' element={ <Payment/> }/>

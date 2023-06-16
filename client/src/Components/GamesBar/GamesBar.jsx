@@ -59,7 +59,7 @@ const GamesBar = ()=>{
             {gamesInPages?.map(({id, thumbnail})=>{
                 return(
                     <button key={id}>
-                    <NavLink to={`/game/${id}`} >
+                    <NavLink to={`/games/${id}`} >
                     <img className={Style.imag} src={thumbnail} alt="" />
                     </NavLink>
                 </button>)}
