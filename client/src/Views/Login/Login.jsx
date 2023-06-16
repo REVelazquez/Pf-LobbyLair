@@ -53,7 +53,7 @@ const Login = () => {
         <img src={LobbyLogo} alt="LOBBYL" className="w-20 h-auto mt-4" />
         <div>
           <NavLink to="/home">Join to the lair!</NavLink>
-          <h1> -----Imagen por defecto mientras se decide cual usar</h1>
+          
         </div>
 
         <div className="w-72 p-4 bg-white rounded-[1rem] shadow-md mt-4">
