@@ -48,7 +48,7 @@ const [loading, setLoading]=useState(true)
 
 const post=useSelector(state=>state.pagePosts)
 const pagedPosts=post.posts
-
+console.log(pagedPosts);
 //----modificacion de estados----///
 useEffect(()=>{
   setLoading(true)
@@ -107,17 +107,17 @@ const handlePrev = ()=>{
         />
         <button style={{marginLeft:'.75em'}} type="submit">Crear Post</button>
       </form>
-      <button onClick={handlePrev} style={{marginRight:'0.75em'}} disabled={btnPrev} >Prev Posts</button>
+      <button onClick={handlePrev} disable={btnPrev} style={{marginRight:'0.75em'}}  >Prev: </button>
       {loading && <Loader/>}
       {post.totalPages > 1 && pages?.map(e=><button style={{marginLeft:'5px', marginRight:'5px'}} key={e} value={e} onClick={handleOnClick} disabled={currentPage===e}>{e}</button>)}
-      <button onClick={handleNext} style={{marginLeft:'0.75'}} disabled={btnNext}>Next Posts</button>
+      <button onClick={handleNext} disable={btnNext} style={{marginLeft:'0.75'}} >Next </button>
       <div>
       {pagedPosts?.map(({id, createdAt, text, User})=>{
         return(
           <div key={id} style={{width:'40rem', marginLeft:'5em', marginTop:'.5em', height:'6em', borderColor:'crimson', borderWidth:'2px'}}>
             <h1>{text}</h1>
             <p>Posted by:</p>
-            <NavLink  to={`/profile/${id}`}>
+            <NavLink  to={`/profile/${User.id}`}>
             <p>{User.name}</p>
             </NavLink>
             <p>Created: {createdAt.slice(0, 10).split('-').reverse().join('-')}</p>

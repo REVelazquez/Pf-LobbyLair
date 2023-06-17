@@ -144,6 +144,7 @@ const NavBar = () => {
                         to={`/profile/${id}`}
                         style={{ color: "black", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
                         activeClassName="text-gray-300"
+                        onClick={handleMenuToggle}
                       >
                         Profile
                       </NavLink>

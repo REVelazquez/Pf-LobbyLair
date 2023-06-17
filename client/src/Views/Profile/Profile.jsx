@@ -19,7 +19,7 @@ const Profile = () => {
   const otherUser=useSelector(state=>state.otherUser)
 
   
-  if(userDetail.id === +id){
+  if(userDetail.id == id){
     return (
       <div>
         <div className="container mx-auto mt-8">
@@ -62,9 +62,10 @@ const Profile = () => {
       </div>
     );
      
-  };
-  return (
-    <div style={{display:'flex', flexDirection:'row'}}>
+  }else{
+
+    return (
+      <div style={{display:'flex', flexDirection:'row'}}>
       <GamesBar/>
       <div>
       <div style={{marginLeft:'2em'}} className="container mx-auto mt-8">
@@ -75,7 +76,7 @@ const Profile = () => {
                 src="https://source.unsplash.com/120x120/?person"
                 alt=""
                 className="rounded-full w-full h-full cursor-pointer"
-              />
+                />
             </div>
           </div>
           <div>
@@ -110,7 +111,8 @@ const Profile = () => {
 
     </div>
   );
-   
+  
+}
 };
   
   
