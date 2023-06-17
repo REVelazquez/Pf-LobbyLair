@@ -6,7 +6,7 @@ const { where } = require('sequelize');
 
 const handleLogin = async (req, res) => {
     const { email, password } = req.body;
-  
+    console.log("a");
     try {
       // Buscar el usuario en la base de datos utilizando el email
       const user_Db = await User.findOne({where:{email: email}});

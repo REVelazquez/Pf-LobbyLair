@@ -16,6 +16,7 @@ const Login = () => {
   const handleLogin = async (values) => {
     try {
       const validateUser = await dispatch(logIn(values));
+      console.log(validateUser);
       navigate("/home");
     } catch (error) {
       alert('User already exists!');

@@ -170,9 +170,10 @@ export const getUserByEmail = (email) => async(dispatch) => {
 };
 
 export const logIn = (payload) => async(dispatch) => {
+
     try {
+        console.log("a");
         const user = await axios.post('http://localhost:3001/login', payload);
-        console.log(user.data);
         return dispatch({
             type: CREATE_USER,
             payload: user.data
