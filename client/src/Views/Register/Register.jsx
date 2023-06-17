@@ -4,6 +4,7 @@ import { createUser } from "../../Redux/actions";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import LobbyLogo from "../../Multimedia/Logo Lobbylair.gif";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -29,61 +30,28 @@ const Register = () => {
   };
 
   return (
-    <section style={{ backgroundColor: "#f3f4f6" }}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "2rem",
-          height: "100vh",
-        }}
-      >
+    <section className="min-h-screen bg-gray-100 pt-9 flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center p-8 min-h-screen">
         <a
           href="/"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            marginBottom: "1.5rem",
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            color: "#111827",
-          }}
+          className="flex items-center mb-6 text-2xl font-bold text-gray-900"
         >
-          logo
+          <img src={LobbyLogo} alt="LOBBYL" className="w-20 h-auto" />
         </a>
-        <div
-          style={{
-            width: "100%",
-            backgroundColor: "#fff",
-            borderRadius: "0.375rem",
-            boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-            maxWidth: "20rem",
-            padding: "1.5rem",
-          }}
+        <div className="w-full bg-white rounded-md shadow-md max-w-20rem"
         >
-          <div
-            style={{
-              padding: "1rem",
-              marginBottom: "1.5rem",
-            }}
+          <div className="p-4 mb-6"
           >
             <h1
-              style={{
-                fontSize: "1.25rem",
-                fontWeight: "bold",
-                lineHeight: "1.5",
-                color: "#111827",
-              }}
+               className="text-xl font-bold mb-4 text-gray-800"
             >
               Create an account
             </h1>
             <form onSubmit={handleRegister} style={{ marginTop: "1.5rem" }}>
-            <div style={{ marginBottom: "1rem" }}>
+            <div className="mb-4">
                 <label
                   htmlFor="name"
-                  style={{ marginBottom: "0.5rem", fontSize: "0.875rem", fontWeight: "medium", color: "#111827" }}
+                  className="mb-1 text-sm font-bold text-gray-800"
                 >
                   Your name
                 </label>
@@ -91,25 +59,17 @@ const Register = () => {
                   type="name"
                   name="name"
                   id="name"
-                  style={{
-                    backgroundColor: "#f9fafb",
-                    border: "1px solid #d1d5db",
-                    color: "#111827",
-                    fontSize: "0.875rem",
-                    borderRadius: "0.375rem",
-                    padding: "0.625rem",
-                    width: "100%",
-                  }}
+                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
                   placeholder="name"
                   required
                   onChange={(e) => setData({ ...data, name: e.target.value })}
                   value={data.name}
                 />
               </div>
-              <div style={{ marginBottom: "1rem" }}>
+              <div className="mb-4">
                 <label
                   htmlFor="email"
-                  style={{ marginBottom: "0.5rem", fontSize: "0.875rem", fontWeight: "medium", color: "#111827" }}
+                  className="mb-1 text-sm font-bold text-gray-800"
                 >
                   Your email
                 </label>
@@ -117,25 +77,17 @@ const Register = () => {
                   type="email"
                   name="email"
                   id="email"
-                  style={{
-                    backgroundColor: "#f9fafb",
-                    border: "1px solid #d1d5db",
-                    color: "#111827",
-                    fontSize: "0.875rem",
-                    borderRadius: "0.375rem",
-                    padding: "0.625rem",
-                    width: "100%",
-                  }}
+                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
                   placeholder="name@company.com"
                   required
                   onChange={(e) => setData({ ...data, email: e.target.value })}
                   value={data.email}
                 />
               </div>
-              <div style={{ marginBottom: "1rem" }}>
+              <div className="mb-4">
                 <label
                   htmlFor="password"
-                  style={{ marginBottom: "0.5rem", fontSize: "0.875rem", fontWeight: "medium", color: "#111827" }}
+                  className="mb-1 text-sm font-bold text-gray-800"
                 >
                   Password
                 </label>
@@ -143,25 +95,17 @@ const Register = () => {
                   type="password"
                   name="password"
                   id="password"
-                  style={{
-                    backgroundColor: "#f9fafb",
-                    border: "1px solid #d1d5db",
-                    color: "#111827",
-                    fontSize: "0.875rem",
-                    borderRadius: "0.375rem",
-                    padding: "0.625rem",
-                    width: "100%",
-                  }}
+                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
                   placeholder="••••••••"
                   required
                   onChange={(e) => setData({ ...data, password: e.target.value })}
                   value={data.password}
                 />
               </div>
-              <div style={{ marginBottom: "1rem" }}>
+              <div className="mb-4">
                 <label
                   htmlFor="confirm-password"
-                  style={{ marginBottom: "0.5rem", fontSize: "0.875rem", fontWeight: "medium", color: "#111827" }}
+                  className="mb-1 text-sm font-bold text-gray-800"
                 >
                   Confirm password
                 </label>
@@ -169,15 +113,7 @@ const Register = () => {
                   type="password"
                   name="confirm-password"
                   id="confirm-password"
-                  style={{
-                    backgroundColor: "#f9fafb",
-                    border: "1px solid #d1d5db",
-                    color: "#111827",
-                    fontSize: "0.875rem",
-                    borderRadius: "0.375rem",
-                    padding: "0.625rem",
-                    width: "100%",
-                  }}
+                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
                   placeholder="••••••••"
                   required
                 />
@@ -185,28 +121,22 @@ const Register = () => {
 
               <button
                 type="submit"
-                style={{
-                  width: "100%",
-                  color: "#000",
-                  backgroundColor: "#fff",
-                  hoverBackgroundColor: "#e5e7eb",
-                  focusRingColor: "#6b7280",
-                  fontWeight: "medium",
-                  borderRadius: "0.375rem",
-                  fontSize: "0.875rem",
-                  padding: "0.625rem",
-                  textAlign: "center",
-                  boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-                  border: "none",
-                  outline: "none",
-                }}
+                className="
+                w-full
+                bg-black 
+                text-white 
+                border-none 
+                rounded-[5rem] 
+                p-3 text-l 
+                font-bold 
+                cursor-pointer"
               >
                 Create an account
               </button>
 
-              <p style={{ marginTop: "1rem", fontSize: "0.875rem", fontWeight: "light", color: "#6b7280" }}>
+              <p className="mt-3 text-sm text-gray-800">
                 Already have an account?{" "}
-                <a href="/login" style={{ fontWeight: "medium", color: "#3b82f6", hoverColor: "#2563eb" }}>
+                <a href="/login"  className="font-bold text-black">
                   Login here
                 </a>
               </p>
