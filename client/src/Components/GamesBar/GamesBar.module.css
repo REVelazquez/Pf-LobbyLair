@@ -3,6 +3,7 @@
     height: 100% fixed;
     display: flex;
     flex-direction: column;
+    margin-left: 1em;
 }
 
 .imag{

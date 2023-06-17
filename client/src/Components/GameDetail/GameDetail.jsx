@@ -36,7 +36,7 @@ const GameDetail= ()=>{
                 
                 return(
                     <button onClick={() => handleOnClick(id)} key={'gameMode' + id}  className="text-gray-200 block rounded-lg text-center font-medium px-6 py-3 bg-gray-900 hover:bg-black hover:text-white m-3">
-                       New post of {name}
+                       New post {name}
                     </button>
                 )
             })}
