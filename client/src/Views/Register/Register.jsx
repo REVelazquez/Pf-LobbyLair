@@ -30,45 +30,17 @@ const Register = () => {
   };
 
   return (
-    <section className="bg-gray-100 min-h-screen w-[100%] pt-14 flex flex-col items-center justify-center">
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "2rem",
-          height: "100vh",
-        }}
-      >
+    <section className="min-h-screen bg-gray-100 pt-9 flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center p-8 min-h-screen">
         <a
           href="/"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            marginBottom: "1.5rem",
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            color: "#111827",
-          }}
+          className="flex items-center mb-6 text-2xl font-bold text-gray-900"
         >
-          <img src={LobbyLogo} alt="LOBBYL" className="w-20 h-auto mt-4" />
+          <img src={LobbyLogo} alt="LOBBYL" className="w-20 h-auto" />
         </a>
-        <div
-          style={{
-            width: "100%",
-            backgroundColor: "#fff",
-            borderRadius: "0.375rem",
-            boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-            maxWidth: "20rem",
-            padding: "1.5rem",
-          }}
+        <div className="w-full bg-white rounded-md shadow-md max-w-20rem"
         >
-          <div
-            style={{
-              padding: "1rem",
-              marginBottom: "1.5rem",
-            }}
+          <div className="p-4 mb-6"
           >
             <h1
                className="text-xl font-bold mb-4 text-gray-800"
@@ -76,7 +48,7 @@ const Register = () => {
               Create an account
             </h1>
             <form onSubmit={handleRegister} style={{ marginTop: "1.5rem" }}>
-            <div style={{ marginBottom: "1rem" }}>
+            <div className="mb-4">
                 <label
                   htmlFor="name"
                   className="mb-1 text-sm font-bold text-gray-800"
@@ -94,7 +66,7 @@ const Register = () => {
                   value={data.name}
                 />
               </div>
-              <div style={{ marginBottom: "1rem" }}>
+              <div className="mb-4">
                 <label
                   htmlFor="email"
                   className="mb-1 text-sm font-bold text-gray-800"
@@ -112,7 +84,7 @@ const Register = () => {
                   value={data.email}
                 />
               </div>
-              <div style={{ marginBottom: "1rem" }}>
+              <div className="mb-4">
                 <label
                   htmlFor="password"
                   className="mb-1 text-sm font-bold text-gray-800"
@@ -130,7 +102,7 @@ const Register = () => {
                   value={data.password}
                 />
               </div>
-              <div style={{ marginBottom: "1rem" }}>
+              <div className="mb-4">
                 <label
                   htmlFor="confirm-password"
                   className="mb-1 text-sm font-bold text-gray-800"
@@ -149,12 +121,20 @@ const Register = () => {
 
               <button
                 type="submit"
-                className="w-full bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer"
+                className="
+                w-full
+                bg-black 
+                text-white 
+                border-none 
+                rounded-[5rem] 
+                p-3 text-l 
+                font-bold 
+                cursor-pointer"
               >
                 Create an account
               </button>
 
-              <p  className="mt-3 text-sm text-gray-800">
+              <p className="mt-3 text-sm text-gray-800">
                 Already have an account?{" "}
                 <a href="/login"  className="font-bold text-black">
                   Login here
