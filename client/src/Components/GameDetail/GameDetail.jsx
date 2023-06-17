@@ -10,9 +10,9 @@ const GameDetail= ()=>{
     const navigate = useNavigate()
     const { detail } = useParams()
 
-    useEffect(()=>{
-        dispatch(getGameById(detail))
-    }, [detail])
+    useEffect(() => {
+        dispatch(getGameById(detail));
+      }, [detail]);
 
 
     let game = useSelector(state=>state.game)

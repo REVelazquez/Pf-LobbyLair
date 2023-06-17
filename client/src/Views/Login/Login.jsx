@@ -19,8 +19,7 @@ const Login = () => {
       navigate("/home");
     } catch (error) {
       alert('User already exists!');
-    }
-      
+    }  
   };
 
   const handleSignInWithGoogle = async () => {
