@@ -67,12 +67,7 @@ const NavBar = () => {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: "1050px", margin: "auto" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "2.5rem", flex: "1" }}>
         <button>
-  <NavLink
-    to="/"
-    style={{ textDecoration: "none", display: "flex", alignItems: "center" }}
-    activeClassName="text-gray-300"
-    exact
-  >
+  
     <div style={{width:'50px', height:'50px', justifyContent:'center', backgroundColor:"white", borderRadius:'100%',}}>
       <img src={LobbyLogo} alt='LOBBYL' style={{ transform:'scale(1)', marginTop:'2px'}} />
     </div>
@@ -90,7 +85,7 @@ const NavBar = () => {
             >
       <img src={LobbyFlight} alt="LOBBYF" style={{ transform:"scale(2)" }} />
     </div>
-  </NavLink>
+  
 </button>
           <button>
             <NavLink
