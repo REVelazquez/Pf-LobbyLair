@@ -87,10 +87,10 @@ router.delete('/posts/:id', deletePost);
 router.get('/posts/page/', getPostsWithPagination );
 
 //Endpoint para post de signup
-router.post('/signup', handleSignUp);
+router.post('/register', handleSignUp);
 
 //Endpoint para login 
-router.post('/login', handleLogin);
+router.post('/', handleLogin);
 
 module.exports = router;
 
