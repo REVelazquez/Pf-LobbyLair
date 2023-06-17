@@ -38,7 +38,7 @@ const Login = () => {
     <>
       <section className="bg-gray-100 min-h-screen w-[80%] flex flex-col items-center justify-center">
         <img src={LobbyLogo} alt="LOBBYL" className="w-20 h-auto mt-4" />
-        <div>
+        <div className="rounded-lg text-black italic font-bold text-sm cursor-default">
           <NavLink to="/home">Join to the lair!</NavLink>
           
         </div>
