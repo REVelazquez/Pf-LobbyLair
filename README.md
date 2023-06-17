@@ -31,7 +31,8 @@ Vuelve al directorio principal: cd ...
 Configura la conexión a la base de datos PostgreSQL en el archivo .env.
 Ejecuta el servidor y el cliente de forma simultánea: npm run dev.
 Abre tu navegador web y accede a http://localhost:3000 para ver LobbyLair en acción.
-Contribución
+                Contribución
+
 
 ¡Nos encantaría recibir contribuciones para mejorar LobbyLair! Si deseas contribuir, sigue estos pasos:
 
@@ -40,4 +41,20 @@ Crea una rama con un nombre descriptivo: git checkout -b feature/nueva-caracteri
 Realiza tus modificaciones y mejoras.
 Asegúrate de ejecutar las pruebas y de que todo funcione correctamente.
 Haz commit de tus cambios: git commit -m "Agrega nueva característica" o git commit -m "Corrige error de bug".
-Envía
+Envía tus cambios a tu repositorio remoto: git push origin feature/nueva-caracteristica.
+Abre un pull request en este repositorio y describe tus cambios en detalle.
+
+Equipo
+Elizabeth Ortiz
+Fernando Volpato
+Gisella Gonzalez 
+Lucas Ledesma
+Matias Arroyo
+Rodrigo Velazquez
+Yeison Ramirez
+
+
+Licencia
+Este proyecto está bajo la Licencia MIT.
+
+¡Diviértete jugando y socializando en LobbyLair! Si tienes alguna pregunta o problema, no dudes en abrir un problema en este repositorio. ¡Esperamos tus contribuciones!
