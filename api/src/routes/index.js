@@ -4,7 +4,7 @@ const { getGamesWithPagination, getGames, getGamesById, getGamesByName, postGame
 const { getPosts, createPost, getPostsByUserId, deletePost, getPostsWithPagination,getGameMode } = require('../controllers/post.js');
 const { getFavorites, createFavorite, removeFavoriteGame } = require('../controllers/favorite.js');
 const { getUsersWithPagination, getAllUsers, getUserById, getUserByName, getUserByEmail, createUser, updateUser, deleteUser} = require('../controllers/users.js');
-
+const { handleLogin, handleSignUp } = require('../controllers/authController.js');
 
 const router = Router();
 
@@ -85,6 +85,9 @@ router.delete('/posts/:id', deletePost);
 
 //Endpoint para conseguir los posts con Paginacion
 router.get('/posts/page/', getPostsWithPagination );
+
+//Endpoint para post de login
+router.post('/signup', handleSignUp,handleLogin);
 
 module.exports = router;
 
