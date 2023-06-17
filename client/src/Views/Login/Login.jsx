@@ -12,12 +12,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const user = auth.currentUser;
-    if (user) {
-      navigate("/");
-    }
-  }, [navigate]);
 
   const handleLogin = async (values) => {
     try {

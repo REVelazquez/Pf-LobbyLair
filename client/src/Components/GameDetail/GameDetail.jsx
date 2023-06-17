@@ -11,9 +11,9 @@ const GameDetail= ()=>{
     const navigate = useNavigate()
     const { detail } = useParams()
 
-    useEffect(()=>{
-        dispatch(getGameById(detail))
-    }, [detail])
+    useEffect(() => {
+        dispatch(getGameById(detail));
+      }, [detail]);
 
 
     let game = useSelector(state=>state.game)
@@ -32,6 +32,7 @@ const GameDetail= ()=>{
             <div style={{display:"flex", flexDirection:'row'}}>
             <img src={game.thumbnail} style={{maxHeight:'10em'}} alt="" />
             <h1 style={{marginTop:'5em'}}>Name:{game.name}</h1>
+            {/* <button></button> */}
             </div>
             {gameModes?.map(({id, name})=>{
                 

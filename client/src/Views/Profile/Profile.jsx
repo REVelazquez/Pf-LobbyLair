@@ -26,10 +26,15 @@ const Profile = () => {
             <h3 className="text-6xl font-bold text-gray-800 text-left mt-2">{userDetail[0].name}</h3>
           </div>
           <div className="mb-1">
-            <h1 className="text-1xl text-gray-600 text-left">@{userDetail[0].email}</h1>
+            <h1 className="text-1xl text-gray-600 text-left">E-mail:{userDetail[0].email}</h1>
           </div>
           <div className="mb-1">
-            <h1 className="text-1xl text-gray-600 text-left">Fecha de creación: {userDetail[0].createdAt}</h1>
+            <h1 className="text-1xl text-gray-600 text-left">Fecha de creación: {userDetail[0].createdAt.slice(0,10).split('-').reverse().join('-')}</h1>
+          </div>
+          <div className="mb-1">
+            <h1 className="text-1xl text-gray-600 text-left">
+              Profile Url:{userDetail[0].perfilUrl !== '' ? userDetail[0].perfilUrl: 'You can put a steam profile url or similar'}
+            </h1>
           </div>
         </div>
       </div>
