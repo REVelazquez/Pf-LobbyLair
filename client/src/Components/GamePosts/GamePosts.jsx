@@ -30,7 +30,7 @@ const GamePosts = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text, userid: userId.toString(), gameid, gamemodeid }),
+        body: JSON.stringify({ text, userid: userId, gameid, gamemodeid }),
       });
 
       if (response.ok) {

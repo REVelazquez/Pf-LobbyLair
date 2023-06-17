@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const PaymentComponent = () => {
+  const stateUser = useSelector((state) => state.user);
+  console.log(stateUser);
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handlePaymentOption = (option) => {
