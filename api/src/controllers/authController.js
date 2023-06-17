@@ -1,4 +1,5 @@
 const bcrypt = require('../utils/bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 const handleLogin = async (req, res) => {
@@ -19,9 +20,11 @@ const handleLogin = async (req, res) => {
         return res.status(401).json({ message: 'Invalid password' });
       }
   
-      // Si el password es válido, el usuario se autentica correctamente
-      // Generar el token de autenticación y enviar la respuesta al cliente
-      // ...
+      // Si las credenciales son válidas, genera un token de autenticación
+    const token = jwt.sign({ userId: user_Db.id }, 'secret_key');
+
+    // Devuelve una respuesta exitosa con el token
+    res.json({ success: true, token });
     } catch (err) {
       console.log(err);
       res.status(500).json({ message: 'Internal server error' });
@@ -51,8 +54,11 @@ const handleLogin = async (req, res) => {
       // Guardar el nuevo usuario en la base de datos
       await newUser.save();
   
-      // Generar el token de autenticación y enviar la respuesta al cliente
-      // ...
+      // Si las credenciales son válidas, genera un token de autenticación
+    const token = jwt.sign({ userId: existingUser.id }, 'secret_key');
+
+    // Devuelve una respuesta exitosa con el token
+    res.json({ success: true, token });
     } catch (err) {
       console.log(err);
       res.status(500).json({ message: 'Internal server error' });
