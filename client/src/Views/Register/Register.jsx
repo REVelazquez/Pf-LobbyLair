@@ -18,9 +18,9 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      dispatch(createUser(data));
-      if (user) { 
-        navigate("/");
+      const validateUser = await dispatch(createUser(data));
+      if (validateUser) {
+        navigate("/home");
       }
     } catch (error) {
       alert(error);
