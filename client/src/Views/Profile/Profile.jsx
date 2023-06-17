@@ -44,7 +44,6 @@ const Profile = () => {
       </div>
       <div className="my-4 border-t border-gray-400"> Posiblemente agregaremos post aca o alguna otra información</div>
     </div>
-    </div>
   );
    
 };
