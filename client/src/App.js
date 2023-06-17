@@ -1,5 +1,6 @@
 import './App.css';
 import { Home, Login, Payment, Profile, Register, Chat, LandingPage, Favorites } from './Views';
+import GameDetail from './Components/GameDetail/GameDetail';
 import GamePosts from './Components/GamePosts/GamePosts';
 import {Routes, Route, useLocation} from 'react-router-dom';
 import NavBar from './Components/NavBar/NavBar';
@@ -13,7 +14,8 @@ function App() {
           <Routes>
             <Route path='/' element={<LandingPage/>} />
             <Route path='/home' element={  <Home/> }/>
-            <Route path='/game/:id' element={<GamePosts />} />
+            <Route path='/games/:detail' element={<GameDetail />} />
+            <Route path='/post' element={<GamePosts />} />
             <Route path='/favorites' element={<Favorites/>} />
             <Route exact path='/login' element={ <Login/> }/>
             <Route exact path='/payment' element={ <Payment/> }/>

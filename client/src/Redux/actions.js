@@ -15,7 +15,7 @@ import {
     LOG_OUT,
     DELETE_USER,
     UPDATE_USER,
-    GET_GAMES_WITH_PAGINATION
+    GET_GAMES_WITH_PAGINATION,
 } from './action-types';
 
 export const getAllGames = () => {
@@ -105,10 +105,10 @@ export const deletePost = (payload) => {
         }
     }
 }
-export const gameMode = (payload)=>{
+export const gameMode = ()=>{
     return async (dispatch)=>{
         try {
-            let newGame = await axios.post('http://localhost:3001/games/mode', payload);
+            let newGame = await axios.get('http://localhost:3001/games/mode');
             return dispatch({
                 type:GET_GAME_MODE,
                 payload: newGame.data
@@ -203,3 +203,4 @@ export const updateUser = (id, payload) => async(dispatch) => {
         throw new Error(error);
     }
 };
+

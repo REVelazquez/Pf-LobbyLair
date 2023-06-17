@@ -19,7 +19,7 @@ const NavBar = () => {
 
   const user= useSelector(state=>state.user)
  
-  const id=user[0].id
+  const id=user[0]?.id
 
   const handleThemeChange = () => {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -40,7 +40,7 @@ const NavBar = () => {
       dispatch(logOut());
       navigate("/");
     } catch (error) {
-      console.log(error);
+      throw new Error(error)
     }
   };
 

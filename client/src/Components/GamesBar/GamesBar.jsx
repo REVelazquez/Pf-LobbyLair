@@ -1,26 +1,24 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getGamesWithPagination } from "../../Redux/actions";
 import Style from './GamesBar.module.css';
-import Loader from '../Loader/Loader'
+import Loader from '../Loader/Loader';
 
-const GamesBar = ()=>{
-    const dispatch = useDispatch()
+const GamesBar = () => {
+  const dispatch = useDispatch();
 
-///paginacion de juegos por pantalla
-    
-    const [loading, setLoading]=useState(true)
-    
-    const [currentPage, setCurrentPage]= useState(1)
-    const [btnUp, setBtnUp]= useState(true)
-    const [btnDown, setBtnDown]=useState(false)
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [btnUp, setBtnUp] = useState(true);
+  const [btnDown, setBtnDown] = useState(false);
 
-    useEffect(()=>{
-        setLoading(true)
-        dispatch(getGamesWithPagination(currentPage))
-        .then(()=>setLoading(false))
-    }, [currentPage, dispatch])
+  useEffect(() => {
+    setLoading(true);
+    dispatch(getGamesWithPagination(currentPage)).then(() => setLoading(false));
+  }, [currentPage, dispatch]);
+
+    const navigate=useNavigate()
 
     let games=useSelector(state=>state.pageGames)
     let gamesInPages= games.games
@@ -52,16 +50,18 @@ const GamesBar = ()=>{
         }
     }
 
+
+
+
     return (
         <div className={Style.container}>
             <button onClick={handleUp} className={Style.btn} disabled={btnUp} >^</button>
             {loading && <Loader/>}
             {gamesInPages?.map(({id, thumbnail})=>{
                 return(
-                    <button key={id}>
-                    <NavLink to={`/game/${id}`} >
+                    <button onClick={()=>navigate(`/games/${id}`)} key={id}>
                     <img className={Style.imag} src={thumbnail} alt="" />
-                    </NavLink>
+
                 </button>)}
                 )}
             <button onClick={handleDown} className={Style.btn} disabled={btnDown}>v</button>

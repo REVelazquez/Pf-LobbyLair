@@ -10,7 +10,8 @@ import {
     LOG_OUT,
     DELETE_USER,
     UPDATE_USER,
-    GET_GAMES_WITH_PAGINATION
+    GET_GAMES_WITH_PAGINATION,
+    GET_GAME_MODE
 } from './action-types';
 
 const initialState = {
@@ -19,7 +20,7 @@ const initialState = {
     post: [],
     pageGames:[],
     user: [],
-    acces: false,
+    gameMode:[],
 };
 
 const reducer = (state = initialState, action) => {
@@ -80,6 +81,11 @@ const reducer = (state = initialState, action) => {
              ...state,
                 user: action.payload,
             }    
+        case GET_GAME_MODE:
+            return{
+                ...state,
+                gameMode:action.payload
+            }
         default:
                 return {
                     ...state
