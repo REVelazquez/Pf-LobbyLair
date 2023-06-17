@@ -16,7 +16,10 @@ import {
     DELETE_USER,
     UPDATE_USER,
     GET_GAMES_WITH_PAGINATION,
+    GET_ALL_POSTS,
+    GET_POST_WITH_PAGINATION
 } from './action-types';
+import { ErrorMessage } from 'formik';
 
 export const getAllGames = () => {
     return async (dispatch) => {
@@ -30,7 +33,7 @@ export const getAllGames = () => {
 
 export const getGameById = (id) => async(dispatch) => {
     try {
-        const gameId = await axios(`http://localhost:3001/games/${id}`);
+        const gameId = await axios.get(`http://localhost:3001/games/${id}`);
         return dispatch({
             type: GET_GAME_BY_ID,
             payload: gameId.data
@@ -79,19 +82,52 @@ export const postGames= (payload)=>{
     }
     
 }
-export const getPostByUserId = (payload) =>{
+export const getPostsByUserId = (id) =>{
     return async (dispatch)=>{
         try {
-            let newGame = await axios.post('http://localhost:3001/games/post', payload);
+            let post = await axios.get(`http://localhost:3001/games/posts/user/${id}`);
             return dispatch({
                 type:GET_POST_BY_USER_ID,
-                payload: newGame.data
+                payload: post.data
             })
         } catch (error) {
             throw new Error(error);
         }
     }
 }
+export const getPostsWithPagination= (currentPage, gameid, gamemodeid)=>{
+    return async (dispatch)=>{
+        try{
+            if(gameid && gamemodeid && +currentPage >= 1 ){
+                const postsPaginated= await axios.get(`http://localhost:3001/posts/page?page=${currentPage}&gameid=${gameid}&gamemodeid=${gamemodeid}`)
+                return dispatch({
+                    type:GET_POST_WITH_PAGINATION,
+                    payload:postsPaginated.data
+                })
+            }else  {const postsPaginated = await axios.get(`http://localhost:3001/posts/page?page=${currentPage}`)
+            return dispatch({
+                type:GET_POST_WITH_PAGINATION,
+                payload:postsPaginated.data
+            })}
+        }catch(error){
+            return {error:error.message}
+        }
+    }
+}
+export const getAllPosts=()=>{
+    return async (dispatch)=>{
+        try {
+            let allPosts = await axios.get('http://localhost:3001/posts')
+            return dispatch({
+                type:GET_ALL_POSTS,
+                payload:allPosts.data
+            })
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+}
+
 export const deletePost = (payload) => {
     return async (dispatch)=>{
         try {
@@ -121,7 +157,7 @@ export const gameMode = ()=>{
 export const createUser = (payload) => {
     return async (dispatch) => {
         try {
-            let newUser = await axios.post('http://localhost:3001/users', payload);
+            let newUser = await axios.post('http://localhost:3001/register', payload);
           return dispatch({
             type:CREATE_USER,
             payload: newUser.data
@@ -168,6 +204,18 @@ export const getUserByEmail = (email) => async(dispatch) => {
     }
 };
 
+export const logIn = (payload) => async(dispatch) => {
+    try {
+        const user = await axios.post('http://localhost:3001/login', payload);
+        console.log(user.data);
+        return dispatch({
+            type: CREATE_USER,
+            payload: user.data
+        });
+    } catch (error) {
+        throw new Error();
+    }
+}
 
 export const logOut = () => async(dispatch) => {
     try {
@@ -176,7 +224,7 @@ export const logOut = () => async(dispatch) => {
             payload: {}
         });
     } catch (error) {
-        throw new Error(error);
+        throw new Error();
     }
 }
 
