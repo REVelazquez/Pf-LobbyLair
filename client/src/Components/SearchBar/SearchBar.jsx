@@ -47,7 +47,7 @@ const SearchBar = () => {
       </button>
       </NavLink>
       {searchName.name.length !== 0 && (
-        <div className="absolute w-full top-8 right-14.2 bg-gray-50 bg-opacity-6 rounded-lg grid grid-cols-1 gap-x-1">
+        <div className="absolute w-full top-9 right-4 bg-gray-50 bg-opacity-6 rounded-lg grid grid-cols-1 gap-x-1">
           {game.length !== 0 ? (
             game.map((match) => (
               <NavLink key={match.id} to={`/games/${match.id}`}>
@@ -57,7 +57,7 @@ const SearchBar = () => {
               </NavLink>
             ))
           ) : (
-            <button className="rounded-lg text-black italic font-bold text-sm p-3 hover:bg-gray-200 w-full hover:text-black text-center">
+            <button className="rounded-lg text-black italic font-bold text-sm p-3 cursor-default">
               No results
             </button>
           )}
