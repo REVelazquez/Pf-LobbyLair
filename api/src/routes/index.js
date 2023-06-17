@@ -90,7 +90,7 @@ router.get('/posts/page/', getPostsWithPagination );
 router.post('/register', handleSignUp);
 
 //Endpoint para login 
-router.post('/', handleLogin);
+router.post('/login', handleLogin);
 
 //Endpoint para chat
 router.get('/chat', sendMessage, getMessages);
