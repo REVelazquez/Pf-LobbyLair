@@ -9,13 +9,14 @@ function App() {
   const location= useLocation()
   return (
     <div className="App">
-        {location.pathname !== '/' && <NavBar />}
+        {location.pathname !== '/' && location.pathname !== '/register' && <NavBar />}
+        
+
           <Routes>
             <Route path='/' element={<LandingPage/>} />
             <Route path='/home' element={  <Home/> }/>
             <Route path='/game/:id' element={<GamePosts />} />
             <Route path='/favorites' element={<Favorites/>} />
-            <Route exact path='/login' element={ <Login/> }/>
             <Route exact path='/payment' element={ <Payment/> }/>
             <Route exact path='/profile/:id' element={ <Profile/> }/>
             <Route exact path='/register' element={ <Register/> }/>

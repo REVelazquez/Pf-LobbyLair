@@ -9,14 +9,33 @@ const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const [ setUser ] = useState(null);
+  const [setUser] = useState(null);
   const [data, setData] = useState({
     email: "",
     password: "",
+    confirmPassword: "",
     name: "",
   });
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}$/;
+
   const handleRegister = async (e) => {
     e.preventDefault();
+    if (!emailRegex.test(data.email)) {
+      alert("Invalid email format");
+      return;
+    }
+    if (!passwordRegex.test(data.password)) {
+      alert(
+        "Password must contain at least one uppercase letter and one special character (!@#$%^&*), and be at least 6 characters long"
+      );
+      return;
+    }
+    if (data.password !== data.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
     try {
       dispatch(createUser(data));
       if (user) { 
@@ -25,7 +44,6 @@ const Register = () => {
     } catch (error) {
       alert(error);
     }
-
   };
 
   return (
@@ -58,7 +76,8 @@ const Register = () => {
             width: "100%",
             backgroundColor: "#fff",
             borderRadius: "0.375rem",
-            boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+            boxShadow:
+              "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
             maxWidth: "20rem",
             padding: "1.5rem",
           }}
@@ -80,10 +99,15 @@ const Register = () => {
               Create an account
             </h1>
             <form onSubmit={handleRegister} style={{ marginTop: "1.5rem" }}>
-            <div style={{ marginBottom: "1rem" }}>
+              <div style={{ marginBottom: "1rem" }}>
                 <label
                   htmlFor="name"
-                  style={{ marginBottom: "0.5rem", fontSize: "0.875rem", fontWeight: "medium", color: "#111827" }}
+                  style={{
+                    marginBottom: "0.5rem",
+                    fontSize: "0.875rem",
+                    fontWeight: "medium",
+                    color: "#111827",
+                  }}
                 >
                   Your name
                 </label>
@@ -102,14 +126,21 @@ const Register = () => {
                   }}
                   placeholder="name"
                   required
-                  onChange={(e) => setData({ ...data, name: e.target.value })}
+                  onChange={(e) =>
+                    setData({ ...data, name: e.target.value })
+                  }
                   value={data.name}
                 />
               </div>
               <div style={{ marginBottom: "1rem" }}>
                 <label
                   htmlFor="email"
-                  style={{ marginBottom: "0.5rem", fontSize: "0.875rem", fontWeight: "medium", color: "#111827" }}
+                  style={{
+                    marginBottom: "0.5rem",
+                    fontSize: "0.875rem",
+                    fontWeight: "medium",
+                    color: "#111827",
+                  }}
                 >
                   Your email
                 </label>
@@ -128,14 +159,21 @@ const Register = () => {
                   }}
                   placeholder="name@company.com"
                   required
-                  onChange={(e) => setData({ ...data, email: e.target.value })}
+                  onChange={(e) =>
+                    setData({ ...data, email: e.target.value })
+                  }
                   value={data.email}
                 />
               </div>
               <div style={{ marginBottom: "1rem" }}>
                 <label
                   htmlFor="password"
-                  style={{ marginBottom: "0.5rem", fontSize: "0.875rem", fontWeight: "medium", color: "#111827" }}
+                  style={{
+                    marginBottom: "0.5rem",
+                    fontSize: "0.875rem",
+                    fontWeight: "medium",
+                    color: "#111827",
+                  }}
                 >
                   Password
                 </label>
@@ -154,14 +192,21 @@ const Register = () => {
                   }}
                   placeholder="••••••••"
                   required
-                  onChange={(e) => setData({ ...data, password: e.target.value })}
+                  onChange={(e) =>
+                    setData({ ...data, password: e.target.value })
+                  }
                   value={data.password}
                 />
               </div>
               <div style={{ marginBottom: "1rem" }}>
                 <label
                   htmlFor="confirm-password"
-                  style={{ marginBottom: "0.5rem", fontSize: "0.875rem", fontWeight: "medium", color: "#111827" }}
+                  style={{
+                    marginBottom: "0.5rem",
+                    fontSize: "0.875rem",
+                    fontWeight: "medium",
+                    color: "#111827",
+                  }}
                 >
                   Confirm password
                 </label>
@@ -180,6 +225,10 @@ const Register = () => {
                   }}
                   placeholder="••••••••"
                   required
+                  onChange={(e) =>
+                    setData({ ...data, confirmPassword: e.target.value })
+                  }
+                  value={data.confirmPassword}
                 />
               </div>
 
@@ -204,9 +253,23 @@ const Register = () => {
                 Create an account
               </button>
 
-              <p style={{ marginTop: "1rem", fontSize: "0.875rem", fontWeight: "light", color: "#6b7280" }}>
+              <p
+                style={{
+                  marginTop: "1rem",
+                  fontSize: "0.875rem",
+                  fontWeight: "light",
+                  color: "#6b7280",
+                }}
+              >
                 Already have an account?{" "}
-                <a href="/login" style={{ fontWeight: "medium", color: "#3b82f6", hoverColor: "#2563eb" }}>
+                <a
+                  href="/login"
+                  style={{
+                    fontWeight: "medium",
+                    color: "#3b82f6",
+                    hoverColor: "#2563eb",
+                  }}
+                >
                   Login here
                 </a>
               </p>

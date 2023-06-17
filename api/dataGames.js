@@ -1,4 +1,5 @@
 const allGames =[
+<<<<<<< Updated upstream
     {
       id: "csgo",
       name: "Counter-Strike: Global Offensive",
@@ -183,6 +184,106 @@ const allGames =[
       genres: ["Survival", "Adventure"],
       thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/raft.png?alt=media&token=cf9cb438-e912-410f-ad8e-5eb8c7b1f627"
     },
+=======
+  {
+    id: "csgo",
+    name: "Counter-Strike: Global Offensive",
+    gameMode: ["PvP", "Team PvP"],
+    genres: ["FPS", "Competitive"],
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/CsGo.png?alt=media&token=9df0b6c6-de88-45a7-97ee-da025ce18d1b"
+  },
+  {
+    id: "lol",
+    name: "League of Legends",
+    gameMode: ["PvP", "Team PvP"],
+    genres: ["MOBA", "Competitive"],
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/LoL.png?alt=media&token=f7be6c10-5966-43cb-b63b-358469640e4f"
+  },
+  {
+    id: "dota2",
+    name: "Dota 2",
+    gameMode: ["PvP", "Team PvP"],
+    genres: ["MOBA","Competitive"],
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/Dota2.png?alt=media&token=f5fdbb60-9e2a-4c17-bdcf-996d423ca01f"
+  },
+  {
+    id: "lostark",
+    name: "Lost Ark",
+    gameMode: ["PvP", "Co-op"],
+    genres: ["MMORPG", "Action"],
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/Lostark.png?alt=media&token=62efb370-962d-4a96-88a7-284cfd7e1f85"
+  },
+  {
+    id: "apexlegends",
+    name: "Apex Legends",
+    gameMode: ["PvP", "Co-op"],
+    genres: ["FPS", "Battle Royale"],
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/apexLegends.png?alt=media&token=7c50a006-bde8-4601-916f-968063769e2d"
+  },
+  {
+    id: "codwarfare2",
+    name: "Call of Duty: Modern Warfare® II",
+    gameMode: ["PvP", "Co-op"],
+    genres: ["FPS", "Action"],
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/codMw2.png?alt=media&token=12f8d4b7-a6f4-4e31-9738-979f3044eea0"
+  },
+  {
+    id: "fortnite",
+    name: "Fortnite",
+    gameMode: ["PvP", "Team PvP"],
+    genres: ["FPS", "Battle Royale"],
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/Fortnite.png?alt=media&token=adda157a-9de1-4551-be49-25612ae3e452"
+  },
+  {
+    id: "minecraft",
+    name: "Minecraft",
+    gameMode: ["PvP", "PvE"],
+    genres: ["Sandbox", "Adventure"],
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/Minecraft.png?alt=media&token=9e1a2382-2abe-464e-aa6c-2213aa4293ca"
+  },
+  {
+    id: "stardewvalley",
+    name: "Stardew Valley",
+    gameMode: ["Co-op"],
+    genres: ["Farming Sim", "RPG", "Sandbox"],
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/StardewValley.png?alt=media&token=e3185309-8b2e-4bfa-a2a9-c648bf79df2b"
+  },
+  {
+    id: "conanexiles",
+    name: "Conan Exiles",
+    gameMode: ["PvP", "Co-op", "PvE"],
+    genres: ["Survival", "Adventure", "RPG"],
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/Conanexiles.png?alt=media&token=d2dfa6d2-92f0-4cd7-abcf-ae9589f8af53"
+  },
+  {
+    id: "7daystodie",
+    name: "7 Days to Die",
+    gameMode: ["PvP", "Co-op", "PvE"],
+    genres: ["Survival", "RPG","Zombies" ],
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/7dtd.png?alt=media&token=8af8e780-07d5-45c0-ad15-a94ff6158f33"
+  },
+  {
+    id: "rocketleague",
+    name: "Rocket League",
+    gameMode: ["PvP","Team PvP" ],
+    genres: ["Competitive", "Racing", "Platformer"],
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/rocketleague.png?alt=media&token=af0e5089-badf-4af8-9209-12602b9a910e"
+  },
+  {
+    id: "rust",
+    name: "Rust",
+    gameMode: ["PvP", "Co-op"],
+    genres: ["Survival", "Adventure"],
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/rust.png?alt=media&token=abe6e33b-756b-4d0c-958a-85b67857a9ed"
+  },
+  {
+    id: "overwatch2",
+    name: "Overwatch 2",
+    gameMode: ["PvP", "Team PvP"],
+    genres: ["FPS"],
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/overwatch2.png?alt=media&token=b149dfda-4c0f-4071-a119-943796a0f997"
+  },
+>>>>>>> Stashed changes
   
     {
       id: "borderlands3",
