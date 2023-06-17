@@ -48,6 +48,7 @@ async function getPostsByUserId(req, res) {
 
   async function createPost(req, res) {
     const { text, userid, gameid, gamemodeid } = req.body;
+    console.log(text, userid, gameid, gamemodeid);
     try {
       let newPost = await Post.create({
         text: text,
@@ -98,7 +99,7 @@ async function getPostsByUserId(req, res) {
     const { page, userid, gameid, gamemodeid } = req.query;
     const pageSize = 5;
     let offset = 0;
-  
+    console.log(page, userid, gameid, gamemodeid);
     let whereClause = {};
     if (userid) {
       whereClause['$User.id$'] = userid;
@@ -110,12 +111,10 @@ async function getPostsByUserId(req, res) {
       whereClause['$GameMode.id$'] = gamemodeid;
     }
   
-
     try {
       let posts;
       let count;
       let totalPages;
-  
       if (page) {
         offset = (parseInt(page) - 1) * pageSize;
         const result = await Post.findAndCountAll({
@@ -126,19 +125,15 @@ async function getPostsByUserId(req, res) {
             },
             {
               model: Game,
-              include: [
-                {
-                  model: GameMode,
-                  through: { attributes: [] },
-                },
-              ],
             },
+            {
+              model: GameMode,
+            }
           ],
           limit: pageSize,
           offset: offset,
           distinct: true,
         });
-  
         count = result.count;
         posts = result.rows;
         totalPages = Math.ceil(count / pageSize);

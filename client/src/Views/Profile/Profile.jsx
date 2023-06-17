@@ -23,13 +23,13 @@ const Profile = () => {
           </button>
         <div className="ml-6">
           <div className="mb-1" >
-            <h3 className="text-6xl font-bold text-gray-800 text-left mt-2">{userDetail[0].name}</h3>
+            <h3 className="text-6xl font-bold text-gray-800 text-left mt-2">{userDetail.name}</h3>
           </div>
           <div className="mb-1">
-            <h1 className="text-1xl text-gray-600 text-left">@{userDetail[0].email}</h1>
+            <h1 className="text-1xl text-gray-600 text-left">@{userDetail.email}</h1>
           </div>
           <div className="mb-1">
-            <h1 className="text-1xl text-gray-600 text-left">Fecha de creación: {userDetail[0].createdAt}</h1>
+            <h1 className="text-1xl text-gray-600 text-left">Fecha de creación: {userDetail.createdAt}</h1>
           </div>
         </div>
       </div>

@@ -17,14 +17,14 @@ const GamePosts = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    console.log(userId);
     try {
       const response = await fetch("http://localhost:3001/posts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text, userId, gameid, gamemodeid }),
+        body: JSON.stringify({ text, userid: userId, gameid, gamemodeid }),
       });
 
       if (response.ok) {
