@@ -29,6 +29,7 @@ const initialState = {
     pagePosts: [],
     userPosts: [],
     user: [],
+    otherUser: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -62,7 +63,7 @@ const reducer = (state = initialState, action) => {
         case GET_USER_BY_ID:
             return {
               ...state,
-                user: action.payload,
+                otherUser: action.payload,
             }
         case GET_USER_BY_NAME:
             return {

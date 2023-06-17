@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, NavLink } from 'react-router-dom';
 import queryString from 'query-string';
 import { useDispatch, useSelector } from "react-redux";
 import GamesBar from "../GamesBar/GamesBar";
@@ -12,8 +12,7 @@ const GamePosts = () => {
   const dispatch = useDispatch()
   const navigate=useNavigate()
   const stateUser = useSelector((state) => state.user);
-  console.log(stateUser);
-
+  const currentId=stateUser.id
 
 
 //------------------esto es para el form------------------------------//
@@ -49,7 +48,7 @@ const [loading, setLoading]=useState(true)
 
 const post=useSelector(state=>state.pagePosts)
 const pagedPosts=post.posts
-
+console.log(pagedPosts);
 //----modificacion de estados----///
 useEffect(()=>{
   setLoading(true)
@@ -62,7 +61,7 @@ useEffect(()=>{
   if(currentPage === 1){
     setBtnNext(true);
     setBtnPrev(false)
-}else if(currentPage === post.totalPages){
+}else if(currentPage === +post.totalPages){
     setBtnNext(true)
     setBtnPrev(false)
 }else{
@@ -76,7 +75,6 @@ const pages=Array.from({ length: post.totalPages }, (_, index) => index + 1)
 const handleOnClick= (event)=>{
   const selectedPage=parseInt(event.target.value)
   if(selectedPage !== currentPage){
-      const newIndex = (selectedPage-1)*
       setCurrentPage(selectedPage)
 
   }
@@ -109,16 +107,19 @@ const handlePrev = ()=>{
         />
         <button style={{marginLeft:'.75em'}} type="submit">Crear Post</button>
       </form>
-      <button onClick={handlePrev} disable={btnPrev} >Prev: </button>
-      {pages?.map(e=><button style={{marginLeft:'5px', marginRight:'5px'}} key={e} value={e} onClick={handleOnClick} disabled={currentPage===e}>{e}</button>)}
-      <button onClick={handleNext} disable={btnNext} >Next </button>
+      <button onClick={handlePrev} disable={btnPrev} style={{marginRight:'0.75em'}}  >Prev: </button>
+      {loading && <Loader/>}
+      {post.totalPages > 1 && pages?.map(e=><button style={{marginLeft:'5px', marginRight:'5px'}} key={e} value={e} onClick={handleOnClick} disabled={currentPage===e}>{e}</button>)}
+      <button onClick={handleNext} disable={btnNext} style={{marginLeft:'0.75'}} >Next </button>
       <div>
       {pagedPosts?.map(({id, createdAt, text, User})=>{
         return(
           <div key={id} style={{width:'40rem', marginLeft:'5em', marginTop:'.5em', height:'6em', borderColor:'crimson', borderWidth:'2px'}}>
             <h1>{text}</h1>
             <p>Posted by:</p>
-            {/* {currentId === User.id && <button onClick={()=>navigate(`/profile/${User.id}`)}>{User?.name}</button>} */}
+            <NavLink  to={`/profile/${User.id}`}>
+            <p>{User.name}</p>
+            </NavLink>
             <p>Created: {createdAt.slice(0, 10).split('-').reverse().join('-')}</p>
           </div>
         )
