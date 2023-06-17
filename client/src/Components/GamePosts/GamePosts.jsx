@@ -109,9 +109,9 @@ const handlePrev = ()=>{
         />
         <button style={{marginLeft:'.75em'}} type="submit">Crear Post</button>
       </form>
-      <button onClick={handlePrev} >Prev Posts</button>
+      <button onClick={handlePrev} disable={btnPrev} >Prev: </button>
       {pages?.map(e=><button style={{marginLeft:'5px', marginRight:'5px'}} key={e} value={e} onClick={handleOnClick} disabled={currentPage===e}>{e}</button>)}
-      <button onClick={handleNext} >Next Posts</button>
+      <button onClick={handleNext} disable={btnNext} >Next </button>
       <div>
       {pagedPosts?.map(({id, createdAt, text, User})=>{
         return(

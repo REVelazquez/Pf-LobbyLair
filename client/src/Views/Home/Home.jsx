@@ -12,16 +12,16 @@ const Home = () => {
       };
     
   return (
-    <div className={Style.container}>
-    <GamesBar/>
-    <div>
-        
-    </div>   
-
+    <div className="flex">
+      <div className="mt-auto">
+        <GamesBar />
+      </div>
+      
     </div>
   );
 };
 
+ 
 
 
 export default Home;
