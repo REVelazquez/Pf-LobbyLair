@@ -4,7 +4,7 @@ import {
     GET_ALL_GAMES,
     GET_GAMES_BY_NAME,
     GET_GAME_BY_ID,
-    POST_GAME,
+    // POST_GAME,
     GET_USER_BY_ID,
     GET_USER_BY_NAME,
     GET_USER_BY_EMAIL,
@@ -13,16 +13,21 @@ import {
     DELETE_USER,
     UPDATE_USER,
     GET_GAMES_WITH_PAGINATION,
-    GET_GAME_MODE
+    GET_GAME_MODE,
+    GET_ALL_POSTS,
+    GET_POST_BY_USER_ID,
+    GET_POST_WITH_PAGINATION
 } from './action-types';
 
 const initialState = {
     games: [],
     game: [],
-    post: [],
-    pageGames:[],
-    user: [],
     gameMode:[],
+    pageGames:[],
+    posts: [],
+    pagePosts: [],
+    userPosts: [],
+    user: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -87,6 +92,21 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 gameMode:action.payload
+            }
+        case GET_ALL_POSTS:
+            return{
+                ...state,
+                posts:action.payload
+            }
+        case GET_POST_BY_USER_ID:
+            return{
+                ...state,
+                userPosts:action.payload
+            }
+        case GET_POST_WITH_PAGINATION:
+            return{
+                ...state,
+                pagePosts:action.payload
             }
         default:
                 return {

@@ -20,15 +20,21 @@ const Profile = () => {
           <button style={{ color: "white", fontSize: "0.8rem", fontWeight: "300", textDecoration: "none", hover: "gray", backgroundColor: "#1f2937", padding: "0.1rem" }}>
             Editar
           </button>
-        <div className="ml-6">
-          <div className="mb-1" >
-            <h3 className="text-6xl font-bold text-gray-800 text-left mt-2">{userDetail.name}</h3>
-          </div>
+          <div>
+            <div className="mb-1">
+              <h3 className="text-4xl font-bold text-left mt-2">{userDetail[0].name}</h3>
+            </div>
+            <div className="mb-1">
+              <h1 className="text-1xl text-left">E-mail:{userDetail[0].email}</h1>
+            </div>
           <div className="mb-1">
-            <h1 className="text-1xl text-gray-600 text-left">@{userDetail.email}</h1>
+            <h1 className="text-1xl text-gray-600 text-left">Fecha de creación: {userDetail[0].createdAt.slice(0,10).split('-').reverse().join('-')}</h1>
           </div>
-          <div className="mb-1">
-            <h1 className="text-1xl text-gray-600 text-left">Fecha de creación: {userDetail.createdAt}</h1>
+            <div className="mb-1">
+              <h1 className="text-1xl text-left">
+              Profile Url:{userDetail[0].perfilUrl !== '' ? userDetail[0].perfilUrl: 'You can put a steam profile url or similar'}
+            </h1>
+            </div>
           </div>
         </div>
         <div className="my-4 border-t border-gray-400"></div>

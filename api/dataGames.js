@@ -60,7 +60,7 @@ const allGames =[
     name: "Stardew Valley",
     gameMode: ["Co-op"],
     genres: ["Farming Sim", "RPG", "Sandbox"],
-    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/Minecraft.png?alt=media&token=9e1a2382-2abe-464e-aa6c-2213aa4293ca"
+    thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/StardewValley.png?alt=media&token=e3185309-8b2e-4bfa-a2a9-c648bf79df2b"
   },
   {
     id: "conanexiles",

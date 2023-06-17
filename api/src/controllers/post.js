@@ -128,8 +128,11 @@ async function getPostsByUserId(req, res) {
             },
             {
               model: GameMode,
+            },
+            {
+              model: GameMode,
             }
-          ],
+          ],          
           limit: pageSize,
           offset: offset,
           distinct: true,
@@ -156,7 +159,7 @@ async function getPostsByUserId(req, res) {
   
         count = result.count;
         posts = result.rows;
-        totalPages = 1;
+        totalPages = Math.ceil(count/pageSize);
       }
   
       res.json({
