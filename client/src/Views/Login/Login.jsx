@@ -2,8 +2,8 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/firebase";
-import { useDispatch } from "react-redux";
-import { getUserByEmail } from "../../Redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { logIn } from "../../Redux/actions";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { FcGoogle } from "react-icons/fc";
 import LobbyLogo from "../../Multimedia/Logo Lobbylair.gif";
@@ -11,23 +11,16 @@ import { NavLink } from "react-router-dom";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const user = useSelector((state) => state.user);
 
   const handleLogin = async (values) => {
     try {
-      const user_Db = await dispatch(getUserByEmail(values.email));
-      if (
-        user_Db.payload.length === 0 ||
-        user_Db.payload[0].password !== values.password
-      ) {
-        alert("Email does not exist");
-        return;
-      } else {
-        navigate("/home");
-      }
-    } catch (err) {
-      console.log(err);
+      const validateUser = await dispatch(logIn(values));
+      navigate("/home");
+    } catch (error) {
+      alert('User already exists!');
     }
+      
   };
 
   const handleSignInWithGoogle = async () => {
@@ -43,9 +36,9 @@ const Login = () => {
 
   return (
     <>
-      <section className="bg-gray-100 min-h-screen w-[80%] flex flex-col items-center justify-center">
+      <section className="min-h-screen bg-gray-100 pt-9 flex flex-col items-center justify-center">
         <img src={LobbyLogo} alt="LOBBYL" className="w-20 h-auto mt-4" />
-        <div>
+        <div className="rounded-lg text-black italic font-bold text-sm cursor-default">
           <NavLink to="/home">Join to the lair!</NavLink>
           
         </div>
