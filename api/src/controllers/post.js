@@ -167,7 +167,17 @@ async function getPostsByUserId(req, res) {
     }
   }
 
-
+  async function getGameMode (req,res){
+    const gameModeId = req.params.gamemodeid;
+  
+    try {
+      let gameMode = await GameMode.findByPk(gameModeId);
+  
+      return res.status(200).json(gameMode);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
 
 
 
@@ -175,6 +185,7 @@ module.exports = {
   getPosts,
   getPostsByUserId,
   createPost,
+  getGameMode,
   getPostsWithPagination,
   deletePost
 

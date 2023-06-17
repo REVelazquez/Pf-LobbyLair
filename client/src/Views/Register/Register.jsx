@@ -1,29 +1,31 @@
 import { useState } from "react";
 import { auth, createUserWithEmailAndPassword } from "../../firebase/firebase";
+import { createUser } from "../../Redux/actions";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Register = () => {
-  const [ setUser] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const [ setUser ] = useState(null);
   const [data, setData] = useState({
     email: "",
     password: "",
+    name: "",
   });
-
   const handleRegister = async (e) => {
     e.preventDefault();
-
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      );
-      setUser(userCredential.user);
-      console.log(userCredential.user);
-    } catch (err) {
-      console.log(err);
+      dispatch(createUser(data));
+      if (user) { 
+        navigate("/");
+      }
+    } catch (error) {
+      alert(error);
     }
 
-    console.log(data);
   };
 
   return (
@@ -78,6 +80,32 @@ const Register = () => {
               Create an account
             </h1>
             <form onSubmit={handleRegister} style={{ marginTop: "1.5rem" }}>
+            <div style={{ marginBottom: "1rem" }}>
+                <label
+                  htmlFor="name"
+                  style={{ marginBottom: "0.5rem", fontSize: "0.875rem", fontWeight: "medium", color: "#111827" }}
+                >
+                  Your name
+                </label>
+                <input
+                  type="name"
+                  name="name"
+                  id="name"
+                  style={{
+                    backgroundColor: "#f9fafb",
+                    border: "1px solid #d1d5db",
+                    color: "#111827",
+                    fontSize: "0.875rem",
+                    borderRadius: "0.375rem",
+                    padding: "0.625rem",
+                    width: "100%",
+                  }}
+                  placeholder="name"
+                  required
+                  onChange={(e) => setData({ ...data, name: e.target.value })}
+                  value={data.name}
+                />
+              </div>
               <div style={{ marginBottom: "1rem" }}>
                 <label
                   htmlFor="email"

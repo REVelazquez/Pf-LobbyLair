@@ -6,31 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserByEmail } from '../../Redux/actions';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { FcGoogle } from 'react-icons/fc';
-import Modal from 'react-modal';
 
-const customStyles = {
-  overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    zIndex: 9999,
-  },
-  content: {
-    width: '300px',
-    height: '200px',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    padding: '2rem',
-    borderRadius: '0.5rem',
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.25)',
-  },
-};
 
-  const Login = () => {
+const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const [showModal, setShowModal] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -39,21 +22,13 @@ const customStyles = {
     }
   }, [navigate]);
 
-  const openModal = () => {
-    setModalIsOpen(true);
-  };
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
-
-
   const handleLogin = async (values) => {
     try {
       const user_Db = await dispatch(getUserByEmail(values.email));
       if (user_Db.payload.length === 0 || user_Db.payload[0].password !== values.password) {
-      openModal()
+        alert('Email does not exist');
         return;
-      }else{
+      } else {
         navigate('/home');
       }
     } catch (err) {
@@ -63,36 +38,40 @@ const customStyles = {
 
   const handleSignInWithGoogle = async () => {
     const googleProvider = new GoogleAuthProvider();
-    
+
     try {
       const res = await signInWithPopup(auth, googleProvider);
       console.log(res);
     } catch (error) {
-      console.log(error);
+      alert(error)
     }
   };
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+      return 'Email is required';
+    } else if (!emailRegex.test(email)) {
+      return 'Invalid email format';
+    }
+    return '';
+  };
+
+  const validatePassword = (password) => {
+    if (!password) {
+      return 'Password is required';
+    } else if (!/(?=.*[A-Z])(?=.*[!@#$%^&*])/.test(password)) {
+      return 'Password must contain at least one uppercase letter and one symbol';
+    }
+    return '';
+  };
+
   return (
-
-
     <section className="bg-gray-100 min-h-screen flex justify-center items-center">
       <div className="w-72 p-4 bg-white rounded shadow-md">
-   
-      <div className="max-w-180 mx-auto text-center flex items-center justify-center">
-
-       </div>
-       <Modal 
-        style={customStyles}
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="User Does Not Exist Modal"
-              >
-          <h2 className="text-xl font-bold mb-4 text-gray-800 text-center">User Does Not Exist</h2>
-             <button onClick={closeModal} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-auto "
->Close</button>
-            </Modal>
+        <div className="max-w-180 mx-auto text-center flex items-center justify-center">
+        </div>
         <div>
-
           <h1 className="text-xl font-bold mb-4 text-gray-800">
             Sign in to your account
           </h1>
@@ -102,20 +81,16 @@ const customStyles = {
               password: '',
             }}
             validate={(values) => {
-              const errors = {};
-
-              if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)){
-                errors.email = 'Invalid email format';
-            }
-
-            if (!/(?=.*[A-Z])(?=.*[!@#$%^&*])/.test(values.password)) {
-                errors.password = 'Password must contain at least one uppercase letter and one symbol';
-              }
-
-              return errors;
-            }}
-            onSubmit={handleLogin}
-          >
+                const errors = {
+                  email: validateEmail(values.email),
+                  password: validatePassword(values.password),
+                };
+                setEmailError(errors.email);
+                setPasswordError(errors.password);
+                return errors;
+              }}
+              onSubmit={handleLogin}
+            >
             <Form>
               <div className="mb-4">
                 <label htmlFor="email" className="mb-1 text-sm font-bold text-gray-800">
@@ -158,7 +133,7 @@ const customStyles = {
           </Formik>
           <p className="text-sm text-gray-800 mt-1">Or sign in with</p>
           <button onClick={handleSignInWithGoogle} className="w-full bg-black text-white border-none rounded-[5rem] p-3 text-xl font-bold cursor-pointer hover:bg-white hover:text-black hover:shadow-md">
-          <FcGoogle className="inline-block mr-2" />
+            <FcGoogle className="inline-block mr-2" />
             Sign in with Google
           </button>
         </div>

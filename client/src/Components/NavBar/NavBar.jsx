@@ -1,11 +1,17 @@
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { auth, signOut } from "../../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import { WiDaySunny, WiMoonAltNew } from "react-icons/wi";
-import LobbyLogo from "../../Flight lobbylair.gif";
+import LobbyFlight from "../../Multimedia/Flight lobbylair.gif"
+import LobbyLogo from '../../Multimedia/Logo Lobbylair.gif'
+import { useDispatch } from "react-redux";
+import { logOut } from "../../Redux/actions";
+import SearchBar from '../SearchBar/Searchbar.jsx';
+
 
 const NavBar = () => {
+  const dispatch = useDispatch();
   const [theme, setTheme] = useState("light");
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
@@ -26,7 +32,8 @@ const NavBar = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate("/login");
+      dispatch(logOut());
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -35,6 +42,20 @@ const NavBar = () => {
   const handleMenuToggle = () => {
     setShowMenu(!showMenu);
   };
+
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      setMousePosition({ x: event.clientX, y: event.clientY });
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
 
   return (
     <nav style={{ backgroundColor: "#1f2937", padding: "1rem" }}>
@@ -47,14 +68,28 @@ const NavBar = () => {
     activeClassName="text-gray-300"
     exact
   >
-    <div style={{ maxWidth: "100px" }}>
-      <img src={LobbyLogo} alt="LOBBYL" style={{ backgroundColor: "white", borderRadius: "50px" }} />
+    <div style={{width:'50px', height:'50px', justifyContent:'center', backgroundColor:"white", borderRadius:'100%',}}>
+      <img src={LobbyLogo} alt='LOBBYL' style={{ transform:'scale(1)', marginTop:'2px'}} />
+    </div>
+    <div
+              style={{
+                maxWidth: "100px",
+                position: "absolute",
+                top: mousePosition.y -30,
+                left: mousePosition.x -30,
+                transform: "translate(-50%, -50%)",
+                zIndex:1,
+                transition: "transform 1.2s ease" ,
+                pointerEvents:"none",
+              }}
+            >
+      <img src={LobbyFlight} alt="LOBBYF" style={{ transform:"scale(2)" }} />
     </div>
   </NavLink>
 </button>
           <button>
             <NavLink
-              to="/"
+              to="/home"
               style={{ color: "white", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
               activeClassName="text-gray-300"
               exact
@@ -62,6 +97,7 @@ const NavBar = () => {
               Home
             </NavLink>
           </button>
+          <SearchBar/>
           <button>
             <NavLink
               to="/payment"
@@ -73,11 +109,11 @@ const NavBar = () => {
           </button>
           <button>
             <NavLink
-              to="/profile"
+              to="/favorites"
               style={{ color: "white", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
               activeClassName="text-gray-300"
             >
-              Profile
+              Favorites
             </NavLink>
           </button>
         </div>
@@ -92,8 +128,6 @@ const NavBar = () => {
               {theme === "light" ? "Light" : "Dark"}
             </span>
           </div>
-          {user ? (
-            <>
               <div style={{ position: "relative" }}>
                 <img
                   src="https://source.unsplash.com/64x64/?person"
@@ -119,26 +153,14 @@ const NavBar = () => {
               </div>
               <button>
                 <NavLink
-                  to="/logout"
+                  to="/"
                   style={{ color: "white", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
                   activeClassName="text-gray-300"
-                  onClick={handleLogout}
-                >
+                  onClick={handleLogout}>
                   Log Out
                 </NavLink>
               </button>
-            </>
-          ) : (
-            <button>
-              <NavLink
-                to="/login"
-                style={{ color: "white", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
-                activeClassName="text-gray-300"
-              >
-                Log In
-              </NavLink>
-            </button>
-          )}
+
         </div>
       </div>
     </nav>
