@@ -13,6 +13,7 @@ function App() {
         {location.pathname !== '/' && <NavBar />}
           <Routes>
               <Route path='/' element={<LandingPage/>} />
+              <Route exact path='/register' element={ <Register/> }/>
             <Route element={<ProtectedRoutes />}>
               <Route path='/home' element={  <Home/> }/>
               <Route path='/games/:detail' element={<GameDetail />} />
@@ -20,7 +21,6 @@ function App() {
               <Route path='/favorites' element={<Favorites/>} />
               <Route exact path='/payment' element={ <Payment/> }/>
               <Route exact path='/profile/:id' element={ <Profile/> }/>
-              <Route exact path='/register' element={ <Register/> }/>
               <Route exact path='/chat' element={ <Chat/> }/> 
             </Route>
           </Routes>
