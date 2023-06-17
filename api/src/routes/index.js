@@ -5,7 +5,7 @@ const { getPosts, createPost, getPostsByUserId, deletePost, getPostsWithPaginati
 const { getFavorites, createFavorite, removeFavoriteGame } = require('../controllers/favorite.js');
 const { getUsersWithPagination, getAllUsers, getUserById, getUserByName, getUserByEmail, createUser, updateUser, deleteUser} = require('../controllers/users.js');
 const { handleLogin, handleSignUp } = require('../controllers/authController.js');
-
+const { sendMessage, getMessages,} = require('../controllers/chatController.js')
 const router = Router();
 
 // Endpoint para obtener todos los games
@@ -91,6 +91,9 @@ router.post('/register', handleSignUp);
 
 //Endpoint para login 
 router.post('/', handleLogin);
+
+//Endpoint para chat
+router.get('/chat', sendMessage, getMessages);
 
 module.exports = router;
 
