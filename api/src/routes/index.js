@@ -86,8 +86,11 @@ router.delete('/posts/:id', deletePost);
 //Endpoint para conseguir los posts con Paginacion
 router.get('/posts/page/', getPostsWithPagination );
 
-//Endpoint para post de login
-router.post('/signup', handleSignUp,handleLogin);
+//Endpoint para post de signup
+router.post('/signup', handleSignUp);
+
+//Endpoint para login 
+router.post('/login', handleLogin);
 
 module.exports = router;
 
