@@ -41,11 +41,10 @@ const SearchBar = () => {
         onChange={handleChange}
         className="rounded-full mr-2 text-center placeholder-center font-semibold text-black"
       />
-      <NavLink>
       <button className="text-white text-lg font-semibold no-underline hover:text-gray-500">
         <img src={glass} alt=""/>
       </button>
-      </NavLink>
+      <div className="absolute w-full top-5 right-2 bg-gray-200 bg-opacity-6 rounded-lg grid grid-cols-1 gap-x-1">
       {searchName.name.length !== 0 && (
         <div className="absolute w-full top-9 right-4 bg-gray-50 bg-opacity-6 rounded-lg grid grid-cols-1 gap-x-1">
           {game.length !== 0 ? (
@@ -63,6 +62,7 @@ const SearchBar = () => {
           )}
         </div>
       )}
+      </div>
     </div>
   )
 }
