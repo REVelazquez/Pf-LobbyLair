@@ -16,7 +16,8 @@ import {
     GET_GAME_MODE,
     GET_ALL_POSTS,
     GET_POST_BY_USER_ID,
-    GET_POST_WITH_PAGINATION
+    GET_POST_WITH_PAGINATION,
+    CREATE_POST
 } from './action-types';
 
 const initialState = {
@@ -107,6 +108,11 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 pagePosts:action.payload
+            }
+        case CREATE_POST:
+            return{
+                ...state,
+                posts:action.payload
             }
         default:
                 return {
