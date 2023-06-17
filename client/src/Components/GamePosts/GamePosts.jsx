@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
 import { useDispatch, useSelector } from "react-redux";
 import GamesBar from "../GamesBar/GamesBar";
-import { getPostsWithPagination } from "../../Redux/actions";
+import { getPostsWithPagination, createPost } from "../../Redux/actions";
 import Loader from "../Loader/Loader";
 
 const GamePosts = () => {
@@ -25,13 +25,7 @@ const GamePosts = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:3001/posts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ text, userid: userId, gameid, gamemodeid }),
-      });
+      const response = await dispatch(createPost({ text, userid: userId, gameid, gamemodeid }))
 
       if (response.ok) {
         // El post se creó exitosamente, puedes realizar alguna acción aquí si es necesario
@@ -43,6 +37,7 @@ const GamePosts = () => {
     } catch (error) {
       console.error("Error al realizar la solicitud:", error);
     }
+    setText("");
   };
 
 //----------posts con paginacion------------------//
@@ -52,16 +47,16 @@ const [btnNext, setBtnNext]=useState(false)
 const [btnPrev, setBtnPrev]=useState(true)
 const [loading, setLoading]=useState(true)
 
+const post=useSelector(state=>state.pagePosts)
+const pagedPosts=post.posts
 
 //----modificacion de estados----///
 useEffect(()=>{
   setLoading(true)
   dispatch(getPostsWithPagination(currentPage, gameid, gamemodeid))
   .then(()=>setLoading(false))
-}, [currentPage, dispatch])
+}, [currentPage, dispatch, post])
 
-const post=useSelector(state=>state.pagePosts)
-const pagedPosts=post.posts
 
 useEffect(()=>{
   if(currentPage === 1){
