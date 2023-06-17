@@ -128,7 +128,7 @@ async function getPostsByUserId(req, res) {
             },
             {
               model: GameMode,
-            }
+            },
             {
               model: GameMode,
             }
