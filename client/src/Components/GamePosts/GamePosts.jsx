@@ -113,7 +113,7 @@ const handleLike= (event)=>{
           type="text"
           value={text}
           onChange={(event) => setText(event.target.value)}
-          placeholder="Ingrese el texto del post"
+          placeholder="Ingrese el texto del a post"
         />
         <button className="m-2 bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer" type="submit">Crear Post</button>
       </form>
