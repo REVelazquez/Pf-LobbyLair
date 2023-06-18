@@ -107,7 +107,7 @@ const getUserById = async (req, res) => {
   const updateUser = async (req, res) => {
     const { id } = req.params;
     const { name, email, password, image, description, isAdmin, isPremium, perfilUrl } = req.body;
-  
+    console.log(perfilUrl);
     const updateFields = {};
     if (name) updateFields.name = name;
     if (email) updateFields.email = email;

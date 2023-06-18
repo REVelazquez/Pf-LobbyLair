@@ -1,9 +1,15 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const ProtectedRoutes = () => {
-  const stateUser = useSelector((state) => state.user);
-  return stateUser.id ? <Outlet /> : <Navigate to="/" />;
-}
+  const isAuthenticated = localStorage.getItem("isAuthenticated");
+  return isAuthenticated === 'true' ? <Outlet /> : <Navigate to="/" />;
+};
 
-export default ProtectedRoutes;
+const ProtectedRoutes2 = () => {
+  const isAuthenticated = localStorage.getItem("isAuthenticated");
+  return isAuthenticated === 'false' ? <Outlet /> : <Navigate to="/home" />;
+};
+
+export { ProtectedRoutes, ProtectedRoutes2 };

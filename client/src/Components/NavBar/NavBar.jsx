@@ -34,9 +34,10 @@ const NavBar = () => {
   };
 
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     try {
-      await signOut(auth);
+      localStorage.setItem("isAuthenticated", false)
+      console.log(localStorage.getItem("isAuthenticated"));
       dispatch(logOut());
       navigate("/");
     } catch (error) {

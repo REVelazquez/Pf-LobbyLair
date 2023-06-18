@@ -1,11 +1,14 @@
 import React from "react";
-
+import { useEffect } from "react";
 import Style from "./Home.css"; 
 import { useNavigate } from 'react-router-dom';
 import GamesBar from "../../Components/GamesBar/GamesBar";
 
 
 const Home = () => {
+  useEffect(() => {
+    localStorage.setItem("isAuthenticated", true)
+  }, []);
     const navigate = useNavigate();
     const handleJoinChat = () => {
        navigate('/chat');
