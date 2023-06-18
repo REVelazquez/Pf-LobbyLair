@@ -141,7 +141,7 @@ const NavBar = () => {
                   <ul style={{ position: "absolute", top: "100%", left: 0, backgroundColor: "white", padding: "0.5rem", borderRadius: "4px", boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", zIndex: 1 }}>
                     <li>
                       <NavLink
-                        to={`/profile/${id}`}
+                        to={`/profile`}
                         style={{ color: "black", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
                         activeClassName="text-gray-300"
                         onClick={handleMenuToggle}

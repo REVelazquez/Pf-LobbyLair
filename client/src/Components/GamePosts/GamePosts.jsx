@@ -21,17 +21,16 @@ const GamePosts = () => {
   const [text, setText] = useState("");
   const [gameid, setGameid] = useState(gameId);
   const [gamemodeid, setGamemodeid] = useState(gameModeId);
+  const [refresh, setRefresh] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const response = await dispatch(createPost({ text, userid: userId, gameid, gamemodeid }))
-
+      setRefresh(!refresh)
       if (response.ok) {
-        // El post se creó exitosamente, puedes realizar alguna acción aquí si es necesario
         console.log("El post se creó exitosamente");
       } else {
-        // Hubo un error al crear el post, puedes manejarlo de acuerdo a tus necesidades
         console.error("Error al crear el post");
       }
     } catch (error) {
@@ -40,8 +39,6 @@ const GamePosts = () => {
     setText("");
   };
 
-//----------posts con paginacion------------------//
-//-------constantes y estados-----
 const [currentPage, setCurrentPage]=useState(1)
 const [btnNext, setBtnNext]=useState(false)
 const [btnPrev, setBtnPrev]=useState(true)
@@ -49,13 +46,14 @@ const [loading, setLoading]=useState(true)
 
 const post=useSelector(state=>state.pagePosts)
 const pagedPosts=post.posts
+console.log(pagedPosts[0].id);
 
 //----modificacion de estados----///
 useEffect(()=>{
   setLoading(true)
   dispatch(getPostsWithPagination(currentPage, gameid, gamemodeid))
   .then(()=>setLoading(false))
-}, [currentPage, dispatch, post])
+}, [currentPage, dispatch, refresh])
 
 
 useEffect(()=>{
@@ -103,45 +101,38 @@ const handleLike= (event)=>{
 
 
   return (
-    <div style={{display:'flex', flexDirection:'row'}}>
+    <div className="flex ml-[15rem] my-[5rem]">
       <GamesBar/>
       <div>
       <form style={{marginTop:'0.75em'}} onSubmit={handleSubmit}>
         <input
-          style={{width:'35rem', height:'5em', marginLeft:'5em', borderColor:'crimson', borderWidth:'2px'}}
+           className="items-center justify-center w-[350px] h-[50px] mx-auto my-[5rem] bg-gray-300 rounded-lg p-3 mt-[5rem] ml-[10rem]"
+        style={{
+          boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
+        }}
           type="text"
           value={text}
           onChange={(event) => setText(event.target.value)}
           placeholder="Ingrese el texto del post"
         />
-        <button style={{marginLeft:'.75em'}} type="submit">Crear Post</button>
+        <button className="m-2 bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer" type="submit">Crear Post</button>
       </form>
       <button onClick={handlePrev} disable={btnPrev} style={{marginRight:'0.75em'}}  >Prev: </button>
       {post.totalPages > 1 && pages?.map(e=><button style={{marginLeft:'5px', marginRight:'5px'}} key={e} value={e} onClick={handleOnClick} disabled={currentPage===e}>{e}</button>)}
-      <button onClick={handleNext} disable={btnNext} style={{marginLeft:'0.75'}} >Next </button>
-      <div>
-      {loading && <Loader style={{marginTop:'10%'}} />}
+      <button onClick={handleNext} disable={btnNext} className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2"> Next </button>
+      <div className="p-2">
       {pagedPosts?.map(({id, createdAt, text, User})=>{
         return(
-          <div key={id} style={{width:'40rem', marginLeft:'5em', marginTop:'.5em', height:'6em', borderColor:'crimson', borderWidth:'2px'}}>
-            <h1>{text}</h1>
-            <div style={{display:'flex', marginLeft:'35%'}}>
-            <p style={{marginRight:'0.5em'}}>Posted by:</p>
-            <NavLink  to={`/profile/${User.id}`}>
-            <p>{User.name}</p>
+          <div key={id} className="items-center justify-center w-[300px] h-[110px] mx-auto my-[5rem] bg-gray-300 rounded-lg p-3 ml-[10rem]"
+          style={{
+            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
+          }}>
+            <h1 className="text-black font-bold">{text}</h1>
+            <p className="text-black font-bold">Posted by:</p>
+            <NavLink  to={`/user/${User.id}`}>
+            <p className="text-black font-bold">{User.name}</p>
             </NavLink>
-
-            </div>
-            <div style={{display:'flex', marginLeft:'33%'}}>
-              {liked  === true ? (<HiHeart onClick={handleLike} style={{cursor:'pointer', color:'crimson'}} />) : ( <HiHeart onClick={handleLike} style={{cursor:'pointer'}} />)}           
-
-            <p style={{marginLeft:'1em'}}>Created: {createdAt.slice(0, 10).split('-').reverse().join('-')}</p>
-
-            </div>
-
-
-
-          
+            <p className="text-black font-bold">Created: {createdAt.slice(0, 10).split('-').reverse().join('-')}</p>
           </div>
         )
       })}
