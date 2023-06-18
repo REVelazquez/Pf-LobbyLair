@@ -39,7 +39,7 @@ const SearchBar = () => {
         type="search"
         value={searchName.name}
         onChange={handleChange}
-        className="rounded-full mr-2 text-center placeholder-center font-semibold text-black"
+        className="rounded-full mr-2 text-center h-[30px] placeholder-center font-semibold text-black"
       />
       <button className="text-white text-lg font-semibold no-underline hover:text-gray-500">
         <img src={glass} alt=""/>
@@ -50,13 +50,19 @@ const SearchBar = () => {
           {game.length !== 0 ? (
             game.map((match) => (
               <NavLink key={match.id} to={`/games/${match.id}`}>
-                <button className="rounded-lg text-black italic font-bold text-sm p-3 hover:bg-gray-200 w-full hover:text-black text-center">
+                <button className="rounded-lg bg-gray-200 text-black italic font-bold text-sm p-3 hover:bg-gray-300 w-full hover:text-black text-center"
+                        style={{
+                          boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
+                        }}>
                   {match.name}
                 </button>
               </NavLink>
             ))
           ) : (
-            <button className="rounded-lg text-black italic font-bold text-sm p-3 cursor-default">
+            <button className="rounded-lg bg-gray-200 text-black italic font-bold text-sm p-3 cursor-default"
+            style={{
+              boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
+            }}>
               No results
             </button>
           )}
