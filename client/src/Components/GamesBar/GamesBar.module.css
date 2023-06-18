@@ -1,15 +1,17 @@
 .container{
-    width: 6.5em;
+    max-width: 7.6%;
     height: 100% fixed;
     display: flex;
     flex-direction: column;
+    margin-left: 1em;
 }
 
 .imag{
-    width: 6.5em;
+    width: 10%fixed;
 }
 
 .btn{
+    height: 8%;
     font-weight: bolder;
     font-size: larger;
 }

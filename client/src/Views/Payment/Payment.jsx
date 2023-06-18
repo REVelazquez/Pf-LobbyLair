@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const PaymentComponent = () => {
+  const stateUser = useSelector((state) => state.user);
+  console.log(stateUser);
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handlePaymentOption = (option) => {
@@ -22,8 +25,6 @@ const PaymentComponent = () => {
           <img
             src="https://onx.la/c4cfc"
             alt="PayPal"
-
-            className="w-12 h-12 mr-4"
             style={{ cursor: "pointer" }}
             className="w-12 h-12 mr-4 cursor-pointer"
           />
@@ -40,9 +41,7 @@ const PaymentComponent = () => {
           <img
             src="https://onx.la/b301d"
             alt="MercadoPago"
-            className="w-12 h-12 mr-4"
             style={{ cursor: "pointer" }}
-
             className="w-12 h-12 mr-4 cursor-pointer"
 
           />

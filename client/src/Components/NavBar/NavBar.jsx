@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { WiDaySunny, WiMoonAltNew } from "react-icons/wi";
 import LobbyFlight from "../../Multimedia/Flight lobbylair.gif"
 import LobbyLogo from '../../Multimedia/Logo Lobbylair.gif'
-import { useDispatch } from "react-redux";
-import { logOut } from "../../Redux/actions";
-import SearchBar from '../SearchBar/Searchbar.jsx';
+import { useDispatch, useSelector } from "react-redux";
+import { getUserById, logOut } from "../../Redux/actions";
+import SearchBar from '../SearchBar/SearchBar';
 
 
 const NavBar = () => {
@@ -15,7 +15,11 @@ const NavBar = () => {
   const [theme, setTheme] = useState("light");
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
-  const user = auth.currentUser;
+  // const user = auth.currentUser;
+
+  const user= useSelector(state=>state.user)
+ 
+  const id=user.id
 
   const handleThemeChange = () => {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -29,13 +33,14 @@ const NavBar = () => {
     }
   };
 
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
       dispatch(logOut());
       navigate("/");
     } catch (error) {
-      console.log(error);
+      throw new Error(error)
     }
   };
 
@@ -62,12 +67,7 @@ const NavBar = () => {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: "1050px", margin: "auto" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "2.5rem", flex: "1" }}>
         <button>
-  <NavLink
-    to="/"
-    style={{ textDecoration: "none", display: "flex", alignItems: "center" }}
-    activeClassName="text-gray-300"
-    exact
-  >
+  
     <div style={{width:'50px', height:'50px', justifyContent:'center', backgroundColor:"white", borderRadius:'100%',}}>
       <img src={LobbyLogo} alt='LOBBYL' style={{ transform:'scale(1)', marginTop:'2px'}} />
     </div>
@@ -85,7 +85,7 @@ const NavBar = () => {
             >
       <img src={LobbyFlight} alt="LOBBYF" style={{ transform:"scale(2)" }} />
     </div>
-  </NavLink>
+  
 </button>
           <button>
             <NavLink
@@ -141,9 +141,10 @@ const NavBar = () => {
                   <ul style={{ position: "absolute", top: "100%", left: 0, backgroundColor: "white", padding: "0.5rem", borderRadius: "4px", boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", zIndex: 1 }}>
                     <li>
                       <NavLink
-                        to="/profile"
+                        to={`/profile/${id}`}
                         style={{ color: "black", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
                         activeClassName="text-gray-300"
+                        onClick={handleMenuToggle}
                       >
                         Profile
                       </NavLink>

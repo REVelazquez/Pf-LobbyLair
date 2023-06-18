@@ -16,7 +16,8 @@ import {
     GET_GAME_MODE,
     GET_ALL_POSTS,
     GET_POST_BY_USER_ID,
-    GET_POST_WITH_PAGINATION
+    GET_POST_WITH_PAGINATION,
+    CREATE_POST
 } from './action-types';
 
 const initialState = {
@@ -28,6 +29,7 @@ const initialState = {
     pagePosts: [],
     userPosts: [],
     user: [],
+    otherUser: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -61,7 +63,7 @@ const reducer = (state = initialState, action) => {
         case GET_USER_BY_ID:
             return {
               ...state,
-                user: action.payload,
+                otherUser: action.payload,
             }
         case GET_USER_BY_NAME:
             return {
@@ -107,6 +109,11 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 pagePosts:action.payload
+            }
+        case CREATE_POST:
+            return{
+                ...state,
+                posts:action.payload
             }
         default:
                 return {

@@ -26,8 +26,7 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Post, User, Game, Genre, GameMode, Favorite } = sequelize.models;
-
+const { Post, User, Game, Genre, GameMode, ChatMessage} = sequelize.models;
 Game.belongsToMany(Genre, {through: 'Game_Genre'})
 Genre.belongsToMany(Game, {through: 'Game_Genre'})
 Game.belongsToMany(GameMode, {through: 'Game_GameMode'})
@@ -41,8 +40,9 @@ Post.belongsTo(GameMode)
 Post.belongsTo(User)
 Game.hasMany(Post)
 Post.belongsTo(Game)
-
+ChatMessage.belongsTo(User)
 module.exports = {
   ...sequelize.models, 
   conn: sequelize,     
 };
+

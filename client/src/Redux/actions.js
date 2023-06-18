@@ -17,7 +17,8 @@ import {
     UPDATE_USER,
     GET_GAMES_WITH_PAGINATION,
     GET_ALL_POSTS,
-    GET_POST_WITH_PAGINATION
+    GET_POST_WITH_PAGINATION,
+    CREATE_POST
 } from './action-types';
 import { ErrorMessage } from 'formik';
 
@@ -169,7 +170,7 @@ export const createUser = (payload) => {
 }
 
 export const getUserById = (id) => async(dispatch) => {
-    console.log(id)
+
     try {
         
         const userId = await axios(`http://localhost:3001/users/${id}`);
@@ -205,9 +206,10 @@ export const getUserByEmail = (email) => async(dispatch) => {
 };
 
 export const logIn = (payload) => async(dispatch) => {
+
     try {
+
         const user = await axios.post('http://localhost:3001/login', payload);
-        console.log(user.data);
         return dispatch({
             type: CREATE_USER,
             payload: user.data
@@ -251,3 +253,18 @@ export const updateUser = (id, payload) => async(dispatch) => {
         throw new Error(error);
     }
 };
+
+export const createPost = (payload) => {
+    return async (dispatch) => {
+        try {
+            let newPost = await axios.post('http://localhost:3001/posts', payload);
+          return dispatch({
+            type: CREATE_POST,
+            payload: newPost.data
+        })
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+}
+

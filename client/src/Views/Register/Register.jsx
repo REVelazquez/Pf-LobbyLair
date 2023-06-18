@@ -9,42 +9,89 @@ const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const [setUser] = useState(null);
   const [data, setData] = useState({
     email: "",
     password: "",
     confirmPassword: "",
     name: "",
   });
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}$/;
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: validateField(name, value),
+    }));
+  };
+
+  const validateField = (fieldName, value) => {
+    let error = "";
+
+    switch (fieldName) {
+      case "email":
+        if (!emailRegex.test(value)) {
+          error = "Invalid email format";
+        }
+        break;
+      case "password":
+        if (!passwordRegex.test(value)) {
+          error =
+            "Password must contain at least one uppercase letter and one special character (!@#$%^&*), and be at least 6 characters long";
+        }
+        break;
+      case "confirmPassword":
+        if (value !== data.password) {
+          error = "Passwords do not match";
+        }
+        break;
+      default:
+        break;
+    }
+
+    return error;
+  };
+
+  const isFormValid = () => {
+    return (
+      !errors.email &&
+      !errors.password &&
+      !errors.confirmPassword &&
+      data.email &&
+      data.password &&
+      data.confirmPassword &&
+      data.name
+    );
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
-    if (!emailRegex.test(data.email)) {
-      alert("Invalid email format");
-      return;
-    }
-    if (!passwordRegex.test(data.password)) {
-      alert(
-        "Password must contain at least one uppercase letter and one special character (!@#$%^&*), and be at least 6 characters long"
-      );
-      return;
-    }
-    if (data.password !== data.confirmPassword) {
-      alert("Passwords do not match");
+
+    if (!isFormValid()) {
       return;
     }
 
     try {
       dispatch(createUser(data));
-      if (user) { 
+      if (user) {
         navigate("/");
       }
     } catch (error) {
       alert(error);
     }
   };
+
+
 
   return (
     <section style={{ backgroundColor: "#f3f4f6" }}>
@@ -159,11 +206,14 @@ const Register = () => {
                   }}
                   placeholder="name@company.com"
                   required
-                  onChange={(e) =>
-                    setData({ ...data, email: e.target.value })
-                  }
+                  onChange={handleInputChange}
                   value={data.email}
                 />
+                 {errors.email && (
+          <p style={{ color: "red", fontSize: "0.75rem", marginTop: "0.25rem" }}>
+            {errors.email}
+          </p>
+        )}
               </div>
               <div style={{ marginBottom: "1rem" }}>
                 <label
@@ -192,11 +242,14 @@ const Register = () => {
                   }}
                   placeholder="••••••••"
                   required
-                  onChange={(e) =>
-                    setData({ ...data, password: e.target.value })
-                  }
+                  onChange={handleInputChange}
                   value={data.password}
                 />
+                {errors.password && (
+          <p style={{ color: "red", fontSize: "0.75rem", marginTop: "0.25rem" }}>
+            {errors.password}
+          </p>
+        )}
               </div>
               <div style={{ marginBottom: "1rem" }}>
                 <label
@@ -212,7 +265,7 @@ const Register = () => {
                 </label>
                 <input
                   type="password"
-                  name="confirm-password"
+                  name="confirmPassword"
                   id="confirm-password"
                   style={{
                     backgroundColor: "#f9fafb",
@@ -225,15 +278,19 @@ const Register = () => {
                   }}
                   placeholder="••••••••"
                   required
-                  onChange={(e) =>
-                    setData({ ...data, confirmPassword: e.target.value })
-                  }
+                  onChange={handleInputChange}
                   value={data.confirmPassword}
                 />
+                   {errors.confirmPassword && (
+          <p style={{ color: "red", fontSize: "0.75rem", marginTop: "0.25rem" }}>
+            {errors.confirmPassword}
+          </p>
+        )}
               </div>
 
               <button
                 type="submit"
+                disabled={!isFormValid()}
                 style={{
                   width: "100%",
                   color: "#000",

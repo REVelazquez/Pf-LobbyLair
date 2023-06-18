@@ -1,30 +1,70 @@
-import { useState } from "react";
-import { useDispatch } from 'react-redux';
-import { getGamesByName } from '../../Redux/actions';
+import { useState, useEffect, useRef } from "react";
+import axios from 'axios';
+import glass from '../../magnifying-glass-search.png';
+import { NavLink } from 'react-router-dom';
 
 const SearchBar = () => {
-    const dispatch = useDispatch();
+  const searchRef = useRef(null); // Referencia al input de búsqueda
+  const [searchName, setSearchName] = useState({
+    name: '',
+  });
+  const [game, setGame] = useState([])
 
-    const [searchName, setSearchName] = useState({
-     name: '',
-    });
- 
-    const handleChange = (event) =>{
-       setSearchName({name: event.target.value})
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      // Comprobar si se hizo clic fuera del input de búsqueda
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setSearchName({ name: '' });
+        setGame([]);
+      }
     }
-    
-   const handleSubmit = () => {
-    const name = searchName.name
-    if(name.length > 0){
-        dispatch(getGamesByName(name));
+
+    window.addEventListener('click', handleOutsideClick);
+    return () => {
+      window.removeEventListener('click', handleOutsideClick);
     }
-   }
-   return (
-    <div >
-        <input type='search' value={searchName.name} onChange={handleChange}  class="rounded-full mr-2 text-center placeholder-center font-semibold"/>
-        <button onChange={handleSubmit} className="text-white text-lg font-semibold no-underline hover:text-gray-500">Search Game</button>
+  }, [])
+
+  const handleChange = async(event) => {
+    setSearchName({ name: event.target.value })
+    const response = await axios.get(`http://localhost:3001/games/page?name=${event.target.value}`);
+    setGame(response.data.games)
+  }
+
+  return (
+    <div className="flex relative">
+      <input
+        ref={searchRef} // Agrega la referencia al input de búsqueda
+        placeholder="Search game..."
+        type="search"
+        value={searchName.name}
+        onChange={handleChange}
+        className="rounded-full mr-2 text-center placeholder-center font-semibold text-black"
+      />
+      <button className="text-white text-lg font-semibold no-underline hover:text-gray-500">
+        <img src={glass} alt=""/>
+      </button>
+      <div className="absolute w-full top-5 right-2 bg-gray-200 bg-opacity-6 rounded-lg grid grid-cols-1 gap-x-1">
+      {searchName.name.length !== 0 && (
+        <div className="absolute w-full top-9 right-4 bg-gray-50 bg-opacity-6 rounded-lg grid grid-cols-1 gap-x-1">
+          {game.length !== 0 ? (
+            game.map((match) => (
+              <NavLink key={match.id} to={`/games/${match.id}`}>
+                <button className="rounded-lg text-black italic font-bold text-sm p-3 hover:bg-gray-200 w-full hover:text-black text-center">
+                  {match.name}
+                </button>
+              </NavLink>
+            ))
+          ) : (
+            <button className="rounded-lg text-black italic font-bold text-sm p-3 cursor-default">
+              No results
+            </button>
+          )}
+        </div>
+      )}
+      </div>
     </div>
-   )
+  )
 }
 
 export default SearchBar;

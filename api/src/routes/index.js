@@ -1,11 +1,11 @@
 const { Router } = require('express');
 const { body } = require('express-validator');
 const { getGamesWithPagination, getGames, getGamesById, getGamesByName, postGames, deleteGame } = require('../controllers/games.js');
-const { getPosts, createPost, getPostsByUserId, deletePost, getPostsWithPagination, getGameMode } = require('../controllers/post.js');
+const { getPosts, createPost, getPostsByUserId, deletePost, getPostsWithPagination,getGameMode } = require('../controllers/post.js');
 const { getFavorites, createFavorite, removeFavoriteGame } = require('../controllers/favorite.js');
 const { getUsersWithPagination, getAllUsers, getUserById, getUserByName, getUserByEmail, createUser, updateUser, deleteUser} = require('../controllers/users.js');
-
-
+const { handleLogin, handleSignUp } = require('../controllers/authController.js');
+const { sendMessage, getMessages,} = require('../controllers/chatController.js')
 const router = Router();
 
 // Endpoint para obtener todos los games
@@ -17,6 +17,7 @@ router.delete('/games/:id', deleteGame);
 // Ruta para obtener juegos con paginación y filtros
 router.get('/games/page', getGamesWithPagination); 
 
+router.get('/games/mode/',getGameMode);
 // Endpoint para obtener un game por id
 router.get('/games/:id', getGamesById);
 
@@ -26,7 +27,6 @@ router.get('/games/name/:name', getGamesByName);
 // Endpoint para crear un game
 router.post('/games', postGames);
 
-router.get('/games/mode',getGameMode);
 
 // Endpoint para obtener todos los usuarios
 router.get('/users', getAllUsers);
@@ -86,4 +86,14 @@ router.delete('/posts/:id', deletePost);
 //Endpoint para conseguir los posts con Paginacion
 router.get('/posts/page/', getPostsWithPagination );
 
+//Endpoint para post de signup
+router.post('/register', handleSignUp);
+
+//Endpoint para login 
+router.post('/login', handleLogin);
+
+//Endpoint para chat
+router.get('/chat', sendMessage, getMessages);
+
 module.exports = router;
+

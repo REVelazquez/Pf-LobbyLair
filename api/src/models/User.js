@@ -14,7 +14,6 @@ module.exports = (sequelize) =>{
         },
         isAdmin: {
           type: DataTypes.BOOLEAN,
-          allowNull:false
         },
         password: {
           type: DataTypes.STRING,
@@ -29,7 +28,6 @@ module.exports = (sequelize) =>{
         },
         perfilUrl: {
           type: DataTypes.STRING,
-          allowNull: false
         },
         createdAt: {
           allowNull: false,
@@ -38,6 +36,16 @@ module.exports = (sequelize) =>{
         updatedAt: {
           allowNull: false,
           type: DataTypes.DATE
+        },
+        image: {
+          type: DataTypes.STRING,
+        },
+        description: {
+          type: DataTypes.STRING,
         }
-      });
+      },
+      {
+        paranoid:true,
+      }
+    );
     }

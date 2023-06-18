@@ -1,4 +1,5 @@
 const { Game, GameMode, Genre } = require('../db.js');
+const { Op } = require('sequelize');
 const allGames = require('../../dataGames.js');
 
 async function getGames(req, res) {
@@ -194,7 +195,6 @@ async function getGamesWithPagination(req, res) {
   
       count = result.count;
       games = result.rows;
-      console.log(count);
       totalPages = Math.ceil(count / pageSize);
     } else {
       const result = await Game.findAndCountAll({

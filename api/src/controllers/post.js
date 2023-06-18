@@ -1,4 +1,5 @@
 const { Post, Game, User, GameMode } = require('../db.js');
+const { Op } = require('sequelize');
 
 async function getPosts(req, res) {
   try {
@@ -15,7 +16,17 @@ async function getPosts(req, res) {
     return res.status(500).json({ error: error.message });
   }
 }
+async function getGameMode (req,res){
+  const gameModeId = req.params;
 
+  try {
+    let gameMode = await GameMode.findAll();
+
+    return res.status(200).json(gameMode);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
 async function getPostsByUserId(req, res) {
   const userId = req.params.userid;
 
@@ -37,6 +48,7 @@ async function getPostsByUserId(req, res) {
 
   async function createPost(req, res) {
     const { text, userid, gameid, gamemodeid } = req.body;
+    console.log(text, userid, gameid, gamemodeid);
     try {
       let newPost = await Post.create({
         text: text,
@@ -87,24 +99,22 @@ async function getPostsByUserId(req, res) {
     const { page, userid, gameid, gamemodeid } = req.query;
     const pageSize = 5;
     let offset = 0;
-  
+    console.log(page, userid, gameid, gamemodeid);
     let whereClause = {};
     if (userid) {
-      whereClause.userid = userid;
+      whereClause['$User.id$'] = userid;
     }
     if (gameid) {
-      whereClause.gameid = gameid;
+      whereClause['$Game.id$'] = gameid;
     }
     if (gamemodeid) {
-      whereClause['$Game.GameModes.id$'] = gamemodeid;
+      whereClause['$GameMode.id$'] = gamemodeid;
     }
   
-
     try {
       let posts;
       let count;
       let totalPages;
-  
       if (page) {
         offset = (parseInt(page) - 1) * pageSize;
         const result = await Post.findAndCountAll({
@@ -115,19 +125,18 @@ async function getPostsByUserId(req, res) {
             },
             {
               model: Game,
-              include: [
-                {
-                  model: GameMode,
-                  through: { attributes: [] },
-                },
-              ],
             },
-          ],
+            {
+              model: GameMode,
+            },
+            {
+              model: GameMode,
+            }
+          ],          
           limit: pageSize,
           offset: offset,
           distinct: true,
         });
-  
         count = result.count;
         posts = result.rows;
         totalPages = Math.ceil(count / pageSize);
@@ -140,20 +149,17 @@ async function getPostsByUserId(req, res) {
             },
             {
               model: Game,
-              include: [
-                {
-                  model: GameMode,
-                  through: { attributes: [] },
-                },
-              ],
             },
+            {
+              model: GameMode,
+            }
           ],
           distinct: true,
         });
   
         count = result.count;
         posts = result.rows;
-        totalPages = 1;
+        totalPages = Math.ceil(count/pageSize);
       }
   
       res.json({
@@ -167,17 +173,7 @@ async function getPostsByUserId(req, res) {
     }
   }
 
-  async function getGameMode (req,res){
-    const gameModeId = req.params.gamemodeid;
-  
-    try {
-      let gameMode = await GameMode.findByPk(gameModeId);
-  
-      return res.status(200).json(gameMode);
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
-    }
-  }
+
 
 
 
@@ -185,9 +181,9 @@ module.exports = {
   getPosts,
   getPostsByUserId,
   createPost,
-  getGameMode,
   getPostsWithPagination,
-  deletePost
-
+  deletePost,
+  getGameMode
+  
 
 };
