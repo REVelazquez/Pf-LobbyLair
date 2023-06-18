@@ -6,10 +6,11 @@ import Register from "./Register/Register";
 import Chat from "./Chat/Chat";
 import LandingPage from "./LandingPage/LandingPage";
 import Favorites from "./Favorites/Favorites";
+import UpdateProfile from "./UpdateProfile/UpdateProfile";
 import UsersProfile from "./UsersProfile/UsersProfile";
 
+export { Home, Login, Payment, Profile, Register, Chat, LandingPage, Favorites, UsersProfile, UpdateProfile};
 
-export { Home, Login, Payment, Profile, Register, Chat, LandingPage, Favorites, UsersProfile};
 
 
 

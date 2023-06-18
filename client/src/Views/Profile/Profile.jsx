@@ -1,11 +1,25 @@
-import React from "react";
-import { useSelector } from "react-redux";
-
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useLocation } from "react-router-dom";
+import GamesBar from "../../Components/GamesBar/GamesBar";
+import { getPostsByUserId, getUserById, updateUser } from "../../Redux/actions";
 
 const Profile = () => {
-
+  const location=useLocation()
+  const dispatch=useDispatch()
   const userDetail = useSelector(state=>state.user)
   
+  useEffect(() => {
+    console.log(id);
+    dispatch(getUserById(id));
+    dispatch(getPostsByUserId(id));
+  }, []);
+  
+  const pathname = location.pathname;
+  const id = pathname.split('/').filter(str => !isNaN(parseInt(str)));
+  const otherUser=useSelector(state=>state.otherUser)
+
+  if(userDetail.id == id){
     return (
       <div>
         <div className="container mx-auto mt-8">
@@ -21,9 +35,9 @@ const Profile = () => {
                 />
               </div>
             </div>
-            <button className="m-2 bg-black text-white border-none rounded-[1rem] h-12 p-3 text-l font-bold cursor-pointer">
+            <NavLink to={`/profile/${id}/update`} style={{ color: "white", fontSize: "0.8rem", fontWeight: "300", textDecoration: "none", hover: "gray", backgroundColor: "#1f2937", padding: "0.1rem" }}>
               Editar
-            </button>
+            </NavLink>
             <div>
               <div className="mb-1 my-10">
                 <h3 className="text-4xl font-bold text-left m-2 p-3 truncate">{userDetail.name}</h3>

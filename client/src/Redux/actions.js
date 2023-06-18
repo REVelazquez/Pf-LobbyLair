@@ -173,8 +173,7 @@ export const createUser = (payload) => {
 export const getUserById = (id) => async(dispatch) => {
 
     try {
-
-        const userId = await axios.get(`http://localhost:3001/users/${id}`);
+        const userId = await axios(`http://localhost:3001/users/${id}`);
         return dispatch({
             type: GET_USER_BY_ID,
             payload: userId.data
@@ -245,7 +244,8 @@ export const deleteUser = (id) => async(dispatch) => {
 
 export const updateUser = (id, payload) => async(dispatch) => {
     try {
-        const userId = await axios(`http://localhost:3001/users/${id}`, payload);
+        const userId = await axios.put(`http://localhost:3001/users/${id}`, payload);
+        console.log();
         return dispatch({
             type: UPDATE_USER,
             payload: userId.data

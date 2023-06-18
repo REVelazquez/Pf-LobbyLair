@@ -1,4 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useEffect } from "react";
+import Style from "./Home.css"; 
+import { useNavigate } from 'react-router-dom';
 import GamesBar from "../../Components/GamesBar/GamesBar";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPosts, orderPostByCreation } from "../../Redux/actions";
@@ -6,6 +9,14 @@ import { NavLink } from "react-router-dom";
 
 
 const Home = () => {
+
+  useEffect(() => {
+    localStorage.setItem("isAuthenticated", true)
+  }, []);
+    const navigate = useNavigate();
+    const handleJoinChat = () => {
+       navigate('/chat');
+      };
   const dispatch=useDispatch()
 
   useEffect(()=>{
