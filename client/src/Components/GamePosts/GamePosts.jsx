@@ -20,17 +20,16 @@ const GamePosts = () => {
   const [text, setText] = useState("");
   const [gameid, setGameid] = useState(gameId);
   const [gamemodeid, setGamemodeid] = useState(gameModeId);
+  const [refresh, setRefresh] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const response = await dispatch(createPost({ text, userid: userId, gameid, gamemodeid }))
-
+      setRefresh(!refresh)
       if (response.ok) {
-        // El post se creó exitosamente, puedes realizar alguna acción aquí si es necesario
         console.log("El post se creó exitosamente");
       } else {
-        // Hubo un error al crear el post, puedes manejarlo de acuerdo a tus necesidades
         console.error("Error al crear el post");
       }
     } catch (error) {
@@ -39,8 +38,6 @@ const GamePosts = () => {
     setText("");
   };
 
-//----------posts con paginacion------------------//
-//-------constantes y estados-----
 const [currentPage, setCurrentPage]=useState(1)
 const [btnNext, setBtnNext]=useState(false)
 const [btnPrev, setBtnPrev]=useState(true)
@@ -48,13 +45,12 @@ const [loading, setLoading]=useState(true)
 
 const post=useSelector(state=>state.pagePosts)
 const pagedPosts=post.posts
-console.log(pagedPosts);
-//----modificacion de estados----///
+
 useEffect(()=>{
   setLoading(true)
   dispatch(getPostsWithPagination(currentPage, gameid, gamemodeid))
   .then(()=>setLoading(false))
-}, [currentPage, dispatch, post])
+}, [currentPage, dispatch, refresh])
 
 
 useEffect(()=>{

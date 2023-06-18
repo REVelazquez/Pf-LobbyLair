@@ -37,6 +37,12 @@ module.exports = (sequelize) =>{
           allowNull: false,
           type: DataTypes.DATE
         },
+        image: {
+          type: DataTypes.STRING,
+        },
+        description: {
+          type: DataTypes.STRING,
+        }
       },
       {
         paranoid:true,
