@@ -95,7 +95,7 @@ const handlePrev = ()=>{
       <div>
       <form style={{marginTop:'0.75em'}} onSubmit={handleSubmit}>
         <input
-           className="items-center justify-center w-[350px] h-[50px] mx-auto my-[5rem] bg-gray-300 rounded-lg p-3 mt-[5rem] ml-[10rem]"
+           className="items-center justify-center w-[350px] h-[50px] mx-auto my-[5rem] bg-gray-300 rounded-lg p-3 mt-[5rem] ml-[10rem] overflow-wrap-break-word"
         style={{
           boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
         }}
@@ -114,20 +114,25 @@ const handlePrev = ()=>{
       {pagedPosts?.map(({ id, createdAt, text, User }) => {
         if (User) {
           return (
-          <div key={id} className="items-center justify-center w-[300px] h-[110px] mx-auto my-[5rem] bg-gray-300 rounded-lg p-3 ml-[10rem]"
-        style={{
-          boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
-        }}>
-        <h1 className="text-black font-bold">{text}</h1>
-        <p className="text-black font-bold">Posted by:</p>
-        <NavLink to={`/profile/${User.id}`}>
-          <p className="text-black font-bold">{User.name}</p>
-        </NavLink>
-        <p className="text-black font-bold">Created: {createdAt.slice(0, 10).split('-').reverse().join('-')}</p>
-      </div>
+<div
+  key={id}
+  className="items-center justify-center w-[300px] h-[110px] mx-auto my-[5rem] bg-gray-300 rounded-lg p-3 ml-[10rem] overflow-hidden"
+  style={{
+    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
+  }}
+>
+  <h1 className="text-black font-bold truncate">{text}</h1>
+  <p className="text-black font-bold truncate">Posted by:</p>
+  <NavLink to={`/profile/${User.id}`}>
+    <p className="text-black font-bold truncate">{User.name}</p>
+  </NavLink>
+  <p className="text-black font-bold truncate">
+    Created: {createdAt.slice(0, 10).split("-").reverse().join("-")}
+  </p>
+</div>
     )
   } else {
-    return null; // O puedes mostrar un mensaje de error, dependiendo de tus necesidades
+    return null; // O puedes mostrar un mensaje de error
   }
 })}
       </div>
