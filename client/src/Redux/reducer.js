@@ -17,7 +17,8 @@ import {
     GET_ALL_POSTS,
     GET_POST_BY_USER_ID,
     GET_POST_WITH_PAGINATION,
-    CREATE_POST
+    CREATE_POST,
+    ORDER
 } from './action-types';
 
 const initialState = {
@@ -114,6 +115,18 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 posts:action.payload
+            }
+        case ORDER:
+            const allPosts=[...state.posts]
+            const orderedGamesByCreation=
+            action.payload=== 'A'
+            ?allPosts.sort((a,b)=> a.id -b.id)
+            :action.payload ==='D'
+            ?allPosts.sort((a,b)=>b.id - a.id)
+            : [...state.posts]
+            return{
+                ...state,
+                posts:orderedGamesByCreation
             }
         default:
                 return {

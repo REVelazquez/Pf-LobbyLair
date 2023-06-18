@@ -67,7 +67,7 @@ const GamesBar = () => {
           return (
             <button
               key={id}
-              onClick={() => navigate(`/games/${id}`)}
+              onClick={() => navigate(`/games/${id}`) }
               className="flex items-center justify-center"
             >
               <img className="w-[8rem] h-[8rem]" src={thumbnail} alt="" />

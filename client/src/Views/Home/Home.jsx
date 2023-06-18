@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import GamesBar from "../../Components/GamesBar/GamesBar";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPosts } from "../../Redux/actions";
+import { getAllPosts, orderPostByCreation } from "../../Redux/actions";
 import { NavLink } from "react-router-dom";
 
 
@@ -13,19 +13,30 @@ const Home = () => {
   }, [dispatch])
 
   const posts=useSelector(state=>state.posts)
-  console.log(posts);
+
+  const handlerOrder= (event)=>{
+    dispatch(orderPostByCreation(event.target.value))
+  }
 
   return (
     <div  style={{position:'sticky', top:'0'}} className="flex">
       <div  style={{display:'flex'}} className="mt-auto">
       <GamesBar/>
       <div>
-        <h1>Order:</h1>
-      {posts?.map(({id, createdAt, text, User})=>{
+        <h1>Order:
+          <select name="Creation Order" key='Order' onChange={handlerOrder} >
+            <option value="None">. . .</option>
+            <option value="A">Old first</option>
+            <option value="D">New first</option>
+          </select>
+        </h1>
+      {posts?.map(({id, createdAt, GameMode, text, User})=>{
         return(
           <div key={id} style={{width:'40rem', marginLeft:'5em', marginTop:'.5em', height:'6em', borderColor:'crimson', borderWidth:'2px'}}>
             <h1>{text}</h1>
-            <div style={{display:'flex', marginLeft:'35%'}}>
+            <div style={{display:'flex',  marginLeft:'35%'}}>
+            <h1 className="text-black font-bold">Game mode: {GameMode.name}</h1>
+
             <p style={{marginRight:'0.5em'}}>Posted by:</p>
             <NavLink  to={`/user/${User.id}`}>
             <p>{User.name}</p>

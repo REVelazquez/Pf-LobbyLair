@@ -101,7 +101,7 @@ const handleLike= (event)=>{
       <div>
       <form style={{marginTop:'0.75em'}} onSubmit={handleSubmit}>
         <input
-           className="items-center justify-center w-[350px] h-[50px] mx-auto my-[5rem] bg-gray-300 rounded-lg p-3 mt-[5rem] ml-[10rem]"
+           className="items-center justify-center w-[350px] h-[50px] mx-auto my-[5rem] bg-gray-300 rounded-lg p-3 mt-[5rem] ml-[10rem] overflow-wrap-break-word"
         style={{
           boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
         }}
@@ -140,7 +140,7 @@ const handleLike= (event)=>{
       </div>
     )
   } else {
-    return null; // O puedes mostrar un mensaje de error, dependiendo de tus necesidades
+    return null; // O puedes mostrar un mensaje de error
   }
 })}
       </div>

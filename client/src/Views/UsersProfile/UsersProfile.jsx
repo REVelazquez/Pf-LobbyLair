@@ -9,15 +9,14 @@ const UsersProfile = ()=>{
 
     console.log(id);
 
-    useEffect(()=>{
-        dispatch(getUserById(id))
-    }, [dispatch, id])
-    const otherUser= useState(state=>state.otherUser)
+    // useEffect(()=>{
+    //     dispatch(getUserById(id))
+    // }, [dispatch, id])
+    // const otherUser= useState(state=>state.otherUser)
 
-    console.log(otherUser);
     return (
         <div>
-            <p>holi</p>
+            <p>complicado hacer esto</p>
         </div>
     )
 }
