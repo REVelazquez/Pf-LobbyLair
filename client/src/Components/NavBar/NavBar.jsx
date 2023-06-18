@@ -68,9 +68,10 @@ const NavBar = () => {
         <div style={{ display: "flex", alignItems: "center", gap: "2.5rem", flex: "1" }}>
         <button>
   
-    <div style={{width:'50px', height:'50px', justifyContent:'center', backgroundColor:"white", borderRadius:'100%',}}>
-      <img src={LobbyLogo} alt='LOBBYL' style={{ transform:'scale(1)', marginTop:'2px'}} />
-    </div>
+        <div style={{ width: '50px', height: '50px', justifyContent: 'center', backgroundColor: 'white', borderRadius: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+  <img src={LobbyLogo} alt='LOBBYL' style={{ transform: 'scale(1)', marginTop: '5px' }} />
+</div>
+
     <div
               style={{
                 maxWidth: "100px",
