@@ -51,7 +51,7 @@ const GamesBar = () => {
 
   return (
     <div className="flex justify-end mt-4">
-      <div className="flex flex-col h-full">
+      <div style={{position:'sticky'}} className="flex flex-col h-full">
         <div className="flex justify-center">
         <NavLink
           onClick={handleUp}
@@ -67,7 +67,7 @@ const GamesBar = () => {
           return (
             <button
               key={id}
-              onClick={() => navigate(`/games/${id}`)}
+              onClick={() => navigate(`/games/${id}`) }
               className="flex items-center justify-center"
             >
               <img className="w-[8rem] h-[8rem]" src={thumbnail} alt="" />

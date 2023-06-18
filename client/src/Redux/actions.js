@@ -18,7 +18,8 @@ import {
     GET_GAMES_WITH_PAGINATION,
     GET_ALL_POSTS,
     GET_POST_WITH_PAGINATION,
-    CREATE_POST
+    CREATE_POST,
+    ORDER
 } from './action-types';
 import { ErrorMessage } from 'formik';
 
@@ -172,8 +173,8 @@ export const createUser = (payload) => {
 export const getUserById = (id) => async(dispatch) => {
 
     try {
-        
-        const userId = await axios(`http://localhost:3001/users/${id}`);
+
+        const userId = await axios.get(`http://localhost:3001/users/${id}`);
         return dispatch({
             type: GET_USER_BY_ID,
             payload: userId.data
@@ -268,3 +269,6 @@ export const createPost = (payload) => {
     }
 }
 
+export const orderPostByCreation = (posts)=>{
+    return  {type:ORDER, payload: posts}
+}

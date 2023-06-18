@@ -1,6 +1,16 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getAllGames } from "../../Redux/actions";
 import { Login } from "../../Views/index";
 
+
 const LandingPage = () => {
+
+    const dispatch=useDispatch()
+    useEffect(()=>{
+      dispatch(getAllGames())
+    })
+
   return (
     <div>
       <div className="flex text-black bg-gray-100 py-[0.5rem] h-[100vh] ">

@@ -4,6 +4,7 @@ import queryString from 'query-string';
 import { useDispatch, useSelector } from "react-redux";
 import GamesBar from "../GamesBar/GamesBar";
 import { getPostsWithPagination, createPost } from "../../Redux/actions";
+import { HiHeart } from "react-icons/hi";
 import Loader from "../Loader/Loader";
 
 const GamePosts = () => {
@@ -86,9 +87,14 @@ const handlePrev = ()=>{
   if(currentPage>1){
     const prevPage=currentPage-1;
     setCurrentPage(prevPage)
+  }
 }
-}
+//--------------------------------------reacciones---------------------------------
+const [liked, setLiked]= useState(false)
 
+const handleLike= (event)=>{
+  setLiked(!liked)
+}
   return (
     <div className="flex ml-[15rem] my-[5rem]">
       <GamesBar/>
@@ -107,29 +113,31 @@ const handlePrev = ()=>{
         <button className="m-2 bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer" type="submit">Crear Post</button>
       </form>
       <button onClick={handlePrev} disable={btnPrev} className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2"> Prev </button>
-      {loading && <Loader/>}
+      
       {post.totalPages > 1 && pages?.map(e=><button style={{marginLeft:'5px', marginRight:'5px'}} key={e} value={e} onClick={handleOnClick} disabled={currentPage===e}>{e}</button>)}
       <button onClick={handleNext} disable={btnNext} className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2"> Next </button>
       <div className="p-2">
+      {loading && <Loader/>}
       {pagedPosts?.map(({ id, createdAt, text, User }) => {
         if (User) {
           return (
-<div
-  key={id}
-  className="items-center justify-center w-[300px] h-[110px] mx-auto my-[5rem] bg-gray-300 rounded-lg p-3 ml-[10rem] overflow-hidden"
-  style={{
-    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
-  }}
->
-  <h1 className="text-black font-bold truncate">{text}</h1>
-  <p className="text-black font-bold truncate">Posted by:</p>
-  <NavLink to={`/profile/${User.id}`}>
-    <p className="text-black font-bold truncate">{User.name}</p>
-  </NavLink>
-  <p className="text-black font-bold truncate">
-    Created: {createdAt.slice(0, 10).split("-").reverse().join("-")}
-  </p>
-</div>
+          <div key={id} className="items-center justify-center w-[300px] h-[110px] mx-auto my-[5rem] bg-gray-300 rounded-lg p-3 ml-[10rem]"
+        style={{
+          boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
+        }}>
+        <h1 className="text-black font-bold">{text}</h1>
+        <p className="text-black font-bold">Posted by:</p>
+        <NavLink to={`/profile/${User.id}`}>
+          <p className="text-black font-bold">{User.name}</p>
+        </NavLink>
+        
+            <div style={{display:'flex', marginLeft:'33%'}}>
+              {liked  === true ? (<HiHeart onClick={handleLike} style={{cursor:'pointer', color:'crimson'}} />) : ( <HiHeart onClick={handleLike} style={{cursor:'pointer'}} />)}           
+
+            <p style={{marginLeft:'1em'}}>Created: {createdAt.slice(0, 10).split('-').reverse().join('-')}</p>
+
+            </div>
+      </div>
     )
   } else {
     return null; // O puedes mostrar un mensaje de error
