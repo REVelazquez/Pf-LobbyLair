@@ -94,33 +94,39 @@ const handlePrev = ()=>{
 }
 
   return (
-    <div style={{display:'flex', flexDirection:'row'}}>
+    <div className="flex ml-[15rem] my-[5rem]">
       <GamesBar/>
       <div>
       <form style={{marginTop:'0.75em'}} onSubmit={handleSubmit}>
         <input
-          style={{width:'35rem', height:'5em', marginLeft:'5em', borderColor:'crimson', borderWidth:'2px'}}
+           className="items-center justify-center w-[350px] h-[50px] mx-auto my-[5rem] bg-gray-300 rounded-lg p-3 mt-[5rem] ml-[10rem]"
+        style={{
+          boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
+        }}
           type="text"
           value={text}
           onChange={(event) => setText(event.target.value)}
           placeholder="Ingrese el texto del post"
         />
-        <button style={{marginLeft:'.75em'}} type="submit">Crear Post</button>
+        <button className="m-2 bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer" type="submit">Crear Post</button>
       </form>
-      <button onClick={handlePrev} disable={btnPrev} style={{marginRight:'0.75em'}}  >Prev: </button>
+      <button onClick={handlePrev} disable={btnPrev} className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2"> Prev </button>
       {loading && <Loader/>}
       {post.totalPages > 1 && pages?.map(e=><button style={{marginLeft:'5px', marginRight:'5px'}} key={e} value={e} onClick={handleOnClick} disabled={currentPage===e}>{e}</button>)}
-      <button onClick={handleNext} disable={btnNext} style={{marginLeft:'0.75'}} >Next </button>
-      <div>
+      <button onClick={handleNext} disable={btnNext} className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2"> Next </button>
+      <div className="p-2">
       {pagedPosts?.map(({id, createdAt, text, User})=>{
         return(
-          <div key={id} style={{width:'40rem', marginLeft:'5em', marginTop:'.5em', height:'6em', borderColor:'crimson', borderWidth:'2px'}}>
-            <h1>{text}</h1>
-            <p>Posted by:</p>
+          <div key={id} className="items-center justify-center w-[300px] h-[110px] mx-auto my-[5rem] bg-gray-300 rounded-lg p-3 ml-[10rem]"
+          style={{
+            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
+          }}>
+            <h1 className="text-black font-bold">{text}</h1>
+            <p className="text-black font-bold">Posted by:</p>
             <NavLink  to={`/profile/${User.id}`}>
-            <p>{User.name}</p>
+            <p className="text-black font-bold">{User.name}</p>
             </NavLink>
-            <p>Created: {createdAt.slice(0, 10).split('-').reverse().join('-')}</p>
+            <p className="text-black font-bold">Created: {createdAt.slice(0, 10).split('-').reverse().join('-')}</p>
           </div>
         )
       })}
