@@ -3,6 +3,7 @@ import React from "react";
 import Style from "./Home.css"; 
 import { useNavigate } from 'react-router-dom';
 import GamesBar from "../../Components/GamesBar/GamesBar";
+import GamePost from '../../Components/GamePosts/GamePosts';
 
 
 const Home = () => {
@@ -14,7 +15,7 @@ const Home = () => {
   return (
     <div className="flex">
       <div className="mt-auto">
-        <GamesBar />
+        <GamePost/>
       </div>
       
     </div>
