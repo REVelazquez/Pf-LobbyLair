@@ -14,7 +14,7 @@ const Profile = () => {
 
   useEffect(()=>{
     dispatch(getUserById(id))
-  }, [id])
+  }, [])
 
   const otherUser=useSelector(state=>state.otherUser)
 

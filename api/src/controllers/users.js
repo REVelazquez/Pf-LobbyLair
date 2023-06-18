@@ -2,6 +2,8 @@ const axios = require('axios');
 const { User } = require('../db');
 const { Op } = require("sequelize");
 const { validationResult } = require('express-validator');
+const  hash  = require('../utils/bcrypt');
+const bcrypt = require('bcrypt');
 // Función para obtener todos los usuarios de la base de datos
 const getAllUsers = async (req, res) => {
   try {
@@ -102,31 +104,36 @@ const getUserById = async (req, res) => {
       return res.status(500).json({ message: 'Error creating user' });
     }
   };
-    const updateUser = async (req, res) => {
-        const { id } = req.params;
-        const { name, email, password } = req.body;
-        try{
-            await User.update(
-                {
-                    name: name,
-                    email: email,
-                    password: password,
-                    isAdmin: false, // Set a default value for isAdmin
-                    perfilUrl: '', // Set a default value for perfilUrl
-                    isPremium: false,
-                },
-                {
-                    where: {
-                        id: id,
-                    },
-                }
-            );
-            res.json({ message: 'User updated' });
-        } catch (error) {   
-            console.error(error);
-            return res.status(500).json({ message: 'Error updating user' });
-        }
-    };
+  const updateUser = async (req, res) => {
+    const { id } = req.params;
+    const { name, email, password, image, description, isAdmin, isPremium, perfilUrl } = req.body;
+  
+    const updateFields = {};
+    if (name) updateFields.name = name;
+    if (email) updateFields.email = email;
+    if (password) {
+      const hashedPassword = await hash.hashPassword(password);
+      updateFields.password = hashedPassword;
+    }
+    if (image) updateFields.image = image;
+    if (description) updateFields.description = description;
+    if (isAdmin) updateFields.isAdmin = isAdmin;
+    if (isPremium) updateFields.isPremium = isPremium;
+    if (perfilUrl) updateFields.perfilUrl = perfilUrl;
+  
+    try {
+      await User.update(updateFields, {
+        where: {
+          id: id,
+        },
+      });
+      res.json({ message: 'User updated' });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Error updating user' });
+    }
+  };
+  
     const deleteUser = async (req, res) => {
         const { id } = req.params;
         try{
