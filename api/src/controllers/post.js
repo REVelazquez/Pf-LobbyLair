@@ -32,7 +32,7 @@ async function getPostsByUserId(req, res) {
 
   try {
     let posts = await Post.findAll({
-      where: { UserId: userId }, 
+      where: { userId: userId }, 
       include: [
         { model: User, attributes: ['id', 'name'] },
         { model: Game, attributes: ['id', 'name', 'thumbnail'] },
