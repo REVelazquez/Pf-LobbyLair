@@ -115,24 +115,27 @@ const handlePrev = ()=>{
       {post.totalPages > 1 && pages?.map(e=><button style={{marginLeft:'5px', marginRight:'5px'}} key={e} value={e} onClick={handleOnClick} disabled={currentPage===e}>{e}</button>)}
       <button onClick={handleNext} disable={btnNext} className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2"> Next </button>
       <div className="p-2">
-      {pagedPosts?.map(({id, createdAt, text, User})=>{
-        return(
+      {pagedPosts?.map(({ id, createdAt, text, User }) => {
+        if (User) {
+          return (
           <div key={id} className="items-center justify-center w-[300px] h-[110px] mx-auto my-[5rem] bg-gray-300 rounded-lg p-3 ml-[10rem]"
-          style={{
-            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
-          }}>
-            <h1 className="text-black font-bold">{text}</h1>
-            <p className="text-black font-bold">Posted by:</p>
-            <NavLink  to={`/profile/${User.id}`}>
-            <p className="text-black font-bold">{User.name}</p>
-            </NavLink>
-            <p className="text-black font-bold">Created: {createdAt.slice(0, 10).split('-').reverse().join('-')}</p>
-          </div>
-        )
-      })}
+        style={{
+          boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
+        }}>
+        <h1 className="text-black font-bold">{text}</h1>
+        <p className="text-black font-bold">Posted by:</p>
+        <NavLink to={`/profile/${User.id}`}>
+          <p className="text-black font-bold">{User.name}</p>
+        </NavLink>
+        <p className="text-black font-bold">Created: {createdAt.slice(0, 10).split('-').reverse().join('-')}</p>
+      </div>
+    )
+  } else {
+    return null; // O puedes mostrar un mensaje de error, dependiendo de tus necesidades
+  }
+})}
       </div>
       </div>
-
     </div>
   );
 };
