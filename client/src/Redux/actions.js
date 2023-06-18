@@ -18,7 +18,8 @@ import {
     GET_GAMES_WITH_PAGINATION,
     GET_ALL_POSTS,
     GET_POST_WITH_PAGINATION,
-    CREATE_POST
+    CREATE_POST,
+    ORDER
 } from './action-types';
 import { ErrorMessage } from 'formik';
 
@@ -268,3 +269,6 @@ export const createPost = (payload) => {
     }
 }
 
+export const orderPostByCreation = (posts)=>{
+    return  {type:ORDER, payload: posts}
+}

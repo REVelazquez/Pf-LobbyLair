@@ -17,3 +17,4 @@ export const GET_POST_WITH_PAGINATION= 'GET_POST_WITH_PAGINATION'
 export const DELETE_POST = 'DELETE_POST';
 export const GET_GAME_MODE = 'GET_GAME_MODE';
 export const CREATE_POST = 'CREATE_POST';
+export const ORDER='ORDER'

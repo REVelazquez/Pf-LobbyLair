@@ -64,20 +64,21 @@ const NavBar = () => {
   }, []);
 
   return (
-    <nav style={{ backgroundColor: "#1f2937", padding: "1rem" }}>
+    <nav style={{ backgroundColor: "#1f2937", padding: "1rem", position:'sticky'}}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: "1050px", margin: "auto" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "2.5rem", flex: "1" }}>
         <button>
   
-    <div style={{width:'50px', height:'50px', justifyContent:'center', backgroundColor:"white", borderRadius:'100%',}}>
-      <img src={LobbyLogo} alt='LOBBYL' style={{ transform:'scale(1)', marginTop:'2px'}} />
-    </div>
+        <div style={{ width: '50px', height: '50px', justifyContent: 'center', backgroundColor: 'white', borderRadius: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+  <img src={LobbyLogo} alt='LOBBYL' style={{ transform: 'scale(1)', marginTop: '5px' }} />
+</div>
+
     <div
               style={{
                 maxWidth: "100px",
                 position: "absolute",
                 top: mousePosition.y -30,
-                left: mousePosition.x -30,
+                left: mousePosition.x -20,
                 transform: "translate(-50%, -50%)",
                 zIndex:1,
                 transition: "transform 1.2s ease" ,
@@ -142,7 +143,7 @@ const NavBar = () => {
                   <ul style={{ position: "absolute", top: "100%", left: 0, backgroundColor: "white", padding: "0.5rem", borderRadius: "4px", boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", zIndex: 1 }}>
                     <li>
                       <NavLink
-                        to={`/profile/${id}`}
+                        to={`/profile`}
                         style={{ color: "black", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
                         activeClassName="text-gray-300"
                         onClick={handleMenuToggle}
