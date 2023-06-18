@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import GamesBar from "../GamesBar/GamesBar";
 import { getPostsWithPagination, createPost } from "../../Redux/actions";
 import Loader from "../Loader/Loader";
+import { HiOutlineHeart, HiHeart} from "react-icons/hi";
 
 const GamePosts = () => {
   const location = useLocation();
@@ -48,7 +49,7 @@ const [loading, setLoading]=useState(true)
 
 const post=useSelector(state=>state.pagePosts)
 const pagedPosts=post.posts
-console.log(pagedPosts);
+
 //----modificacion de estados----///
 useEffect(()=>{
   setLoading(true)
@@ -70,6 +71,7 @@ useEffect(()=>{
 }
 })
 
+//------------------------------------------Paginado--------------------------------------------
 const pages=Array.from({ length: post.totalPages }, (_, index) => index + 1)
 
 const handleOnClick= (event)=>{
@@ -92,6 +94,13 @@ const handlePrev = ()=>{
     setCurrentPage(prevPage)
 }
 }
+//--------------------------------------reacciones---------------------------------
+const [liked, setLiked]= useState(false)
+
+const handleLike= (event)=>{
+  setLiked(!liked)
+}
+
 
   return (
     <div style={{display:'flex', flexDirection:'row'}}>
@@ -108,19 +117,31 @@ const handlePrev = ()=>{
         <button style={{marginLeft:'.75em'}} type="submit">Crear Post</button>
       </form>
       <button onClick={handlePrev} disable={btnPrev} style={{marginRight:'0.75em'}}  >Prev: </button>
-      {loading && <Loader/>}
       {post.totalPages > 1 && pages?.map(e=><button style={{marginLeft:'5px', marginRight:'5px'}} key={e} value={e} onClick={handleOnClick} disabled={currentPage===e}>{e}</button>)}
       <button onClick={handleNext} disable={btnNext} style={{marginLeft:'0.75'}} >Next </button>
       <div>
+      {loading && <Loader style={{marginTop:'10%'}} />}
       {pagedPosts?.map(({id, createdAt, text, User})=>{
         return(
           <div key={id} style={{width:'40rem', marginLeft:'5em', marginTop:'.5em', height:'6em', borderColor:'crimson', borderWidth:'2px'}}>
             <h1>{text}</h1>
-            <p>Posted by:</p>
+            <div style={{display:'flex', marginLeft:'35%'}}>
+            <p style={{marginRight:'0.5em'}}>Posted by:</p>
             <NavLink  to={`/profile/${User.id}`}>
             <p>{User.name}</p>
             </NavLink>
-            <p>Created: {createdAt.slice(0, 10).split('-').reverse().join('-')}</p>
+
+            </div>
+            <div style={{display:'flex', marginLeft:'33%'}}>
+              {liked  === true ? (<HiHeart onClick={handleLike} style={{cursor:'pointer', color:'crimson'}} />) : ( <HiHeart onClick={handleLike} style={{cursor:'pointer'}} />)}           
+
+            <p style={{marginLeft:'1em'}}>Created: {createdAt.slice(0, 10).split('-').reverse().join('-')}</p>
+
+            </div>
+
+
+
+          
           </div>
         )
       })}

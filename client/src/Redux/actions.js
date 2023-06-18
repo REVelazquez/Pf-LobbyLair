@@ -172,8 +172,8 @@ export const createUser = (payload) => {
 export const getUserById = (id) => async(dispatch) => {
 
     try {
-        
-        const userId = await axios(`http://localhost:3001/users/${id}`);
+        console.log(id);
+        const userId = await axios.get(`http://localhost:3001/users/${id}`);
         return dispatch({
             type: GET_USER_BY_ID,
             payload: userId.data

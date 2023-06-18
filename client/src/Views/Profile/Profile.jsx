@@ -10,16 +10,17 @@ const Profile = () => {
   const userDetail = useSelector(state=>state.user)
   
   const pathname = location.pathname;
-  const id = pathname.split('/').filter(str => !isNaN(parseInt(str)));
+  let id = pathname.split('/').filter(str => !isNaN(parseInt(str)));
+  id=parseInt(id)
 
   useEffect(()=>{
     dispatch(getUserById(id))
-  }, [dispatch])
+  }, [])
 
   const otherUser=useSelector(state=>state.otherUser)
+  console.log(otherUser);
 
-  
-  if(userDetail.id == id){
+  if(userDetail.id === id){
     return (
       <div>
         <div className="container mx-auto mt-8">
@@ -62,7 +63,9 @@ const Profile = () => {
       </div>
     );
      
-  }else{
+  }
+  
+  
 
     return (
       <div style={{display:'flex', flexDirection:'row'}}>
@@ -113,7 +116,7 @@ const Profile = () => {
   );
   
 }
-};
+
   
   
 

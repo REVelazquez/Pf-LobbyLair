@@ -63,7 +63,7 @@ const NavBar = () => {
   }, []);
 
   return (
-    <nav style={{ backgroundColor: "#1f2937", padding: "1rem" }}>
+    <nav style={{ backgroundColor: "#1f2937", padding: "1rem", position:'sticky'}}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: "1050px", margin: "auto" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "2.5rem", flex: "1" }}>
         <button>
@@ -76,7 +76,7 @@ const NavBar = () => {
                 maxWidth: "100px",
                 position: "absolute",
                 top: mousePosition.y -30,
-                left: mousePosition.x -30,
+                left: mousePosition.x -20,
                 transform: "translate(-50%, -50%)",
                 zIndex:1,
                 transition: "transform 1.2s ease" ,
