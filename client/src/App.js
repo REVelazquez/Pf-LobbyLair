@@ -5,12 +5,13 @@ import GamePosts from './Components/GamePosts/GamePosts';
 import {Routes, Route, useLocation, redirect} from 'react-router-dom';
 import NavBar from './Components/NavBar/NavBar';
 import ProtectedRoutes from './router/ProctectedRoutes';
+import GamesBar from './Components/GamesBar/GamesBar';
 
 function App() {
   const location= useLocation();
   return (
     <div className="App">
-        {location.pathname !== '/' && <NavBar />}
+        {location.pathname !== '/' && location.pathname !== '/register' && <NavBar />}
           <Routes>
               <Route path='/' element={<LandingPage/>} />
               <Route exact path='/register' element={ <Register/> }/>

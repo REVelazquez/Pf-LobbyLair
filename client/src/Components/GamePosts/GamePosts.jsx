@@ -4,8 +4,8 @@ import queryString from 'query-string';
 import { useDispatch, useSelector } from "react-redux";
 import GamesBar from "../GamesBar/GamesBar";
 import { getPostsWithPagination, createPost } from "../../Redux/actions";
+import { HiHeart } from "react-icons/hi";
 import Loader from "../Loader/Loader";
-import { HiOutlineHeart, HiHeart} from "react-icons/hi";
 
 const GamePosts = () => {
   const location = useLocation();
@@ -46,9 +46,7 @@ const [loading, setLoading]=useState(true)
 
 const post=useSelector(state=>state.pagePosts)
 const pagedPosts=post.posts
-console.log(pagedPosts[0].id);
 
-//----modificacion de estados----///
 useEffect(()=>{
   setLoading(true)
   dispatch(getPostsWithPagination(currentPage, gameid, gamemodeid))
@@ -69,7 +67,6 @@ useEffect(()=>{
 }
 })
 
-//------------------------------------------Paginado--------------------------------------------
 const pages=Array.from({ length: post.totalPages }, (_, index) => index + 1)
 
 const handleOnClick= (event)=>{
@@ -90,7 +87,7 @@ const handlePrev = ()=>{
   if(currentPage>1){
     const prevPage=currentPage-1;
     setCurrentPage(prevPage)
-}
+  }
 }
 //--------------------------------------reacciones---------------------------------
 const [liked, setLiked]= useState(false)
@@ -98,8 +95,6 @@ const [liked, setLiked]= useState(false)
 const handleLike= (event)=>{
   setLiked(!liked)
 }
-
-
   return (
     <div className="flex ml-[15rem] my-[5rem]">
       <GamesBar/>
@@ -113,32 +108,43 @@ const handleLike= (event)=>{
           type="text"
           value={text}
           onChange={(event) => setText(event.target.value)}
-          placeholder="Ingrese el texto del a post"
+          placeholder="Ingrese el texto del post"
         />
         <button className="m-2 bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer" type="submit">Crear Post</button>
       </form>
-      <button onClick={handlePrev} disable={btnPrev} style={{marginRight:'0.75em'}}  >Prev: </button>
+      <button onClick={handlePrev} disable={btnPrev} className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2"> Prev </button>
+      
       {post.totalPages > 1 && pages?.map(e=><button style={{marginLeft:'5px', marginRight:'5px'}} key={e} value={e} onClick={handleOnClick} disabled={currentPage===e}>{e}</button>)}
       <button onClick={handleNext} disable={btnNext} className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2"> Next </button>
       <div className="p-2">
-      {pagedPosts?.map(({id, createdAt, text, User})=>{
-        return(
+      {loading && <Loader/>}
+      {pagedPosts?.map(({ id, createdAt, text, User }) => {
+        if (User) {
+          return (
           <div key={id} className="items-center justify-center w-[300px] h-[110px] mx-auto my-[5rem] bg-gray-300 rounded-lg p-3 ml-[10rem]"
-          style={{
-            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
-          }}>
-            <h1 className="text-black font-bold">{text}</h1>
-            <p className="text-black font-bold">Posted by:</p>
-            <NavLink  to={`/user/${User.id}`}>
-            <p className="text-black font-bold">{User.name}</p>
-            </NavLink>
-            <p className="text-black font-bold">Created: {createdAt.slice(0, 10).split('-').reverse().join('-')}</p>
-          </div>
-        )
-      })}
-      </div>
-      </div>
+        style={{
+          boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
+        }}>
+        <h1 className="text-black font-bold">{text}</h1>
+        <p className="text-black font-bold">Posted by:</p>
+        <NavLink to={`/profile/${User.id}`}>
+          <p className="text-black font-bold">{User.name}</p>
+        </NavLink>
+        
+            <div style={{display:'flex', marginLeft:'33%'}}>
+              {liked  === true ? (<HiHeart onClick={handleLike} style={{cursor:'pointer', color:'crimson'}} />) : ( <HiHeart onClick={handleLike} style={{cursor:'pointer'}} />)}           
 
+            <p style={{marginLeft:'1em'}}>Created: {createdAt.slice(0, 10).split('-').reverse().join('-')}</p>
+
+            </div>
+      </div>
+    )
+  } else {
+    return null; // O puedes mostrar un mensaje de error, dependiendo de tus necesidades
+  }
+})}
+      </div>
+      </div>
     </div>
   );
 };
