@@ -59,7 +59,7 @@ const Profile = () => {
         <div className="my-4 border-t border-gray-400"> </div>
       </div>
     );
-
+  }
   
 }
 
