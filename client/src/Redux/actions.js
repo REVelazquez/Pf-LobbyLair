@@ -18,7 +18,9 @@ import {
     GET_GAMES_WITH_PAGINATION,
     GET_ALL_POSTS,
     GET_POST_WITH_PAGINATION,
-    CREATE_POST
+    CREATE_POST,
+    ORDER,
+    GET_ALL_USERS,
 } from './action-types';
 import { ErrorMessage } from 'formik';
 
@@ -172,7 +174,6 @@ export const createUser = (payload) => {
 export const getUserById = (id) => async(dispatch) => {
 
     try {
-        
         const userId = await axios(`http://localhost:3001/users/${id}`);
         return dispatch({
             type: GET_USER_BY_ID,
@@ -244,7 +245,7 @@ export const deleteUser = (id) => async(dispatch) => {
 
 export const updateUser = (id, payload) => async(dispatch) => {
     try {
-        const userId = await axios(`http://localhost:3001/users/${id}`, payload);
+        const userId = await axios.put(`http://localhost:3001/users/${id}`, payload);
         return dispatch({
             type: UPDATE_USER,
             payload: userId.data
@@ -258,9 +259,10 @@ export const createPost = (payload) => {
     return async (dispatch) => {
         try {
             let newPost = await axios.post('http://localhost:3001/posts', payload);
+            let post = [newPost.data]
           return dispatch({
             type: CREATE_POST,
-            payload: newPost.data
+            payload: post
         })
         } catch (error) {
             throw new Error(error);
@@ -268,3 +270,18 @@ export const createPost = (payload) => {
     }
 }
 
+export const orderPostByCreation = (posts)=>{
+    return  {type:ORDER, payload: posts}
+}
+
+export const getAllUsers = () => async(dispatch) => {
+    try {
+        const users = await axios('http://localhost:3001/users');
+        return dispatch({
+            type: GET_ALL_USERS,
+            payload: users.data
+        });
+    } catch (error) {
+        throw new Error(error);
+    }
+}

@@ -5,7 +5,7 @@ async function getPosts(req, res) {
   try {
     let posts = await Post.findAll({
       include: [
-        { model: User, attributes: ['id'] },
+        { model: User, attributes: ['id', 'name'] },
         { model: Game, attributes: ['id', 'name', 'thumbnail'] },
         { model: GameMode, attributes: ['id', 'name'] }
       ]
@@ -48,7 +48,6 @@ async function getPostsByUserId(req, res) {
 
   async function createPost(req, res) {
     const { text, userid, gameid, gamemodeid } = req.body;
-    console.log(text, userid, gameid, gamemodeid);
     try {
       let newPost = await Post.create({
         text: text,
@@ -70,8 +69,16 @@ async function getPostsByUserId(req, res) {
       await newPost.setUser(userid);
       await newPost.setGame(gameid)
       await newPost.setGameMode(gamemodeid);
+
+      const post = await Post.findByPk(newPost.id, {
+        include: [
+          { model: User, attributes: ['id', 'name'] },
+          { model: Game, attributes: ['id', 'name', 'thumbnail'] },
+          { model: GameMode, attributes: ['id', 'name'] }
+        ]
+      });
   
-      return res.status(200).json(newPost);
+      return res.status(200).json(post);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
@@ -99,7 +106,6 @@ async function getPostsByUserId(req, res) {
     const { page, userid, gameid, gamemodeid } = req.query;
     const pageSize = 5;
     let offset = 0;
-    console.log(page, userid, gameid, gamemodeid);
     let whereClause = {};
     if (userid) {
       whereClause['$User.id$'] = userid;
