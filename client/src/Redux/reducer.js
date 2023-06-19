@@ -18,7 +18,8 @@ import {
     GET_POST_BY_USER_ID,
     GET_POST_WITH_PAGINATION,
     CREATE_POST,
-    ORDER
+    ORDER,
+    GET_ALL_USERS,
 } from './action-types';
 
 const initialState = {
@@ -127,6 +128,11 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 posts:orderedGamesByCreation
+            }
+        case GET_ALL_USERS:
+            return{
+                ...state,
+                otherUser:action.payload
             }
         default:
                 return {

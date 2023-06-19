@@ -10,14 +10,11 @@ const Profile = () => {
   const userDetail = useSelector(state=>state.user)
   
   useEffect(() => {
-    console.log(id);
     dispatch(getUserById(id));
-    dispatch(getPostsByUserId(id));
   }, []);
-  
+
   const pathname = location.pathname;
   const id = pathname.split('/').filter(str => !isNaN(parseInt(str)));
-  const otherUser=useSelector(state=>state.otherUser)
 
   if(userDetail.id == id){
     return (
@@ -59,12 +56,8 @@ const Profile = () => {
         <div className="my-4 border-t border-gray-400"> </div>
       </div>
     );
-
+  }
   
 }
-
-  
-  
-
  
 export default Profile;

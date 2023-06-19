@@ -50,7 +50,7 @@ const SearchBar = () => {
           {game.length !== 0 ? (
             game.map((match) => (
               <NavLink key={match.id} to={`/games/${match.id}`}>
-                <button className="rounded-lg bg-gray-200 text-black italic font-bold text-sm p-3 hover:bg-gray-300 w-full hover:text-black text-center"
+                <button className="z-10 rounded-lg bg-gray-200 text-black italic font-bold text-sm p-3 hover:bg-gray-300 w-full hover:text-black text-center"
                         style={{
                           boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
                         }}>
