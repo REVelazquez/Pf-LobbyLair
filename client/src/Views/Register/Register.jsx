@@ -21,6 +21,7 @@ const Register = () => {
     try {
       const validateUser = await dispatch(createUser(data));
       if (validateUser) {
+        localStorage.setItem("isAuthenticated", true);
         navigate("/home");
       }
     } catch (error) {

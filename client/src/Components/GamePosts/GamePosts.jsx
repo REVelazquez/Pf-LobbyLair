@@ -13,7 +13,6 @@ const GamePosts = () => {
   const dispatch = useDispatch()
   const navigate=useNavigate()
   const stateUser = useSelector((state) => state.user);
-  const currentId=stateUser.id
 
 
 //------------------esto es para el form------------------------------//
@@ -22,13 +21,12 @@ const GamePosts = () => {
   const [gameid, setGameid] = useState(gameId);
   const [gamemodeid, setGamemodeid] = useState(gameModeId);
   const [refresh, setRefresh] = useState(false);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await dispatch(createPost({ text, userid: userId, gameid, gamemodeid }))
+      const response = await dispatch(createPost({ text, userid: userId, gameid, gamemodeid, name: stateUser.name }))
       setRefresh(!refresh)
-      if (response.ok) {
+      if (response) {
         console.log("El post se creó exitosamente");
       } else {
         console.error("Error al crear el post");
