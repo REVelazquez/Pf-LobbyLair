@@ -48,6 +48,8 @@ const Login = () => {
   const handleLogin = async (values) => {
     try {
       const validateUser = await dispatch(logIn(values));
+      localStorage.setItem("isAuthenticated", true)
+
        navigate("/home");
     } catch (error) {
       openModal()
