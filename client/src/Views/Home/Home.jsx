@@ -39,33 +39,33 @@ const Home = () => {
                 <option value="D">New first</option>
               </select>
             </h1>
-            {
-          prueba.map((post)=>{
-            if (post && post.id) {  
-              return(
-                <div key={post.id} style={{width:'40rem', marginLeft:'5em', marginTop:'.5em', height:'6em', borderColor:'crimson', borderWidth:'2px'}}>
+            {prueba.map((post) => {
+              if (post && post.id && post.User) { // Verificación de nulidad para post.User
+                return (
+                <div key={post.id} style={{ width: '40rem', marginLeft: '5em', marginTop: '.5em', borderColor: 'crimson', borderWidth: '2px' }}>
                   <h1>{post.text}</h1>
-                  <div style={{display:'flex',  marginLeft:'35%'}}>
-                  <h1 className="text-black font-bold">Game mode: {post.GameMode.name}</h1>
-                  <p style={{marginRight:'0.5em'}}>Posted by:</p>
-                  <NavLink  to={`/user/${post.User.id}`}>
-                  <p>{post.User.name}</p>
-                  </NavLink>
-                  </div>
-                  <div style={{display:'flex', marginLeft:'33%'}}>
-                    {/* {liked  === true ? (<HiHeart onClick={handleLike} style={{cursor:'pointer', color:'crimson'}} />) : ( <HiHeart onClick={handleLike} style={{cursor:'pointer'}} />)}            */}
-                  <p style={{marginLeft:'1em'}}>Created: {post.createdAt.slice(0, 10).split('-').reverse().join('-')}</p>
-      
-                  </div>
-                </div>
-              )
-            }
-          })}
-          </div>
-        </div>    
-      </div>
-    );
-};
+                  <div style={{ display: 'flex', marginLeft: '35%' }}>
+                    <h1 className="text-black font-bold">Game mode: {post.GameMode.name}</h1>
+                    <p style={{ marginRight: '0.5em' }}>Posted by:</p>
+                    <NavLink to={`/user/${post.User.id}`}>
+                      <p>{post.User.name}</p>
+                      </NavLink>
+                      </div>
+                      <div style={{ display: 'flex', marginLeft: '33%' }}>
+                        {/* {liked  === true ? (<HiHeart onClick={handleLike} style={{cursor:'pointer', color:'crimson'}} />) : ( <HiHeart onClick={handleLike} style={{cursor:'pointer'}} />)}            */}
+                        <p style={{ marginLeft: '1em' }}>Created: {post.createdAt.slice(0, 10).split('-').reverse().join('-')}</p>
+                        </div>
+                        </div>
+                        );
+                      } else {
+                        return null;
+                      }
+                      })}
+                      </div>
+                      </div>    
+                      </div>
+                      );
+                    };
 
  
 
