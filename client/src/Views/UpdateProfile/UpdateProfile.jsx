@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../Redux/actions'
+import { useNavigate } from 'react-router-dom';
 
 export default function UpdateProfile() {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const id = user.id;
   const dispatch = useDispatch();
@@ -25,6 +27,7 @@ export default function UpdateProfile() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateUser(id, formData));
+    navigate(`/profile/${id}`);
   };
 
   return (

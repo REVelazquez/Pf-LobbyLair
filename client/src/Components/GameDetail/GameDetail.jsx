@@ -26,11 +26,9 @@ const GameDetail = () => {
     navigate(`/post?gameId=${gameId}&gameModeId=${gameModeId}`);
   };
 
-
-
   return (
     <div className="flex">
-      <div className="ml-auto">
+      <div className="ml-2">
         <GamesBar />
       </div>
 

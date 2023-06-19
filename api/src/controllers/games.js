@@ -195,7 +195,6 @@ async function getGamesWithPagination(req, res) {
   
       count = result.count;
       games = result.rows;
-      console.log(count);
       totalPages = Math.ceil(count / pageSize);
     } else {
       const result = await Game.findAndCountAll({

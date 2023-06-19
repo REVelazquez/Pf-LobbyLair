@@ -6,19 +6,15 @@ const { where } = require('sequelize');
 
 const handleLogin = async (req, res) => {
     const { email, password } = req.body;
-    console.log("a");
     try {
       // Buscar el usuario en la base de datos utilizando el email
       const user_Db = await User.findOne({where:{email: email}});
-      console.log(user_Db);
       if (!user_Db) {
-        console.log("a");
         return res.status(404).json({ message: 'Email does not exist' });
       }
       
       // Verificar si el password coincide utilizando bcrypt.compare()
       const isPasswordMatch = await bcrypt.compare(password, user_Db.password);
-      console.log(isPasswordMatch);
       if (!isPasswordMatch) {
         return res.status(401).json({ message: 'Invalid password' });
       }
@@ -29,7 +25,6 @@ const handleLogin = async (req, res) => {
     // Devuelve una respuesta exitosa con el token
     res.json(user_Db);
     } catch (err) {
-      console.log(err);
       res.status(500).json({ message: 'Internal server error' });
     }
   };
