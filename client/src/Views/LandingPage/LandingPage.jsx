@@ -9,7 +9,7 @@ const LandingPage = () => {
     const dispatch=useDispatch()
     useEffect(()=>{
       dispatch(getAllGames())
-    },[])
+    }, [])
 
   return (
     <div>
