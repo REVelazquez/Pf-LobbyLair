@@ -30,29 +30,127 @@ const Register = () => {
 
   };
 
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}$/;
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: validateField(name, value),
+    }));
+  };
+
+  const validateField = (fieldName, value) => {
+    let error = "";
+
+    switch (fieldName) {
+      case "email":
+        if (!emailRegex.test(value)) {
+          error = "Invalid email format";
+        }
+        break;
+      case "password":
+        if (!passwordRegex.test(value)) {
+          error =
+            "Password must contain at least one uppercase letter and one special character (!@#$%^&*), and be at least 6 characters long";
+        }
+        break;
+      case "confirmPassword":
+        if (value !== data.password) {
+          error = "Passwords do not match";
+        }
+        break;
+      default:
+        break;
+    }
+
+    return error;
+  };
+
+  const isFormValid = () => {
+    return (
+      !errors.email &&
+      !errors.password &&
+      !errors.confirmPassword &&
+      data.email &&
+      data.password &&
+      data.confirmPassword &&
+      data.name
+    );
+  };
+
   return (
-    <section className="min-h-screen bg-gray-100 pt-9 flex flex-col items-center justify-center">
-      <div className="flex flex-col items-center justify-center p-8 min-h-screen">
+    <section style={{ backgroundColor: "#f3f4f6" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "2rem",
+          height: "100vh",
+        }}
+      >
         <a
           href="/"
-          className="flex items-center mb-6 text-2xl font-bold text-gray-900"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "1.5rem",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+            color: "#111827",
+          }}
         >
-          <img src={LobbyLogo} alt="LOBBYL" className="w-20 h-auto" />
+          logo
         </a>
-        <div className="w-full bg-white rounded-md shadow-md max-w-20rem"
+        <div
+          style={{
+            width: "100%",
+            backgroundColor: "#fff",
+            borderRadius: "0.375rem",
+            boxShadow:
+              "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+            maxWidth: "20rem",
+            padding: "1.5rem",
+          }}
         >
-          <div className="p-4 mb-6"
+          <div
+            style={{
+              padding: "1rem",
+              marginBottom: "1.5rem",
+            }}
           >
             <h1
-               className="text-xl font-bold mb-4 text-gray-800"
+              style={{
+                fontSize: "1.25rem",
+                fontWeight: "bold",
+                lineHeight: "1.5",
+                color: "#111827",
+              }}
             >
               Create an account
             </h1>
             <form onSubmit={handleRegister} style={{ marginTop: "1.5rem" }}>
-            <div className="mb-4">
+              <div style={{ marginBottom: "1rem" }}>
                 <label
                   htmlFor="name"
-                  className="mb-1 text-sm font-bold text-gray-800"
+                  style={{
+                    marginBottom: "0.5rem",
+                    fontSize: "0.875rem",
+                    fontWeight: "medium",
+                    color: "#111827",
+                  }}
                 >
                   Your name
                 </label>
@@ -60,17 +158,32 @@ const Register = () => {
                   type="name"
                   name="name"
                   id="name"
-                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
+                  style={{
+                    backgroundColor: "#f9fafb",
+                    border: "1px solid #d1d5db",
+                    color: "#111827",
+                    fontSize: "0.875rem",
+                    borderRadius: "0.375rem",
+                    padding: "0.625rem",
+                    width: "100%",
+                  }}
                   placeholder="name"
                   required
-                  onChange={(e) => setData({ ...data, name: e.target.value })}
+                  onChange={(e) =>
+                    setData({ ...data, name: e.target.value })
+                  }
                   value={data.name}
                 />
               </div>
-              <div className="mb-4">
+              <div style={{ marginBottom: "1rem" }}>
                 <label
                   htmlFor="email"
-                  className="mb-1 text-sm font-bold text-gray-800"
+                  style={{
+                    marginBottom: "0.5rem",
+                    fontSize: "0.875rem",
+                    fontWeight: "medium",
+                    color: "#111827",
+                  }}
                 >
                   Your email
                 </label>
@@ -78,17 +191,35 @@ const Register = () => {
                   type="email"
                   name="email"
                   id="email"
-                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
+                  style={{
+                    backgroundColor: "#f9fafb",
+                    border: "1px solid #d1d5db",
+                    color: "#111827",
+                    fontSize: "0.875rem",
+                    borderRadius: "0.375rem",
+                    padding: "0.625rem",
+                    width: "100%",
+                  }}
                   placeholder="name@company.com"
                   required
-                  onChange={(e) => setData({ ...data, email: e.target.value })}
+                  onChange={handleInputChange}
                   value={data.email}
                 />
+                 {errors.email && (
+          <p style={{ color: "red", fontSize: "0.75rem", marginTop: "0.25rem" }}>
+            {errors.email}
+          </p>
+        )}
               </div>
-              <div className="mb-4">
+              <div style={{ marginBottom: "1rem" }}>
                 <label
                   htmlFor="password"
-                  className="mb-1 text-sm font-bold text-gray-800"
+                  style={{
+                    marginBottom: "0.5rem",
+                    fontSize: "0.875rem",
+                    fontWeight: "medium",
+                    color: "#111827",
+                  }}
                 >
                   Password
                 </label>
@@ -96,48 +227,102 @@ const Register = () => {
                   type="password"
                   name="password"
                   id="password"
-                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
+                  style={{
+                    backgroundColor: "#f9fafb",
+                    border: "1px solid #d1d5db",
+                    color: "#111827",
+                    fontSize: "0.875rem",
+                    borderRadius: "0.375rem",
+                    padding: "0.625rem",
+                    width: "100%",
+                  }}
                   placeholder="••••••••"
                   required
-                  onChange={(e) => setData({ ...data, password: e.target.value })}
+                  onChange={handleInputChange}
                   value={data.password}
                 />
+                {errors.password && (
+          <p style={{ color: "red", fontSize: "0.75rem", marginTop: "0.25rem" }}>
+            {errors.password}
+          </p>
+        )}
               </div>
-              <div className="mb-4">
+              <div style={{ marginBottom: "1rem" }}>
                 <label
                   htmlFor="confirm-password"
-                  className="mb-1 text-sm font-bold text-gray-800"
+                  style={{
+                    marginBottom: "0.5rem",
+                    fontSize: "0.875rem",
+                    fontWeight: "medium",
+                    color: "#111827",
+                  }}
                 >
                   Confirm password
                 </label>
                 <input
                   type="password"
-                  name="confirm-password"
+                  name="confirmPassword"
                   id="confirm-password"
-                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
+                  style={{
+                    backgroundColor: "#f9fafb",
+                    border: "1px solid #d1d5db",
+                    color: "#111827",
+                    fontSize: "0.875rem",
+                    borderRadius: "0.375rem",
+                    padding: "0.625rem",
+                    width: "100%",
+                  }}
                   placeholder="••••••••"
                   required
+                  onChange={handleInputChange}
+                  value={data.confirmPassword}
                 />
+                   {errors.confirmPassword && (
+          <p style={{ color: "red", fontSize: "0.75rem", marginTop: "0.25rem" }}>
+            {errors.confirmPassword}
+          </p>
+        )}
               </div>
 
               <button
                 type="submit"
-                className="
-                w-full
-                bg-black 
-                text-white 
-                border-none 
-                rounded-[5rem] 
-                p-3 text-l 
-                font-bold 
-                cursor-pointer"
+                disabled={!isFormValid()}
+                style={{
+                  width: "100%",
+                  color: "#000",
+                  backgroundColor: "#fff",
+                  hoverBackgroundColor: "#e5e7eb",
+                  focusRingColor: "#6b7280",
+                  fontWeight: "medium",
+                  borderRadius: "0.375rem",
+                  fontSize: "0.875rem",
+                  padding: "0.625rem",
+                  textAlign: "center",
+                  boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+                  border: "none",
+                  outline: "none",
+                }}
               >
                 Create an account
               </button>
 
-              <p className="mt-3 text-sm text-gray-800">
+              <p
+                style={{
+                  marginTop: "1rem",
+                  fontSize: "0.875rem",
+                  fontWeight: "light",
+                  color: "#6b7280",
+                }}
+              >
                 Already have an account?{" "}
-                <a href="/"  className="font-bold text-black">
+                <a
+                  href="/login"
+                  style={{
+                    fontWeight: "medium",
+                    color: "#3b82f6",
+                    hoverColor: "#2563eb",
+                  }}
+                >
                   Login here
                 </a>
               </p>
