@@ -15,6 +15,10 @@ export default function UpdateProfile() {
     perfilUrl: '',
   });
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}$/;
+
+
   const handleChange = (e) => {
     setFormData({
       ...formData,

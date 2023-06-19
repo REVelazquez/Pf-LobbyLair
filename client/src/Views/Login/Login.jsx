@@ -7,6 +7,7 @@ import { logIn } from "../../Redux/actions";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { FcGoogle } from "react-icons/fc";
 import Modal from 'react-modal';
+import LobbyLogo from '../../Multimedia/Logo Lobbylair.gif'
 
 const customStyles = {
   overlay: {
@@ -70,7 +71,13 @@ const Login = () => {
   return (
 
 
-    <section className="bg-gray-100 min-h-screen flex justify-center items-center">
+    <section className="min-h-screen bg-gray-100 pt-9 flex flex-col items-center justify-center">
+
+           <img src={LobbyLogo} alt="LOBBYL" className="w-20 h-auto mt-4" />
+        <div className="rounded-lg text-black italic font-bold text-sm cursor-default">
+          <p >Join to the lair!</p>
+
+        </div>
       <div className="w-72 p-4 bg-white rounded shadow-md">
    
       <div className="max-w-180 mx-auto text-center flex items-center justify-center">
