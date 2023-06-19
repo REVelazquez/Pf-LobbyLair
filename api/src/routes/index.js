@@ -96,4 +96,3 @@ router.post('/login', handleLogin);
 router.get('/chat', sendMessage, getMessages);
 
 module.exports = router;
-

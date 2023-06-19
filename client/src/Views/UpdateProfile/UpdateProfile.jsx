@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../Redux/actions'
 
+
 export default function UpdateProfile() {
   const user = useSelector((state) => state.user);
-  const id = user.id;
+  const id = user ? user.id : '';  
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: '',
@@ -18,18 +19,24 @@ export default function UpdateProfile() {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}$/;
 
-
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateUser(id, formData));
   };
+  //const urlPattern = /^(http://www.|https://www.|http://|https://)?[a-zA-Z0-9]+([-.]{1}[a-zA-Z0-9]+).[a-zA-Z]{2,5}(:[0-9]{1,5})?(/.)?$/;
+
+  const isEmailValid = emailRegex.test(formData.email);
+  const isPasswordValid = passwordRegex.test(formData.password);
+  const isButtonDisabled = !isEmailValid || !isPasswordValid;
 
   return (
     <div className="flex justify-center items-center h-screen">
@@ -58,6 +65,10 @@ export default function UpdateProfile() {
             value={formData.email}
             onChange={handleChange}
           />
+           {!isEmailValid && (
+            <p className="text-red-500 text-xs mt-1">Please enter a valid email address.</p>
+          )}
+
         </div>
         <div className="mb-4">
           <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">Password</label>
@@ -70,6 +81,9 @@ export default function UpdateProfile() {
             value={formData.password}
             onChange={handleChange}
           />
+           {!isPasswordValid && (
+            <p className="text-red-500 text-xs mt-1">Please enter a password with at least 6 characters, including one uppercase letter and one special character.</p>
+          )}
         </div>
         <div className="mb-4">
           <label htmlFor="image" className="block text-gray-700 text-sm font-bold mb-2">Image</label>
@@ -108,9 +122,10 @@ export default function UpdateProfile() {
         </div>
         </div>
         <div className="flex items-center justify-center">
-          <button
+        <button
             type="submit"
-            className=" bg-[#1f2937] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-[#1f2937] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            disabled={isButtonDisabled}
           >
             Update
           </button>
