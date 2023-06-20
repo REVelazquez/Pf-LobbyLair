@@ -1,16 +1,11 @@
 import { useState } from "react";
-import { auth, createUserWithEmailAndPassword } from "../../firebase/firebase";
 import { createUser } from "../../Redux/actions";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import LobbyLogo from "../../Multimedia/Logo Lobbylair.gif";
 
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const [setUser] = useState(null);
   const [data, setData] = useState({
     email: "",
     password: "",
