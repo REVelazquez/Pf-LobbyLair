@@ -59,7 +59,7 @@ const Profile = () => {
         </div>
       </div>
     </div>
-    <div className="absolute bottom-15 right-10 mt-5 mr-10">
+    <div className="flex ml-[5rem] my-[1rem]">
       <NavLink
         to={`/profile/${id}/update`}
         className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer"
