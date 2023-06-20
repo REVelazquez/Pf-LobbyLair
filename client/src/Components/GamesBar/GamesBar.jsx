@@ -5,6 +5,24 @@ import { getGamesWithPagination } from "../../Redux/actions";
 import { HiArrowCircleDown, HiArrowCircleUp} from "react-icons/hi";
 import Loader from "../Loader/Loader";
 import { NavLink } from "react-router-dom";
+
+const ImagePreloader = ({ src }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = src;
+    img.onload = () => {
+      setIsLoaded(true);
+    };
+    return () => {
+      img.onload = null;
+    };
+  }, [src]);
+
+  return isLoaded ? <img src={src} alt="" className="w-[8rem] h-[8rem]"/> : <Loader />;
+};
+
 const GamesBar = () => {
   const dispatch = useDispatch();
 
@@ -15,7 +33,7 @@ const GamesBar = () => {
 
   useEffect(() => {
     setLoading(true);
-    dispatch(getGamesWithPagination(currentPage)).then(() => setLoading(false));
+    dispatch(getGamesWithPagination(currentPage));
   }, [currentPage, dispatch]);
 
   const navigate = useNavigate();
@@ -48,7 +66,7 @@ const GamesBar = () => {
       setCurrentPage(nextPage);
     }
   };
-
+  
   return (
     <div className="flex justify-end mt-4">
       <div style={{position:'sticky'}} className="flex flex-col h-full">
@@ -62,17 +80,16 @@ const GamesBar = () => {
           <HiArrowCircleUp className="w-6 h-6" />
         </NavLink>
         </div>
-        {loading && <Loader />}
         {gamesInPages?.map(({ id, thumbnail }) => {
-          return (
+          return(
             <button
               key={id}
               onClick={() => navigate(`/games/${id}`) }
               className="flex items-center justify-center"
             >
-              <img className="w-[8rem] h-[8rem]" src={thumbnail} alt="" />
+              <ImagePreloader src={thumbnail} />
             </button>
-          );
+          ) 
         })}
         <div className="flex justify-center">
           <NavLink

@@ -207,7 +207,6 @@ const GamePosts = () => {
     setLoading(true);
     dispatch(getPostsWithPagination(currentPage, gameid, gamemodeid)).then(() =>
       setLoading(false)
-      
     );
   }, [currentPage, dispatch, refresh]);
 
@@ -256,6 +255,7 @@ const GamePosts = () => {
   const handleLike = (event) => {
     setLiked(!liked);
   };
+
 
   return (
     <div>

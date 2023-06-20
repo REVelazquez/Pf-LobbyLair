@@ -3,44 +3,64 @@ import { useState, useEffect } from "react";
 import { auth, signOut } from "../../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import { WiDaySunny, WiMoonAltNew } from "react-icons/wi";
-import LobbyFlight from "../../Multimedia/Flight lobbylair.gif"
-import LobbyLogo from '../../Multimedia/Logo Lobbylair.gif'
+import LobbyFlight from "../../Multimedia/Flight lobbylair.gif";
+import LobbyLogo from "../../Multimedia/Logo Lobbylair.gif";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserById, logOut } from "../../Redux/actions";
-import SearchBar from '../SearchBar/SearchBar';
+import SearchBar from "../SearchBar/SearchBar";
 
+function NavItem({ href, text }) {
+  return (
+    <NavLink
+      to={href}
+      className="text-white text-lg font-bold hover:text-gray-300"
+    >
+      {text}
+    </NavLink>
+  );
+}
+
+function ProfileItem({ href, text, onClick }) {
+  return (
+    <NavLink
+      to={href}
+      className="text-black text-lg font-bold hover:opacity-80 duration-200"
+      onClick={onClick}
+    >
+      {text}
+    </NavLink>
+  );
+}
 
 const NavBar = () => {
   const dispatch = useDispatch();
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
-  // const user = auth.currentUser;
 
-  const user= useSelector(state=>state.user)
- 
-  const id=user.id
+  const user = useSelector((state) => state.user);
+
+  const id = user.id;
 
   const handleThemeChange = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-
-    // Realiza los cambios de estilo según el tema seleccionado
-    if (newTheme === "dark") {
-      document.documentElement.setAttribute("data-theme", "dark");
+    setTheme(!theme);
+    if (theme) {
+      document.body.classList.add("dark");
+      localStorage.setItem("darkMode", "true");
     } else {
-      document.documentElement.setAttribute("data-theme", "light");
+      document.body.classList.remove("dark");
+      localStorage.setItem("darkMode", "false");
     }
+    document.body.setAttribute("data-theme", theme ? "dark" : "light");
   };
-
 
   const handleLogout = () => {
     try {
-      localStorage.setItem("isAuthenticated", false)
+      localStorage.setItem("isAuthenticated", false);
       dispatch(logOut());
       navigate("/");
     } catch (error) {
-      throw new Error(error)
+      throw new Error(error);
     }
   };
 
@@ -48,121 +68,62 @@ const NavBar = () => {
     setShowMenu(!showMenu);
   };
 
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (event) => {
-      setMousePosition({ x: event.clientX, y: event.clientY });
-    };
-
-    document.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
-
   return (
-    <nav style={{ backgroundColor: "#1f2937", padding: "1rem", position:'sticky'}}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: "1050px", margin: "auto" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "2.5rem", flex: "1" }}>
-        <button>
-  
-        <div style={{ width: '50px', height: '50px', justifyContent: 'center', backgroundColor: 'white', borderRadius: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-  <img src={LobbyLogo} alt='LOBBYL' style={{ transform: 'scale(1)', marginTop: '5px' }} />
-</div>
-
-    <div
-              style={{
-                maxWidth: "100px",
-                position: "absolute",
-                top: mousePosition.y -30,
-                left: mousePosition.x -20,
-                transform: "translate(-50%, -50%)",
-                zIndex:1,
-                transition: "transform 1.2s ease" ,
-                pointerEvents:"none",
-              }}
-            >
-      <img src={LobbyFlight} alt="LOBBYF" style={{ transform:"scale(2)" }} />
-    </div>
-  
-</button>
-          <button>
-            <NavLink
-              to="/home"
-              style={{ color: "white", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
-              activeClassName="text-gray-300"
-              exact
-            >
-              Home
-            </NavLink>
-          </button>
-          <SearchBar/>
-          <button>
-            <NavLink
-              to="/payment"
-              style={{ color: "white", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
-              activeClassName="text-gray-300"
-            >
-              Payments
-            </NavLink>
-          </button>
-          <button>
-            <NavLink
-              to="/favorites"
-              style={{ color: "white", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
-              activeClassName="text-gray-300"
-            >
-              Favorites
-            </NavLink>
-          </button>
+    <nav className="bg-[#1f2937] p-[1rem] sticky">
+      <div className="flex justify-between items-center max-w-[1050px] mx-auto">
+        <div className="flex items-center gap-[2.5rem]">
+          <NavLink
+            to="/home"
+            className="w-[50px] h-[50px] bg-white rounded-full flex items-center justify-center"
+          >
+            <img src={LobbyLogo} alt="LOBBYL" className=" scale-125 mt-1" />
+          </NavLink>
+          <SearchBar />
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "3rem", position: "relative" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            {theme === "light" ? (
-              <WiDaySunny size={20} color="white" onClick={handleThemeChange} style={{ cursor: "pointer" }} />
+        <div className="flex items-center gap-6 relative">
+          <div className="flex items-center gap-[0.5rem]">
+            {theme ? (
+              <WiDaySunny
+                size={20}
+                color="white"
+                onClick={handleThemeChange}
+                style={{ cursor: "pointer" }}
+              />
             ) : (
-              <WiMoonAltNew size={20} color="white" onClick={handleThemeChange} style={{ cursor: "pointer" }} />
+              <WiMoonAltNew
+                size={20}
+                color="white"
+                onClick={handleThemeChange}
+                style={{ cursor: "pointer" }}
+              />
             )}
-            <span style={{ color: "white", fontSize: "1.25rem", fontWeight: "600" }}>
-              {theme === "light" ? "Light" : "Dark"}
+            <span className="text-white text-lg font-bold hover:text-gray-300">
+              {theme ? "Light" : "Dark"}
             </span>
           </div>
-              <div style={{ position: "relative" }}>
-                <img
-                  src="https://source.unsplash.com/64x64/?person"
-                  alt=""
-                  width={40}
-                  height={40}
-                  style={{ borderRadius: "50%", cursor: "pointer" }}
-                  onClick={handleMenuToggle}
-                />
-                {showMenu && (
-                  <ul style={{ position: "absolute", top: "100%", left: 0, backgroundColor: "white", padding: "0.5rem", borderRadius: "4px", boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", zIndex: 1 }}>
-                    <li>
-                      <NavLink
-                        to={`/profile/${id}`}
-                        style={{ color: "black", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
-                        activeClassName="text-gray-300"
-                        onClick={handleMenuToggle}
-                      >
-                        Profile
-                      </NavLink>
-                    </li>
-                  </ul>
-                )}
-              </div>
-              <button>
-                <NavLink
-                  to="/"
-                  style={{ color: "white", fontSize: "1.25rem", fontWeight: "600", textDecoration: "none", hover: "gray" }}
-                  activeClassName="text-gray-300"
-                  onClick={handleLogout}>
-                  Log Out
-                </NavLink>
-              </button>
-
+          <NavItem href="/home" text="Home" />
+          <NavItem href="/payment" text="Payment" />
+          <NavItem href="/favorites" text="Favorites" />
+          <div className="relative">
+            <img
+              src="https://source.unsplash.com/64x64/?person"
+              alt=""
+              width={40}
+              height={40}
+              style={{ borderRadius: "50%", cursor: "pointer" }}
+              onClick={handleMenuToggle}
+            />
+            {showMenu && (
+              <ul className="absolute top-12 right-0 bg-white p-2 rounded-sm shadow z-10 min-w-[10rem] flex flex-col gap-2">
+                <li>
+                  <ProfileItem href={`/profile/${id}`} text="Profile" />
+                </li>
+                <li>
+                  <ProfileItem text="Log Out" onClick={handleLogout} />
+                </li>
+              </ul>
+            )}
+          </div>
         </div>
       </div>
     </nav>
