@@ -1,5 +1,5 @@
-// const server = require('./src/app.js');
-// const { conn } = require('./src/db.js');
+const server = require('./src/app.js');
+const { conn } = require('./src/db.js');
 // const https = require('https');
 // const fs = require('fs');
 // const options = {
