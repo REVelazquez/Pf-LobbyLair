@@ -29,7 +29,7 @@ const GameDetail = () => {
   return (
     <div className="flex ">
         <div></div>
-      <div className="flex ml-[5rem] my-[1rem]">
+        <div className="md:w-1/6 ml-0 md:ml-1 my-1">
         <GamesBar className="sticky" />
       </div>
       <div className="flex justify-start">
@@ -58,7 +58,7 @@ const GameDetail = () => {
   </div>
 </div>
 
-      <div className= "w-[56%]">
+      <div className= "w-1/3">
 
 <div className= "mt-[3rem]"> 
       <div key="Posts in detail">
@@ -91,7 +91,7 @@ const GameDetail = () => {
                   </div>
                 </div>
                 <div className="w-[68%] h-full ">
-                <h1 className="text-l  text-black mt-3 p-4 flex flex-col items-center text-left">{text}</h1>
+                <h1 className="text-l mt-3 p-4 flex flex-col items-center text-left">{text}</h1>
                 </div>
               </div>
             );
