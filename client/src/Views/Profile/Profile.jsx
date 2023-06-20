@@ -63,7 +63,6 @@ const Profile = () => {
       <NavLink
         to={`/profile/${id}/update`}
         className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer"
-        style={{ zIndex: 10 }} // Agregamos el z-index al botón de edición
       >
         Editar
       </NavLink>
