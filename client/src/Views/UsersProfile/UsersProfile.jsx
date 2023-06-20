@@ -1,12 +1,9 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useLocation } from "react-router-dom";
-import GamesBar from "../../Components/GamesBar/GamesBar";
-import { getPostsByUserId, getUserById, updateUser } from "../../Redux/actions";
+import React from "react";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 const Profile = () => {
   const location = useLocation();
-  const dispatch = useDispatch();
   const users = useSelector((state) => state.otherUser) || [];
   const pathname = location.pathname;
   const id = pathname.split("/").find((str) => !isNaN(parseInt(str)));
