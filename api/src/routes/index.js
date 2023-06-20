@@ -6,6 +6,7 @@ const { getFavorites, createFavorite, removeFavoriteGame } = require('../control
 const { getUsersWithPagination, getAllUsers, getUserById, getUserByName, getUserByEmail, createUser, updateUser, deleteUser} = require('../controllers/users.js');
 const { handleLogin, handleSignUp } = require('../controllers/authController.js');
 const { sendMessage, getMessages,} = require('../controllers/chatController.js')
+const { createOrder, receiveWebhook } = require('../controllers/mecadoPagoController.js');
 const router = Router();
 
 // Endpoint para obtener todos los games
@@ -94,6 +95,13 @@ router.post('/login', handleLogin);
 
 //Endpoint para chat
 router.get('/chat', sendMessage, getMessages);
+
+//Endpoint para mecado pago
+router.post('/payment', createOrder);
+
+router.post("/webhook", receiveWebhook);
+
+router.get("/success", (req, res) => res.send("Success"));
 
 module.exports = router;
 
