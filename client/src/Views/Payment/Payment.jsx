@@ -6,8 +6,16 @@ const PaymentComponent = () => {
   console.log(stateUser);
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const handlePaymentOption = (option) => {
+  const handlePaymentOption = async (option) => {
     setSelectedOption(option);
+    const response = await fetch('https://localhost:3001/payment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ option }),
+    });
+    const data = await response.json();
+    console.log(data);
+    setSelectedOption(null);
   };
 
   return (

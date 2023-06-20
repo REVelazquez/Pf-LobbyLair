@@ -14,7 +14,6 @@
 //   const navigate=useNavigate()
 //   const stateUser = useSelector((state) => state.user);
 
-
 // //------------------esto es para el form------------------------------//
 //   const [userId, setUserId] = useState(stateUser.id);
 //   const [text, setText] = useState("");
@@ -50,7 +49,6 @@
 //   dispatch(getPostsWithPagination(currentPage, gameid, gamemodeid))
 //   .then(()=>setLoading(false))
 // }, [currentPage, dispatch, refresh])
-
 
 // useEffect(()=>{
 //   if(currentPage === 1){
@@ -111,7 +109,7 @@
 //         <button className="m-2 bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer" type="submit">Crear Post</button>
 //       </form>
 //       <button onClick={handlePrev} disable={btnPrev} className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2"> Prev </button>
-      
+
 //       {post.totalPages > 1 && pages?.map(e=><button style={{marginLeft:'5px', marginRight:'5px'}} key={e} value={e} onClick={handleOnClick} disabled={currentPage===e}>{e}</button>)}
 //       <button onClick={handleNext} disable={btnNext} className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2"> Next </button>
 //       <div className="p-2">
@@ -128,9 +126,9 @@
 //         <NavLink to={`/profile/${User.id}`}>
 //           <p className="text-black font-bold">{User.name}</p>
 //         </NavLink>
-        
+
 //             <div style={{display:'flex', marginLeft:'33%'}}>
-//               {liked  === true ? (<HiHeart onClick={handleLike} style={{cursor:'pointer', color:'crimson'}} />) : ( <HiHeart onClick={handleLike} style={{cursor:'pointer'}} />)}           
+//               {liked  === true ? (<HiHeart onClick={handleLike} style={{cursor:'pointer', color:'crimson'}} />) : ( <HiHeart onClick={handleLike} style={{cursor:'pointer'}} />)}
 
 //             <p style={{marginLeft:'1em'}}>Created: {createdAt.slice(0, 10).split('-').reverse().join('-')}</p>
 
@@ -150,7 +148,7 @@
 // export default GamePosts;
 
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, NavLink } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 import queryString from "query-string";
 import { useDispatch, useSelector } from "react-redux";
 import GamesBar from "../GamesBar/GamesBar";
@@ -162,7 +160,6 @@ const GamePosts = () => {
   const location = useLocation();
   const { gameId, gameModeId } = queryString.parse(location.search);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const stateUser = useSelector((state) => state.user);
 
   //------------------esto es para el form------------------------------//
@@ -207,7 +204,6 @@ const GamePosts = () => {
     setLoading(true);
     dispatch(getPostsWithPagination(currentPage, gameid, gamemodeid)).then(() =>
       setLoading(false)
-      
     );
   }, [currentPage, dispatch, refresh]);
 
@@ -276,7 +272,8 @@ const GamePosts = () => {
               />
               <button
                 className="ml-2 bg-black text-white border-none rounded-full px-4 py-2 text-lg font-bold cursor-pointer"
-                type="submit">
+                type="submit"
+              >
                 Create Post
               </button>
             </form>
@@ -285,7 +282,8 @@ const GamePosts = () => {
           <button
             onClick={handlePrev}
             disabled={btnPrev}
-            className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2 text-sm">
+            className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2 text-sm"
+          >
             {" "}
             Prev{" "}
           </button>
@@ -297,14 +295,16 @@ const GamePosts = () => {
                 key={e}
                 value={e}
                 onClick={handleOnClick}
-                disabled={currentPage === e}>
+                disabled={currentPage === e}
+              >
                 {e}
               </button>
             ))}
           <button
             onClick={handleNext}
             disabled={btnNext}
-            className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2 text-sm">
+            className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2 text-sm"
+          >
             {" "}
             Next{" "}
           </button>
@@ -319,8 +319,9 @@ const GamePosts = () => {
                     className="w-[80%] mx-auto border-2 border-crimson p-8 flex justify-between items-start mb-3"
                     style={{
                       boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
-                    }}>
-                    <div className="flex items-start " >
+                    }}
+                  >
+                    <div className="flex items-start ">
                       <p className=" font-bold">Posted by:</p>
                       <NavLink to={`/profile/${User.id}`}>
                         <p className=" font-bold ml-2">{User.name}</p>
