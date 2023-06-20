@@ -30,8 +30,6 @@ const customStyles = {
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user);
-  const [showModal, setShowModal] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const openModal = () => {

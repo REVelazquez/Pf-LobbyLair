@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
-import GamesBar from "../../Components/GamesBar/GamesBar";
-import { getPostsByUserId, getUserById, updateUser } from "../../Redux/actions";
+import { getUserById } from "../../Redux/actions";
 
 const Profile = () => {
   const location = useLocation();
