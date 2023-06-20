@@ -6,7 +6,7 @@ const { getFavorites, createFavorite, removeFavoriteGame } = require('../control
 const { getUsersWithPagination, getAllUsers, getUserById, getUserByName, getUserByEmail, createUser, updateUser, deleteUser} = require('../controllers/users.js');
 const { handleLogin, handleSignUp } = require('../controllers/authController.js');
 const { sendMessage, getMessages,} = require('../controllers/chatController.js')
-const { createOrder,  receiveWebhook } = require('../controllers/mecadoPagoController.js');
+const { createOrder, receiveWebhook } = require('../controllers/mecadoPagoController.js');
 const router = Router();
 
 // Endpoint para obtener todos los games
