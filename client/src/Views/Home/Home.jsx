@@ -50,7 +50,7 @@ const Home = () => {
                 className="appearance-none bg-gray-900 border text-white border-gray-300 rounded-md px-4 py-2 pr-8 leading-tight focus:outline-none focus:border-blue-500 text-sm"
               >
                 <path d="M10 12L6 8h8l-4 4z" />
-              </svg>
+              </select>
             </div>
           </div>
         </div>
