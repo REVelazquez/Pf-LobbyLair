@@ -246,6 +246,7 @@ export const deleteUser = (id) => async(dispatch) => {
 export const updateUser = (id, payload) => async(dispatch) => {
     try {
         const userId = await axios.put(`http://localhost:3001/users/${id}`, payload);
+        console.log(userId.data);
         return dispatch({
             type: UPDATE_USER,
             payload: userId.data

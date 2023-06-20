@@ -1,6 +1,4 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 
 const ProtectedRoutes = () => {
   const isAuthenticated = localStorage.getItem("isAuthenticated");

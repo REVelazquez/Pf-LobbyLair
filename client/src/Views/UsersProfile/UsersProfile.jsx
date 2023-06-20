@@ -1,18 +1,10 @@
-import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
-import { Navigate, useParams } from "react-router-dom"
-import { getAllUsers } from "../../Redux/actions"
+import { useParams } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 const UsersProfile = ()=>{
     const {id}= useParams()
-    const dispatch=useDispatch()
     const otherUser = useSelector(state=>state.otherUser)
     const userDetail = otherUser.find(user=>user.id===Number(id))
-    const user = useSelector(state=>state.user)
-    if (Number(id) === user.id) {
-        Navigate(`/profile/${id}`)
-    }
     return (   
         <div>
           <div className="container mx-auto mt-8">

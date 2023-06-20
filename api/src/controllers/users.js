@@ -83,7 +83,6 @@ const getUserById = async (req, res) => {
   const createUser = async (req, res) => {
     const { name, email, password } = req.body;
     const allUsers = await User.findAll();
-    console.log(allUsers);
     const userExists = allUsers.find((user) => user.email === email);
     if (userExists) {
       return res.status(400).json({ message: 'User already exists' });
@@ -107,7 +106,6 @@ const getUserById = async (req, res) => {
   const updateUser = async (req, res) => {
     const { id } = req.params;
     const { name, email, password, image, description, isAdmin, isPremium, perfilUrl } = req.body;
-    console.log(perfilUrl);
     const updateFields = {};
     if (name) updateFields.name = name;
     if (email) updateFields.email = email;
@@ -122,12 +120,17 @@ const getUserById = async (req, res) => {
     if (perfilUrl) updateFields.perfilUrl = perfilUrl;
   
     try {
-      await User.update(updateFields, {
+      const user = await User.update(updateFields, {
         where: {
           id: id,
         },
       });
-      res.json({ message: 'User updated' });
+      const updatedUser = await User.findOne({
+        where: {
+          id: id,
+        },
+      });
+      res.json(updatedUser);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: 'Error updating user' });
