@@ -40,8 +40,9 @@ const receiveWebhook = async (req, res) => {
     if (payment.type === "payment") {
       const data = await mercadopago.payment.findById(payment["data.id"]);
       console.log(data);
+      //store in database
+      
     }
-
     res.sendStatus(204);
   } catch (error) {
     console.log(error);

@@ -1,8 +1,7 @@
-const { DataTypes } = require('sequelize');
-
+const {DataTypes}= require ('sequelize')
 
 module.exports = (sequelize) =>{
-    sequelize.define('ChatMessage', {
+    sequelize.define('Payment', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -12,10 +11,17 @@ module.exports = (sequelize) =>{
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  message: {
+  amount: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  data_id:{
+    type: DataTypes.STRING,
+  },
+  type: {
     type: DataTypes.STRING,
     allowNull: false,
-    },
+  },
   }, 
   {
     paranoid:true,
