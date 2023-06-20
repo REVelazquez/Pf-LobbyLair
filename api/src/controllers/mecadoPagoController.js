@@ -16,17 +16,17 @@ const createOrder = async (req, res) => {
           quantity: 1,
         },
       ],
-      notification_url: "https://e720-190-237-16-208.sa.ngrok.io/webhook",
+      notification_url: "https:45b0-181-15-145-168.sa.ngrok.io/webhook",
       back_urls: {
         success: "http://localhost:3000/success",
-        // pending: "https://e720-190-237-16-208.sa.ngrok.io/pending",
-        // failure: "https://e720-190-237-16-208.sa.ngrok.io/failure",
+        pending: "https://e720-190-237-16-208.sa.ngrok.io/pending",
+        failure: "https://e720-190-237-16-208.sa.ngrok.io/failure",
       },
     });
 
     console.log(result);
 
-    // res.json({ message: "Payment creted" });
+    res.json({ message: "Payment creted" });
     res.json(result.body);
   } catch (error) {
     return res.status(500).json({ message: "Something goes wrong" });
