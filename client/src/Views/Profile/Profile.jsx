@@ -77,6 +77,17 @@ const Profile = () => {
           </div>
         </div>
       </div>
+    </div>
+    <div className="flex ml-[5rem] my-[1rem]">
+      <NavLink
+        to={`/profile/${id}/update`}
+        className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer"
+      >
+        Editar
+      </NavLink>
+    </div>
+  </div>
+</div>
     );
   }
 };

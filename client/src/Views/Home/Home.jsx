@@ -33,10 +33,11 @@ const Home = () => {
   };
 
   return (
-    <div className="flex">
-      <div className="flex ml-[5rem] my-[3rem]">
+    <div className="flex flex-col md:flex-row">
+      <div className="md:w-[12rem]">
         <GamesBar className="sticky" />
       </div>
+
       <div className="post-container mx-auto mt-[4rem] overflow-y-auto">
         <div className="text-left">
           <div className="flex items-center mb-4">
@@ -48,20 +49,8 @@ const Home = () => {
                 onChange={handlerOrder}
                 className="appearance-none bg-gray-900 border text-white border-gray-300 rounded-md px-4 py-2 pr-8 leading-tight focus:outline-none focus:border-blue-500 text-sm"
               >
-                <option value="A" className="bg-black text-white">
-                  Old first
-                </option>
-                <option value="D">New first</option>
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg
-                  className="fill-current h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M10 12L6 8h8l-4 4z" />
-                </svg>
-              </div>
+                <path d="M10 12L6 8h8l-4 4z" />
+              </svg>
             </div>
           </div>
         </div>
