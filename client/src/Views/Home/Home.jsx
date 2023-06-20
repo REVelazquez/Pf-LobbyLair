@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import GamesBar from "../../Components/GamesBar/GamesBar";
 import { useDispatch, useSelector } from "react-redux";
-import { BiShareAlt } from 'react-icons/bi';
+import { BiShareAlt } from "react-icons/bi";
 
 import {
   getAllPosts,
@@ -38,9 +38,9 @@ const Home = () => {
         <GamesBar className="sticky" />
       </div>
       <div className="post-container mx-auto mt-[4rem] overflow-y-auto">
-        <div className="text-left"> 
+        <div className="text-left">
           <div className="flex items-center mb-4">
-            <h1 className="text-sm font-bold mr-2">Order:</h1> 
+            <h1 className="text-sm font-bold mr-2">Order:</h1>
             <div className="relative inline-flex">
               <select
                 name="Creation Order"
@@ -72,46 +72,50 @@ const Home = () => {
                 key={post.id}
                 className="w-[80rem] mx-auto mt- border-2 border-crimson p-6 flex justify-between items-start mb-3"
               >
-                
                 <div className="bg-slate-100 w-[20%] flex flex-col justify-center items-center shadow-md">
-                
-  <img
-    src="https://source.unsplash.com/120x120/?person"
-    alt=""
-    className="rounded-[1rem] w-[6.9rem] h-full cursor-pointer p-3"
-  />
-  <h1 className="text-black font-bold text-sm mt-3">
-    Game mode: {post.GameMode.name}
-  </h1>
-          <div className="flex mt-2">
-            <p className="mr-2 text-black font-bold text-sm">Posted by:</p>
-            <NavLink to={`/user/${post.User?.id}`}>
-              <p>{post.User?.name}</p>
-            </NavLink>
-          </div>
-          <div className="flex mt-2 ">
-            <p className="text-sm text-black font-bold mb-8 ">
-              Created: {post.createdAt.slice(0, 10).split("-").reverse().join("-")}
-            </p>
-          </div>
-        </div>
-        <div className=" w-[79%]">
-          <div className= "flex justify-end">
-          <BiShareAlt className="text-yellow-500 text-2xl " />
-          </div>
-        
-          <h1 className="w-[60rem] mt-3 p-4 flex flex-col items-center text-left">{post.text}</h1>
-        </div>
-      </div>
-    );
-  }
-})}
+                  <img
+                    src="https://source.unsplash.com/120x120/?person"
+                    alt=""
+                    className="rounded-[1rem] w-[6.9rem] h-full cursor-pointer p-3"
+                  />
+                  <h1 className="text-black font-bold text-sm mt-3">
+                    Game mode: {post.GameMode.name}
+                  </h1>
+                  <div className="flex mt-2">
+                    <p className="mr-2 text-black font-bold text-sm">
+                      Posted by:
+                    </p>
+                    <NavLink to={`/user/${post.User?.id}`}>
+                      <p>{post.User?.name}</p>
+                    </NavLink>
+                  </div>
+                  <div className="flex mt-2 ">
+                    <p className="text-sm text-black font-bold mb-8 ">
+                      Created:{" "}
+                      {post.createdAt
+                        .slice(0, 10)
+                        .split("-")
+                        .reverse()
+                        .join("-")}
+                    </p>
+                  </div>
+                </div>
+                <div className=" w-[79%]">
+                  <div className="flex justify-end">
+                    <BiShareAlt className="text-yellow-500 text-2xl " />
+                  </div>
 
+                  <h1 className="w-[60rem] mt-3 p-4 flex flex-col items-center text-left">
+                    {post.text}
+                  </h1>
+                </div>
+              </div>
+            );
+          }
+        })}
       </div>
     </div>
   );
 };
 
 export default Home;
-
-

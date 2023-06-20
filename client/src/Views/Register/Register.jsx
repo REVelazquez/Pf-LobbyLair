@@ -10,7 +10,7 @@ const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const [ setUser ] = useState(null);
+  const [setUser] = useState(null);
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -18,16 +18,17 @@ const Register = () => {
   });
   const handleRegister = async (e) => {
     e.preventDefault();
+    const validateUser = dispatch(createUser(data));
     try {
-      const validateUser = await dispatch(createUser(data));
-      if (validateUser) {
-        localStorage.setItem("isAuthenticated", true);
-        navigate("/home");
-      }
+      localStorage.setItem("isAuthenticated", true);
+      localStorage.setItem("user", JSON.stringify(validateUser.payload));
+      navigate("/home");
+
+      return console.log(validateUser);
     } catch (error) {
+      console.log("a");
       alert(error);
     }
-
   };
 
   const [errors, setErrors] = useState({
@@ -169,9 +170,7 @@ const Register = () => {
                   }}
                   placeholder="name"
                   required
-                  onChange={(e) =>
-                    setData({ ...data, name: e.target.value })
-                  }
+                  onChange={(e) => setData({ ...data, name: e.target.value })}
                   value={data.name}
                 />
               </div>
@@ -205,11 +204,17 @@ const Register = () => {
                   onChange={handleInputChange}
                   value={data.email}
                 />
-                 {errors.email && (
-          <p style={{ color: "red", fontSize: "0.75rem", marginTop: "0.25rem" }}>
-            {errors.email}
-          </p>
-        )}
+                {errors.email && (
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "0.75rem",
+                      marginTop: "0.25rem",
+                    }}
+                  >
+                    {errors.email}
+                  </p>
+                )}
               </div>
               <div style={{ marginBottom: "1rem" }}>
                 <label
@@ -242,10 +247,16 @@ const Register = () => {
                   value={data.password}
                 />
                 {errors.password && (
-          <p style={{ color: "red", fontSize: "0.75rem", marginTop: "0.25rem" }}>
-            {errors.password}
-          </p>
-        )}
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "0.75rem",
+                      marginTop: "0.25rem",
+                    }}
+                  >
+                    {errors.password}
+                  </p>
+                )}
               </div>
               <div style={{ marginBottom: "1rem" }}>
                 <label
@@ -277,11 +288,17 @@ const Register = () => {
                   onChange={handleInputChange}
                   value={data.confirmPassword}
                 />
-                   {errors.confirmPassword && (
-          <p style={{ color: "red", fontSize: "0.75rem", marginTop: "0.25rem" }}>
-            {errors.confirmPassword}
-          </p>
-        )}
+                {errors.confirmPassword && (
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "0.75rem",
+                      marginTop: "0.25rem",
+                    }}
+                  >
+                    {errors.confirmPassword}
+                  </p>
+                )}
               </div>
 
               <button

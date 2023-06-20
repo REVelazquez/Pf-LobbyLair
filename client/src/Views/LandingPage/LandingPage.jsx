@@ -5,11 +5,11 @@ import { Login } from "../../Views/index";
 
 
 const LandingPage = () => {
-
-    const dispatch=useDispatch()
-    useEffect(()=>{
-      dispatch(getAllGames())
-    },[])
+  const dispatch=useDispatch()
+    
+  useEffect(()=>{
+    dispatch(getAllGames())
+  },[])
 
   return (
     <div>
