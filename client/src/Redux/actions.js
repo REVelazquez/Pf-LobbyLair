@@ -21,6 +21,10 @@ import {
     CREATE_POST,
     ORDER,
     GET_ALL_USERS,
+    ADD_FAVORITE,
+    DELETE_FAVORITE,
+
+    
 } from './action-types';
 import { ErrorMessage } from 'formik';
 
@@ -283,4 +287,13 @@ export const getAllUsers = () => async(dispatch) => {
     } catch (error) {
         throw new Error(error);
     }
+
+}
+export const addFavorite = (id,name,thumbnail) => {
+    
+    return {type:ADD_FAVORITE, payload: {id,name,thumbnail}
+}
+}
+export const deleteFavorite = (id) => {
+    return {type:DELETE_FAVORITE, payload: id}
 }
