@@ -6,15 +6,13 @@ const PaymentComponent = () => {
   console.log(stateUser);
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const handlePaymentOption = async (option) => {
+  const handlePaymentOption = (option) => {
     setSelectedOption(option);
-    const response = await fetch('https://localhost:3001/payment', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ option }),
-    });
-    const data = await response.json();
-    console.log(data);
+    // const response = await fetch('http://localhost:3001/create-order', {
+    //   method: 'POST',
+    // });
+    // const data = await response.json();
+    // window.location.href = data.links[1].href;
     setSelectedOption(null);
   };
 
