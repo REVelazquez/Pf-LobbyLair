@@ -69,7 +69,7 @@ const captureOrder = async (req, res) => {
     );
     
     console.log(response.data);
-    return res.send('payed');
+    return res.send('payment successful');
     // Hashear el token después de utilizarlo
     const hashedToken = await bcrypt.hash(token, 10);
     // Aquí puedes almacenar o utilizar el valor hasheado del token en lugar del valor original
@@ -82,7 +82,7 @@ const captureOrder = async (req, res) => {
 
 
 const cancelPayment = (req, res) => {
-  res.redirect('/');
+  res.send('payment canceled');
 };
 module.exports = {
   createOrder,
