@@ -13,15 +13,13 @@ const Register = () => {
   });
   const handleRegister = async (e) => {
     e.preventDefault();
-    const validateUser = dispatch(createUser(data));
     try {
-      localStorage.setItem("isAuthenticated", true);
-      localStorage.setItem("user", JSON.stringify(validateUser.payload));
-      navigate("/home");
-
-      return console.log(validateUser);
+      const validateUser = await dispatch(createUser(data)); // Esperar a que se resuelva la promesa
+      console.log(validateUser);
+      if (validateUser) {
+        navigate("/");
+      }
     } catch (error) {
-      console.log("a");
       alert(error);
     }
   };
@@ -328,7 +326,7 @@ const Register = () => {
               >
                 Already have an account?{" "}
                 <a
-                  href="/login"
+                  href="/"
                   style={{
                     fontWeight: "medium",
                     color: "#3b82f6",
