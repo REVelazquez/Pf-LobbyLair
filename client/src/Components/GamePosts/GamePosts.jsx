@@ -202,11 +202,12 @@ const GamePosts = () => {
 
   useEffect(() => {
     setLoading(true);
-    dispatch(getPostsWithPagination(currentPage, gameid, gamemodeid)).then(() =>
-      setLoading(false)
-    );
+    dispatch(getPostsWithPagination(currentPage, gameid, gamemodeid)).then(() => {
+      setLoading(false);
+      console.log("Posts obtenidos:", pagedPosts);
+    });
   }, [currentPage, dispatch, refresh]);
-
+  
   useEffect(() => {
     if (currentPage === 1) {
       setBtnNext(true);
@@ -224,6 +225,7 @@ const GamePosts = () => {
     { length: post.totalPages },
     (_, index) => index + 1
   );
+  
 
   const handleOnClick = (event) => {
     const selectedPage = parseInt(event.target.value);
@@ -255,8 +257,8 @@ const GamePosts = () => {
 
   return (
     <div>
-      <div className="flex">
-        <div className="flex ml-[5rem] my-[1rem] w-[10%]">
+      <div className="">
+        <div className="">
           <GamesBar className="sticky" />
         </div>
 

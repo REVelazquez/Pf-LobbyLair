@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getGamesWithPagination } from "../../Redux/actions";
-import { HiArrowCircleDown, HiArrowCircleUp} from "react-icons/hi";
+import { FcPrevious, FcNext } from "react-icons/fc";
 import Loader from "../Loader/Loader";
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const ImagePreloader = ({ src }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -20,7 +21,13 @@ const ImagePreloader = ({ src }) => {
     };
   }, [src]);
 
-  return isLoaded ? <img src={src} alt="" className="w-[8rem] h-[8rem]"/> : <Loader />;
+  return isLoaded ? (
+    <div className="w-[80%] my-6">
+      <img src={src} alt="" className="w-[100%] h-[full]" />
+    </div>
+  ) : (
+    <Loader />
+  );
 };
 
 const GamesBar = () => {
@@ -60,47 +67,64 @@ const GamesBar = () => {
       setCurrentPage(nextPage);
     }
   };
+
   const handleUp = (event) => {
     if (currentPage > 1) {
       const nextPage = currentPage - 1;
       setCurrentPage(nextPage);
     }
   };
-  
-  return (
-    <div className="flex justify-end mt-4">
-      <div style={{position:'sticky'}} className="flex flex-col h-full">
-        <div className="flex justify-center">
-        <NavLink
-          onClick={handleUp}
-          className=" border-gray-400 rounded-lg disabled:bg-gray-300 hover:text-blue-500 mt-2"
-          disabled={btnUp}
 
-        >
-          <HiArrowCircleUp className="w-6 h-6" />
-        </NavLink>
+  return (
+    <div className="mt-10">
+      <motion.div
+        className="bg-gray-200 flex flex-col w-[100%] overflow-x-auto boxShadow transform transition duration-500 hover:scale-105"
+        style={{ display: "flex" }}
+        drag="x"
+        dragConstraints={{
+          left: 0,
+          right: 0,
+        }}
+        dragElastic={0.8}
+      >
+        <div style={{ position: "sticky" }}>
+          <div className="flex justify-center">
+            <div className="my-8 w-full h-full flex items-center justify-center">
+              <div className="flex justify-center">
+                <NavLink
+                  onClick={handleUp}
+                  className="disabled:bg-gray-300 mt-2 flex items-center rounded-l me-4  bg-gray-700 w-[2rem] h-[5rem]"
+                  disabled={btnUp}
+                >
+                  <FcPrevious className="w-6 h-6 " />
+                </NavLink>
+              </div>
+              <div className="flex justify-between flex-nowrap w-[76%]">
+                {gamesInPages?.map(({ id, thumbnail }) => (
+                  <motion.button
+                    key={id}
+                    onClick={() => navigate(`/games/${id}`)}
+                    className="flex items-center justify-center flex-col w-[20%] h-[20%] bg-gray-800 rounded-xl m-2 hover:bg-gray-500"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <ImagePreloader src={thumbnail} />
+                  </motion.button>
+                ))}
+              </div>
+              <div className="flex justify-center">
+                <NavLink
+                  onClick={handleDown}
+                  className="disabled:bg-gray-300 flex items-center rounded-r ms-4 bg-gray-700 w-[2rem] h-[5rem]"
+                  disabled={btnDown}
+                >
+                  <FcNext className="w-6 h-6" />
+                </NavLink>
+              </div>
+            </div>
+          </div>
         </div>
-        {gamesInPages?.map(({ id, thumbnail }) => {
-          return(
-            <button
-              key={id}
-              onClick={() => navigate(`/games/${id}`) }
-              className="flex items-center justify-center"
-            >
-              <ImagePreloader src={thumbnail} />
-            </button>
-          ) 
-        })}
-        <div className="flex justify-center">
-          <NavLink
-            onClick={handleDown}
-            className=" border-gray-400 rounded-lg disabled:bg-gray-300 hover:text-blue-500 mt-2"
-            disabled={btnDown}
-          >
-            <HiArrowCircleDown className="w-6 h-6" />
-          </NavLink>
-        </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

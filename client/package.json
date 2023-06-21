@@ -9,6 +9,7 @@
     "axios": "^1.4.0",
     "firebase": "^9.22.2",
     "formik": "^2.4.2",
+    "framer-motion": "^10.12.16",
     "install": "^0.13.0",
     "npm": "^9.7.1",
     "query-string": "^8.1.0",
