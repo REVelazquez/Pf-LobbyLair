@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import glass from "../../magnifying-glass-search.png";
 import { NavLink } from "react-router-dom";
+import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
 
 const SearchBar = () => {
   const searchRef = useRef(null); // Referencia al input de búsqueda
@@ -28,7 +28,7 @@ const SearchBar = () => {
   const handleChange = async (event) => {
     setSearchName({ name: event.target.value });
     const response = await axios.get(
-      `http://localhost:3001/games/page?name=${event.target.value}`
+      `http://localhost:3001/games/page?name=${event.target.value}` 
     );
     setGame(response.data.games);
   };
@@ -45,7 +45,8 @@ const SearchBar = () => {
           className="rounded text-center h-[30px] placeholder-center font-semibold text-black focus:outline-none"
         />
         <button className="text-white text-lg font-semibold no-underline hover:text-gray-500">
-          <img src={glass} alt="" />
+          <HiOutlineMagnifyingGlass
+          size={30}/>
         </button>
       </div>
       <div className="absolute w-full top-2 bg-gray-200 bg-opacity-6 rounded-lg grid grid-cols-1 gap-x-1">

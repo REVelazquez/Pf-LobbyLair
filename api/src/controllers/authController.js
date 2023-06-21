@@ -5,6 +5,7 @@ const { User } = require("../db.js");
 const { where } = require("sequelize");
 
 const handleLogin = async (req, res) => {
+
   const { email, password } = req.body;
   try {
     const user_Db = await User.findOne({ where: { email: email } });
@@ -77,5 +78,6 @@ const handleSignUp = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 module.exports = { handleLogin, handleSignUp };
