@@ -1,12 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { auth, signOut } from "../../firebase/firebase";
 import { useNavigate } from "react-router-dom";
-import { WiDaySunny, WiMoonAltNew } from "react-icons/wi";
-import LobbyFlight from "../../Multimedia/Flight lobbylair.gif";
+import { HiOutlineLightBulb, HiLightBulb} from "react-icons/hi";
 import LobbyLogo from "../../Multimedia/Logo Lobbylair.gif";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserById, logOut } from "../../Redux/actions";
+import { logOut } from "../../Redux/actions";
 import SearchBar from "../SearchBar/SearchBar";
 
 function NavItem({ href, text }) {
@@ -43,7 +41,10 @@ const NavBar = () => {
   const id = user.id;
 
   const handleThemeChange = () => {
-    setTheme(!theme);
+    setTheme((prevTheme) => !prevTheme);
+  };
+  
+  useEffect(() => {
     if (theme) {
       document.body.classList.add("dark");
       localStorage.setItem("darkMode", "true");
@@ -52,8 +53,8 @@ const NavBar = () => {
       localStorage.setItem("darkMode", "false");
     }
     document.body.setAttribute("data-theme", theme ? "dark" : "light");
-  };
-
+  }, [theme]);
+  
   const handleLogout = () => {
     try {
       localStorage.setItem("isAuthenticated", false);
@@ -68,29 +69,37 @@ const NavBar = () => {
     setShowMenu(!showMenu);
   };
 
+  const handleProfileClick = () => {
+    if (showMenu) {
+      setShowMenu(false);
+    } else {
+      setShowMenu(true);
+    }
+  };
+
   return (
     <nav className="bg-[#1f2937] p-[1rem] sticky">
       <div className="flex justify-between items-center max-w-[1050px] mx-auto">
         <div className="flex items-center gap-[2.5rem]">
           <NavLink
             to="/home"
-            className="w-[50px] h-[50px] bg-white rounded-full flex items-center justify-center"
+            className="w-[50px] h-[50px] bg-white rounded-full border-2 border-white inline-block overflow-hidden"
           >
-            <img src={LobbyLogo} alt="LOBBYL" className=" scale-125 mt-1" />
+            <img src={LobbyLogo} alt="LOBBYL" className="scale-125 flex items-center justify-center" />
           </NavLink>
           <SearchBar />
         </div>
         <div className="flex items-center gap-6 relative">
           <div className="flex items-center gap-[0.5rem]">
             {theme ? (
-              <WiDaySunny
+              <HiOutlineLightBulb
                 size={20}
                 color="white"
                 onClick={handleThemeChange}
                 style={{ cursor: "pointer" }}
               />
             ) : (
-              <WiMoonAltNew
+              <HiLightBulb
                 size={20}
                 color="white"
                 onClick={handleThemeChange}
@@ -114,9 +123,13 @@ const NavBar = () => {
               onClick={handleMenuToggle}
             />
             {showMenu && (
-              <ul className="absolute top-12 right-0 bg-white p-2 rounded-sm shadow z-10 min-w-[10rem] flex flex-col gap-2">
+              <ul className="absolute top-16 right-0 bg-white p-1 rounded-lg  shadow-md border-2 border-gray-300 z-10 min-w-[10rem] flex flex-col gap-1">
                 <li>
-                  <ProfileItem href={`/profile/${id}`} text="Profile" />
+                  <ProfileItem 
+                  href={`/profile/${id}`} 
+                  text="Profile"
+                  onClick={handleProfileClick} 
+                />
                 </li>
                 <li>
                   <ProfileItem text="Log Out" onClick={handleLogout} />
