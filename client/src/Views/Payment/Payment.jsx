@@ -8,13 +8,12 @@ const PaymentComponent = () => {
 
   const handlePaymentOption = async (option) => {
     setSelectedOption(option);
-    const response = await fetch('https://localhost:3001/payment', {
+    const response = await fetch('http://localhost:3001/create-order', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ option }),
     });
     const data = await response.json();
-    console.log(data);
+    console.log(data.links);
+    window.location.href = data.links[1].href;
     setSelectedOption(null);
   };
 

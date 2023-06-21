@@ -49,9 +49,9 @@ const SearchBar = () => {
           size={30}/>
         </button>
       </div>
-      <div className="absolute w-full z-50 top-2 bg-gray-200 bg-opacity-6 rounded-lg grid grid-cols-1 gap-x-1">
+      <div className="absolute w-full top-2 bg-gray-200 bg-opacity-6 rounded-lg grid grid-cols-1 gap-x-1">
         {searchName.name.length !== 0 && (
-          <div className="absolute  w-full top-9 shadow-lg bg-gray-50 bg-opacity-6 rounded-lg grid grid-cols-1 gap-x-1">
+          <div className="absolute  top-9 shadow-lg bg-gray-50 bg-opacity-6 rounded-lg grid grid-cols-1 gap-x-1">
             {game.length !== 0 ? (
               game.map((match) => (
                 <NavLink
