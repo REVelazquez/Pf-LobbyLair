@@ -1,8 +1,8 @@
 require('dotenv').config();
 const axios = require('axios');
-const {PAYPAL_API_SECRET,PAYPAL_API_CLIENT,PAYPAL_API,CAPTURE_API} = process.env;
+const {PAYPAL_API_SECRET,PAYPAL_API_CLIENT,PAYPAL_API} = process.env;
 const API = PAYPAL_API || 'https://api-m.sandbox.paypal.com';
-const API_CAPTURE = CAPTURE_API || 'https://api.sandbox.paypal.com';
+
 const createOrder = async (req, res) => {
   const order = {
     intent: 'CAPTURE',
@@ -54,11 +54,11 @@ const createOrder = async (req, res) => {
 };
 
 const captureOrder = async (req, res) => {
-  const { token } = req.body;
-  console.log(req.body);
+  const { token } = req.query;
+  console.log(req.query);
   try {
     const response = await axios.post(
-      `${API_CAPTURE}/v2/checkout/orders/${token}/capture`,
+      `${API}/v2/checkout/orders/${token}/capture`,
       {},
       {
         auth: {
