@@ -9,19 +9,32 @@ const handleLogin = async (req, res) => {
   try {
     const user_Db = await User.findOne({ where: { email: email } });
 
-    if (!user_Db)
-      return res.status(404).json({ message: "Email does not exist" });
+    if (!user_Db) {
+      return res.status(404).json({ message: "Email or password is invalid" });
+    }
 
     const isPasswordMatch = await bcrypt.compare(password, user_Db.password);
 
-    if (!isPasswordMatch)
-      return res.status(401).json({ message: "Invalid password" });
+    if (!isPasswordMatch) {
+      return res.status(404).json({ message: "Email or Password are invalid" });
+    }
 
     const token = jwt.sign(user_Db.dataValues, process.env.SECRET_KEY, {
       expiresIn: 60 * 60 * 24 * 7,
     });
 
-    res.json(user_Db);
+    const respuesta = {
+      id: user_Db.id,
+      name: user_Db.name,
+      email: user_Db.email,
+      createdAt: user_Db.createdAt,
+      perfilUrl: user_Db.perfilUrl,
+      image: user_Db.image,
+      description: user_Db.description,
+      token,
+    };
+
+    return res.json(respuesta);
   } catch (err) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -29,27 +42,36 @@ const handleLogin = async (req, res) => {
 
 const handleSignUp = async (req, res) => {
   const { email, password, name } = req.body;
-  console.log(email, password, name);
   try {
     const existingUser = await User.findOne({ where: { email: email } });
 
-    if (existingUser)
+    if (existingUser) {
       return res.status(400).json({ message: "Email already exists" });
+    }
 
     const hashedPassword = await hash.hashPassword(password);
 
-    const newUser = new User({
+    const newUser = await User.create({
       email,
       password: hashedPassword,
       name,
     });
 
-    await newUser.save();
-    // const token = jwt.sign(newUser, process.env.SECRET_KEY, {
-    //   expiresIn: 60 * 60 * 24 * 7,
-    // })
+    const token = jwt.sign({ userId: newUser.id }, process.env.SECRET_KEY, {
+      expiresIn: 60 * 60 * 24 * 7,
+    });
 
-    res.json(newUser);
+    const respuesta = {
+      id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+      createdAt: newUser.createdAt,
+      perfilUrl: newUser.perfilUrl,
+      image: newUser.image,
+      description: newUser.description,
+    };
+
+    return res.header("Authorization", "Bearer " + token).json(respuesta);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Internal server error" });
