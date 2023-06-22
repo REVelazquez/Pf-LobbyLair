@@ -3,6 +3,7 @@ const axios = require("axios");
 const { PAYPAL_API_SECRET, PAYPAL_API_CLIENT, PAYPAL_API } = process.env;
 const API = PAYPAL_API || "https://api-m.sandbox.paypal.com";
 
+
 const createOrder = async (req, res) => {
   const order = {
     intent: "CAPTURE",
@@ -38,19 +39,19 @@ const createOrder = async (req, res) => {
     const {
       data: { access_token },
     } = await axios.post(`${API}/v1/oauth2/token`, params, { headers });
-    console.log(access_token);
     const response = await axios.post(`${API}/v2/checkout/orders`, order, {
       headers: { Authorization: `Bearer ${access_token}` },
     });
 
     console.log(response.data);
     return res.json(response.data);
-  } catch (error) {
+  } 
+  
+  catch (error) {
     console.error(error);
-    return res.status(500).json("Failed to create order");
+    res.status(500).json({ error: 'Failed to create PayPal order' });
   }
 };
-
 const captureOrder = async (req, res) => {
   const { token } = req.query;
   console.log(req.query);
