@@ -12,7 +12,7 @@ import {
 } from "./Views";
 import GameDetail from "./Components/GameDetail/GameDetail";
 import GamePosts from "./Components/GamePosts/GamePosts";
-import { Routes, Route, useLocation, redirect } from "react-router-dom";
+import { Routes, Route, useLocation} from "react-router-dom";
 import NavBar from "./Components/NavBar/NavBar";
 import { ProtectedRoutes, ProtectedRoutes2 } from "./router/ProctectedRoutes";
 import GamesBar from "./Components/GamesBar/GamesBar";
@@ -52,16 +52,17 @@ function App() {
   const location = useLocation();
   return (
     <div className="App">
-      {location.pathname !== "/" &&
-        location.pathname !== "/register" &&
-        location.pathname !== "/sendEmail" &&
-        location.pathname !== "/resetPassword/:token" && <NavBar />}
+      {location.pathname !== "/" && location.pathname !== "/register" && !location.pathname.startsWith('/resetPassword') && !location.pathname.startsWith('/sendEmail') && <NavBar />}
+      {location.pathname === '/home' ? <GamesBar/>
+      :location.pathname.startsWith('/games') ? <GamesBar/>
+      :location.pathname === '/post' ? <GamesBar/>
+      :null}
       <Routes>
-        <Route element={<ProtectedRoutes2 />}>
+          <Route element={<ProtectedRoutes2 />}>
           <Route path="/" element={<LandingPage />} />
-        </Route>
-        <Route exact path="/register" element={<Register />} />
-        <Route element={<ProtectedRoutes />}>
+          </Route>
+          <Route exact path="/register" element={<Register />} />
+          <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
           <Route path="/games/:detail" element={<GameDetail />} />
           <Route path="/post" element={<GamePosts />} />
