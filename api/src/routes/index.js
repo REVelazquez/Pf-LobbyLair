@@ -41,8 +41,8 @@ const {
   getMessages,
 } = require("../controllers/chatController.js");
 const {
-  createOrder,
-  receiveWebhook,
+  createPreference,
+  feedback
 } = require("../controllers/mecadoPagoController.js");
 
 const { sendEmail } = require("../controllers/sendEmail");
@@ -139,9 +139,9 @@ router.post("/login", handleLogin);
 router.get("/chat", sendMessage, getMessages);
 
 //Endpoint para mecado pago
-router.post("/payment", createOrder);
+router.post("/payment", createPreference);
 
-router.post("/webhook", receiveWebhook);
+router.post("/feedback", feedback);
 
 router.post("/sendEmail", sendEmail);
 
