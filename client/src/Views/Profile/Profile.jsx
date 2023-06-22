@@ -48,15 +48,11 @@ const Profile = () => {
                     </h1>
                   </div>
                   <div className="m-4 space-x-2 pl-10">
-                    <h1 className="text-black font-bold truncate">Profile Url:</h1>
-                    <h1 className="text-black truncate">
-                      {userDetail.perfilUrl !== "" ? userDetail.perfilUrl : "You can put a steam profile url or similar"}
-                    </h1>
-                  </div>
-                  <div className="m-4 space-x-2 pl-10">
-                    <h1 className="text-black font-bold truncate">Descripción:</h1>
-                    <h1 className="text-black truncate">{userDetail.Descripción}</h1>
-                  </div>
+                  {userDetail.perfilUrl && [<h1 className="text-black font-bold truncate">Profile Url</h1>, <p className="text-black truncate">{userDetail.perfilUrl}</p>]}
+              </div>
+              <div className="m-4 space-x-2 pl-10">
+                  {userDetail.description && [<h1 className="text-black font-bold truncate">Description:</h1>, <p className="text-black truncate">{userDetail.description}</p>]}
+            </div>
                 </div>
               </div>
             </div>
