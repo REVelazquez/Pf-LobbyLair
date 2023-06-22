@@ -23,7 +23,7 @@ const Profile = () => {
       <div className="m-10">
       <div className="bg-gray-300 rounded-lg min-h-[20rem]" style={{ boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)" }}>
         <div className="flex flex-col sm:flex-row items-center">
-          {userDetail.image?.length <= 1 ? <img src={Default} className='rounded-full scale-75' /> : userDetail.image.length > 1 &&  <img src={userDetail.image} alt="" className="w-1/5 rounded-[25%] cursor-pointer p-5" />}
+          {userDetail.image && <img src={userDetail.image} alt="" className="w-1/5 rounded-[25%] cursor-pointer p-5" />}
           {userDetail.admin && <img src="../../Multimedia/Dragona premium"/>}
           <div className="flex flex-col space-y-2 w-full">
             <div className="my-10">

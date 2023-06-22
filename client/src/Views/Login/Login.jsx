@@ -179,6 +179,9 @@ const Login = () => {
                   Sign up
                 </a>
               </p>
+              <a href="/sendEmail" className="font-bold text-black text-sm">
+                forgot your password?
+              </a>
             </Form>
           </Formik>
           <p className="text-sm text-gray-800 mt-1">Or sign in with</p>

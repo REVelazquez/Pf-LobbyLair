@@ -8,7 +8,9 @@ const bcrypt = require("bcrypt");
 const getAllUsers = async (req, res) => {
   console.log("a");
   try {
-    const users = await User.findAll();
+    const users = await User.findAll({
+      attributes: { exclude: ["password"] },
+    });
     res.json(users);
   } catch (error) {
     console.error(error);
@@ -20,11 +22,11 @@ const getUserById = async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Se busca el usuario en la base de datos por su ID
     const user = await User.findOne({
       where: {
         id: id,
       },
+      attributes: { exclude: ["password"] },
     });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -47,6 +49,7 @@ const getUserByName = async (req, res) => {
           [Op.iLike]: "%" + name + "%",
         },
       },
+      attributes: { exclude: ["password"] },
     });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -71,6 +74,7 @@ const getUserByEmail = async (req, res) => {
           [Op.iLike]: "%" + email + "%",
         },
       },
+      attributes: { exclude: ["password"] },
     });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -84,7 +88,7 @@ const getUserByEmail = async (req, res) => {
       .json({ message: "Error when searching for the user" });
   }
 };
-// Función para eliminar un usuario
+
 const createUser = async (req, res) => {
   const { name, email, password} = req.body;
   const allUsers = await User.findAll();
@@ -94,19 +98,26 @@ const createUser = async (req, res) => {
   }
   let new_user = null;
   try {
-    new_user = await User.create({
-      name: name,
-      email: email,
-      password: password,
-      perfilUrl: "",
-      image:''
-    });
+    new_user = await User.create(
+      {
+        name: name,
+        email: email,
+        password: password,
+        isAdmin: false,
+        perfilUrl: "",
+        isPremium: false,
+      },
+      {
+        attributes: { exclude: ["password"] },
+      }
+    );
     res.json(new_user);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Error creating user" });
   }
 };
+
 const updateUser = async (req, res) => {
   const { id } = req.params;
   const {
@@ -142,6 +153,7 @@ const updateUser = async (req, res) => {
       where: {
         id: id,
       },
+      attributes: { exclude: ["password"] },
     });
     res.json(updatedUser);
   } catch (error) {
@@ -157,6 +169,7 @@ const deleteUser = async (req, res) => {
       where: {
         id: id,
       },
+      attributes: { exclude: ["password"] },
     });
     res.json({ message: "User deleted" });
   } catch (error) {
@@ -184,6 +197,7 @@ const getUsersWithPagination = async (req, res) => {
       where: whereClause,
       limit: pageSize,
       offset: (page - 1) * pageSize,
+      attributes: { exclude: ["password"] },
     });
 
     res.json({
