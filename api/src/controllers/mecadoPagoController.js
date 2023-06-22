@@ -1,56 +1,49 @@
 const mercadopago = require('mercadopago');
-require("dotenv").config();
-const MERCADOPAGO_API_KEY = process.env.MERCADOPAGO_API_KEY;
-const createOrder = async (req, res) => {
-  mercadopago.configure({
-    access_token: MERCADOPAGO_API_KEY,
-  });
+const express = require("express");
+const server = require("../app.js");
 
-  try {
-    const result = await mercadopago.preferences.create({
+require("dotenv").config();
+const MERCADOPAGO_ACCESS_TOKEN = process.env.MERCADOPAGO_ACCESS_TOKEN;
+
+server.use = express.json();
+mercadopago.configure({
+  access_token: MERCADOPAGO_ACCESS_TOKEN
+})
+
+const createPreference = async (req, res) => {
+    let preference = {
       items: [
         {
-          title: "Videogame",
-          unit_price: 500,
-          currency_id: "ARS",
-          quantity: 1,
-        },
+          title: req.body.description,
+          unit_price: Number(req.body.price),
+          quantity: Number(req.body.quantity),
+        }
       ],
-      notification_url: "https://localhost:3001/webhook",
       back_urls: {
-        success: "http://localhost:3001/success",
-        // pending: "https://e720-190-237-16-208.sa.ngrok.io/pending",
-        // failure: "https://e720-190-237-16-208.sa.ngrok.io/failure",
+        "success": "http://localhost:3001/feedback",
+        "failure": "http://localhost:3001/feedback",
+        "pending": "http://localhost:3001/feedback"
       },
+      auto_return: "approved",
+    };
+  
+    mercadopago.preferences.create(preference)
+      .then(function (response) {
+        res.json({
+          id: response.body.id
+        });
+      }).catch(function (error) {
+        console.log(error);
+      });
+  };
+  const feedback = async (req, res) => {
+    res.json({
+      Payment: req.query.payment_id,
+      Status: req.query.status,
+      MerchantOrder: req.query.merchant_order_id
     });
-
-    console.log(result);
-
-    // res.json({ message: "Payment creted" });
-    res.json(result.body);
-  } catch (error) {
-    return res.status(500).json({ message: "Something goes wrong" });
-  }
-};
-
-const receiveWebhook = async (req, res) => {
-  try {
-    const payment = req.query;
-    console.log(payment);
-    if (payment.type === "payment") {
-      const data = await mercadopago.payment.findById(payment["data.id"]);
-      console.log(data);
-      //store in database
-      
-    }
-    res.sendStatus(204);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: "Something goes wrong" });
-  }
-};
-
-module.exports = {
-  createOrder,
-  receiveWebhook,
-};
+  };
+  module.exports = {
+    createPreference,
+    feedback
+  };
