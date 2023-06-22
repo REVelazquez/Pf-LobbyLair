@@ -46,7 +46,7 @@ const createOrder = async (req, res) => {
     );
 
     console.log(response.data);
-    return res.json('captured order');
+    return res.json(response.data);
   } catch (error) {
     console.error(error);
     return res.status(500).json('Failed to create order');
@@ -69,7 +69,10 @@ const captureOrder = async (req, res) => {
     );
     
     console.log(response.data);
-    return res.send('payed');
+    return res.send('payment successful');
+    // Hashear el token después de utilizarlo
+    const hashedToken = await bcrypt.hash(token, 10);
+    // Aquí puedes almacenar o utilizar el valor hasheado del token en lugar del valor original
   } catch (error) {
     console.error(error.response.data);
     return res.status(500).json('Failed to capture order');
@@ -79,7 +82,7 @@ const captureOrder = async (req, res) => {
 
 
 const cancelPayment = (req, res) => {
-  res.redirect('/');
+  res.send('payment canceled');
 };
 module.exports = {
   createOrder,
