@@ -151,7 +151,6 @@ import React, { useEffect, useState } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import queryString from "query-string";
 import { useDispatch, useSelector } from "react-redux";
-import GamesBar from "../GamesBar/GamesBar";
 import { getPostsWithPagination, createPost } from "../../Redux/actions";
 import { HiHeart } from "react-icons/hi";
 import Loader from "../Loader/Loader";
@@ -258,9 +257,6 @@ const GamePosts = () => {
   return (
     <div>
       <div className="">
-        <div className="">
-          <GamesBar className="sticky" />
-        </div>
 
         <div className="post-container mx-auto mt-[4rem] overflow-y-auto w-[80%]">
           <div className="flex justify-center">

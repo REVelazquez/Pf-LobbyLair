@@ -90,7 +90,7 @@ const getUserByEmail = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password} = req.body;
   const allUsers = await User.findAll();
   const userExists = allUsers.find((user) => user.email === email);
   if (userExists) {

@@ -47,9 +47,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="">
-        <GamesBar className="sticky" />
-      </div>
+
       <div className="flex md:flex-row w-full h-full">
         <div className="w-[60%]">
           <div className="post-container mx-auto overflow-y-auto mt-[1rem] justify-start items-start border-r-2 border-gray-200">
