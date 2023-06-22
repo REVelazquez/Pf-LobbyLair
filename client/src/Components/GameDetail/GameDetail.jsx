@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getGameById, getPostsWithPagination } from "../../Redux/actions";
 import { motion } from "framer-motion";
 
@@ -8,10 +9,52 @@ const GameDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { detail } = useParams();
+  const [isFav, setIsFav] = useState(false);
+  const myFavorites = useSelector((state) => state.myFavorites);
+
+  // Obtener los datos de favoritos guardados en el Local Storage
+  const storedFavorites = localStorage.getItem("favorites");
+  const initialFavorites = storedFavorites ? JSON.parse(storedFavorites) : [];
+  const [favorites, setFavorites] = useState(initialFavorites);
+
+  const handleFavorite = () => {
+    if (isFav) {
+      setIsFav(false);
+      dispatch(deleteFavorite(detail));
+  
+      // Restablecer el estado local de favoritos y el Local Storage
+      const updatedFavorites = favorites.filter((fav) => fav.id !== detail);
+      setFavorites(updatedFavorites);
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+    } else {
+      setIsFav(true);
+      dispatch(addFavorite(detail, game.name, game.thumbnail));
+  
+      // Agregar el juego favorito al estado local y actualizar el Local Storage
+      const newFavorite = { id: detail, name: game.name, thumbnail: game.thumbnail };
+      const updatedFavorites = [...favorites, newFavorite];
+      setFavorites(updatedFavorites);
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+    }
+  };
+  useEffect(() => {
+    // Verificar si el juego está en la lista de favoritos al cargar el componente
+    if (myFavorites) {
+      myFavorites.forEach((fav) => {
+        if (fav.id === detail) {
+          setIsFav(true);
+        }
+      });
+    }
+  }, [myFavorites, detail]);
 
   useEffect(() => {
     dispatch(getGameById(detail));
     dispatch(getPostsWithPagination(detail));
+  }, [detail]);
+
+  useEffect(() => {
+    setIsFav(false); // Reiniciar el estado de isFav al cambiar el parámetro 'detail'
   }, [detail]);
 
   let game = useSelector((state) => state.game);
@@ -29,11 +72,23 @@ const GameDetail = () => {
   return (
     <div className="">
       <div className="md:w-[50%] ml-0 md:ml-1 "></div>
+      
       <div className="flex justify-center ">
         <div
           className="flex flex-col items-center justify-center w-[50%] h-[600px] bg-gray-200 rounded-lg p-3 mt-[4rem] mx-[5rem] shadow-lg transform rotate-x-2 rotate-y-2 perspective-lg"
           style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)" }}
         >
+          <div className="bg-gray-500 w-[3rem]">
+  {isFav ? (
+    <button onClick={handleFavorite} className="text-red-500">
+      ❤️
+    </button>
+  ) : (
+    <button onClick={handleFavorite} className="text-gray-500">
+      🤍
+    </button>
+  )}
+</div>
           <motion.div
             className="flex items-center justify-center flex-col w-[45%] h-[45%] bg-gray-800 rounded-xl m-2 hover:bg-gray-500"
             whileHover={{ scale: 1.1 }}
@@ -83,16 +138,16 @@ const GameDetail = () => {
                           Game mode: {GameMode.name}
                         </p>
                       </h1>
-
+                      
                       <p className="text-black font-bold text-sm">
                         Posted by:
                       </p>
-                      <motion.NavLink
+                      <motion.Link
                         to={`/user/${User.id}`}
                         whileHover={{ scale: 1.1 }}
                       >
                         <p className="text-black  text-sm">{User.name}</p>
-                      </motion.NavLink>
+                      </motion.Link>
 
                       <div className="flex items-center mt-2">
                         <p className="text-sm font-bold text-black mb-3 ">
@@ -118,6 +173,7 @@ const GameDetail = () => {
             })}
           </div>
         </div>
+        
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ const ImagePreloader = ({ src }) => {
 
   return isLoaded ? (
     <div className="w-[80%] my-6">
-      <img src={src} alt="" className="w-[100%] h-[full]" />
+        <img src={src} alt="" className="w-full h-full flex object-cover" />
     </div>
   ) : (
     <Loader />
@@ -76,18 +76,19 @@ const GamesBar = () => {
   };
 
   return (
-    <div className="mt-10">
+    <div className="">
       <motion.div
-        className="bg-gray-200 flex flex-col w-[100%] overflow-x-auto boxShadow transform transition duration-500 hover:scale-105"
+        className="bg-gray-200 w-[100%] transition duration-500 hover:scale-105"
         style={{ display: "flex" }}
-        drag="x"
+        drag=""
         dragConstraints={{
           left: 0,
           right: 0,
         }}
         dragElastic={0.8}
       >
-        <div style={{ position: "sticky" }}>
+     
+        <div >
           <div className="flex justify-center">
             <div className="my-8 w-full h-full flex items-center justify-center">
               <div className="flex justify-center">
@@ -104,8 +105,8 @@ const GamesBar = () => {
                   <motion.button
                     key={id}
                     onClick={() => navigate(`/games/${id}`)}
-                    className="flex items-center justify-center flex-col w-[10%] h-[10%] bg-gray-800 rounded-xl m-2 hover:bg-gray-500"
-                    whileHover={{ scale: 1.05 }}
+                    className="flex items-center justify-center flex-col w-[20%] h-[20%] bg-gray-800 rounded-xl m-2 hover:bg-gray-500"
+                    whileHover={{ scale: 1.08 }}
                     whileTap={{ scale: 0.9 }}
                   >
                     <ImagePreloader src={thumbnail} />
