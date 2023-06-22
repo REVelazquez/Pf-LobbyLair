@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getGameById, getPostsWithPagination } from "../../Redux/actions";
 import { motion } from "framer-motion";
-import GamesBar from "../GamesBar/GamesBar";
 
 const GameDetail = () => {
   const dispatch = useDispatch();
@@ -29,9 +28,6 @@ const GameDetail = () => {
 
   return (
     <div className="">
-      <div>
-        <GamesBar className="" />
-      </div>
       <div className="md:w-[50%] ml-0 md:ml-1 "></div>
       <div className="flex justify-center ">
         <div

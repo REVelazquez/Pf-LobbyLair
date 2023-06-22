@@ -66,7 +66,7 @@ router.get("/games/name/:name", getGamesByName);
 router.post("/games", postGames);
 
 // Endpoint para obtener todos los usuarios
-router.get("/users", authenticateToken, getAllUsers);
+router.get("/users",  getAllUsers);
 
 // Endpoint para obtener un usuario por id
 router.get("/users/:id", authenticateToken, getUserById);

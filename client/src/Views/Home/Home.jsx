@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import GamesBar from "../../Components/GamesBar/GamesBar";
 import { useDispatch, useSelector } from "react-redux";
 import { BiShareAlt } from "react-icons/bi";
 import { motion } from "framer-motion";
@@ -35,9 +34,7 @@ const Home = () => {
 
   return (
     <>
-    <div className="">
-        <GamesBar className="sticky" />
-      </div>
+
     <div className="flex md:flex-row w-full h-full">
       
 <div className="w-[60%]">

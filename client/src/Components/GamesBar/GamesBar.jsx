@@ -104,7 +104,7 @@ const GamesBar = () => {
                   <motion.button
                     key={id}
                     onClick={() => navigate(`/games/${id}`)}
-                    className="flex items-center justify-center flex-col w-[20%] h-[20%] bg-gray-800 rounded-xl m-2 hover:bg-gray-500"
+                    className="flex items-center justify-center flex-col w-[10%] h-[10%] bg-gray-800 rounded-xl m-2 hover:bg-gray-500"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.9 }}
                   >
