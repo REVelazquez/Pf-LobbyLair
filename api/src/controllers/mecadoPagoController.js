@@ -4,7 +4,6 @@ const server = require("../app.js");
 
 require("dotenv").config();
 const {MERCADOPAGO_ACCESS_TOKEN} = process.env;
-console.log("MERCADOPAGO_ACCESS_TOKEN", MERCADOPAGO_ACCESS_TOKEN);
 server.use = express.json();
 mercadopago.configure({
   access_token: MERCADOPAGO_ACCESS_TOKEN,
