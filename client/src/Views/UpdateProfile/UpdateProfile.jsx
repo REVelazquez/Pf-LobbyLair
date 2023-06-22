@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../Redux/actions'
 import { useNavigate } from 'react-router-dom';
-
+import Profile from '../Profile/Profile';
 
 export default function UpdateProfile() {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ export default function UpdateProfile() {
   };
 
   return (
-    <div className="min-h-screen  pt-9 flex flex-col items-center justify-center">
+    <div className="min-h-screen flex flex-col items-center ">
       <div className="flex">
       <form className="w-80 bg-gray-300 shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
         <h2 className="text-xl font-bold mb-4 text-gray-800">Update Profile</h2>
