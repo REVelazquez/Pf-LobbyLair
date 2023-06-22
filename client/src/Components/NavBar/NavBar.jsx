@@ -39,6 +39,7 @@ const NavBar = () => {
   const user = useSelector((state) => state.user);
 
   const id = user.id;
+  const isAdmin =user.isAdmin;
 
   const handleThemeChange = () => {
     setTheme((prevTheme) => !prevTheme);
@@ -76,6 +77,11 @@ const NavBar = () => {
       setShowMenu(true);
     }
   };
+  const handleAdminDash = ()=>{
+    if(isAdmin){
+      navigate('/AdminDashboard')
+    }
+  }
 
   return (
     <nav className="bg-[#1f2937] p-[1rem] sticky">
@@ -135,6 +141,14 @@ const NavBar = () => {
                     onClick={handleProfileClick}
                   />
                 </li>
+                <li>
+
+                <ProfileItem 
+                  href={'/admindashboard'} 
+                  text="Dashboard"
+                  onClick={handleProfileClick} 
+                  />
+                  </li>
                 <li>
                   <ProfileItem text="Log Out" onClick={handleLogout} />
                 </li>
