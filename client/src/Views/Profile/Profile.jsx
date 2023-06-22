@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { getUserById } from "../../Redux/actions";
 import UpdateProfile from "../UpdateProfile/UpdateProfile";
+import {FaCrown} from 'react-icons/fa'
+import Premium from '../../Multimedia/Dragona premium.jpeg'
+
 
 
 const Profile = () => {
@@ -11,6 +14,9 @@ const Profile = () => {
   const userDetail = useSelector((state) => state.user);
   const [editMode, setEditMode] = useState(false);
   const [showImage, setShowImage] = useState(true);
+  const isAdmin=userDetail.isAdmin
+  const isPremium=userDetail.isPremium
+
 
   useEffect(() => {
     const pathname = location.pathname;
@@ -23,23 +29,26 @@ const Profile = () => {
     setShowImage(false);
   };
 
+
   const renderProfile = () => {
     return (
       <div className="flex">
         <div className="w-3/4 pr-5">
           <div className="bg-gray-300 rounded-lg min-h-[20rem]" style={{ boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)" }}>
             <div className="">
-              <img src="https://source.unsplash.com/120x120/?person" alt="" className="w-1/4 rounded-full cursor-pointer p-5" />
+            {userDetail.image && <img className="w-1/4" src={userDetail.image}/>}
               <div className="flex flex-col space-y-2 w-full">
-                <div className="">
+                <div className="flex flex-row">
                   <h3 className="text-4xl font-bold text-left m-2 p-3 truncate border-b border-black w-2/2 text-black">
-                    {userDetail.name}
+                    {userDetail.name} 
                   </h3>
+                  {isAdmin && <div><p>Admin </p><FaCrown/></div>}
                 </div>
                 <div className="flex flex-col sm:flex-row sm:space-x-2">
                   <div className="m-4 space-x-2 pl-10">
                     <h1 className="text-black font-bold truncate">E-mail:</h1>
                     <h1 className="text-black truncate">{userDetail.email}</h1>
+                    {isPremium && <img className="w-1/4" src={Premium} />}
                   </div>
                   <div className="m-4 space-x-2 pl-10">
                     <h1 className="text-black font-bold truncate">Fecha de creación:</h1>
@@ -48,15 +57,11 @@ const Profile = () => {
                     </h1>
                   </div>
                   <div className="m-4 space-x-2 pl-10">
-                    <h1 className="text-black font-bold truncate">Profile Url:</h1>
-                    <h1 className="text-black truncate">
-                      {userDetail.perfilUrl !== "" ? userDetail.perfilUrl : "You can put a steam profile url or similar"}
-                    </h1>
+                  {userDetail.perfilUrl && [<h1 className="text-black font-bold truncate">Profile Url</h1>, <p className="text-black truncate">{userDetail.perfilUrl}</p>]}
                   </div>
                   <div className="m-4 space-x-2 pl-10">
-                    <h1 className="text-black font-bold truncate">Descripción:</h1>
-                    <h1 className="text-black truncate">{userDetail.Descripción}</h1>
-                  </div>
+                  {userDetail.description && [<h1 className="text-black font-bold truncate">Description:</h1>, <p className="text-black truncate">{userDetail.description}</p>]}
+            </div>
                 </div>
               </div>
             </div>

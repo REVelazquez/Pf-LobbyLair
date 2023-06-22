@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getGameById, getPostsWithPagination } from "../../Redux/actions";
 import { motion } from "framer-motion";
+import { addFavorite, deleteFavorite } from "../../Redux/actions";
 
 const GameDetail = () => {
   const dispatch = useDispatch();

@@ -9,6 +9,7 @@ import {
   Favorites,
   UsersProfile,
   UpdateProfile,
+  AdminDashboard,
 } from "./Views";
 import GameDetail from "./Components/GameDetail/GameDetail";
 import GamePosts from "./Components/GamePosts/GamePosts";
@@ -20,6 +21,7 @@ import LobbyFlight from "./Multimedia/Flight lobbylair.gif";
 import { useEffect, useState } from "react";
 import SendEmail from "./Components/ForgotPassword/sendEmail";
 import ResetPassword from "./Components/ForgotPassword/resetPassword";
+import { useSelector } from "react-redux";
 
 function ProjectCursor() {
   const [cursorX, setCursorX] = useState();
@@ -50,6 +52,8 @@ function ProjectCursor() {
 }
 function App() {
   const location = useLocation();
+
+
   return (
     <div className="App">
       {location.pathname !== "/" && location.pathname !== "/register" && !location.pathname.startsWith('/resetPassword') && !location.pathname.startsWith('/sendEmail') && <NavBar />}
@@ -72,6 +76,7 @@ function App() {
           <Route exact path="/profile/:id/update" element={<UpdateProfile />} />
           <Route path="/user/:id" element={<UsersProfile />} />
           <Route exact path="/chat" element={<Chat />} />
+          <Route path='/admindashboard' element={<AdminDashboard/>}/>
         </Route>
         <Route exact path="/sendEmail" element={<SendEmail />} />
         <Route exact path="/resetPassword/:token" element={<ResetPassword />} />

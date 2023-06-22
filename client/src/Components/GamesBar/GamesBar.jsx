@@ -59,7 +59,7 @@ const GamesBar = () => {
       setBtnDown(false);
       setBtnUp(false);
     }
-  });
+  }, []);
 
   const handleDown = (event) => {
     if (currentPage !== games.totalPages) {
