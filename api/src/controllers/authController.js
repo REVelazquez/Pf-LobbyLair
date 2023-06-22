@@ -32,6 +32,8 @@ const handleLogin = async (req, res) => {
       perfilUrl: user_Db.perfilUrl,
       image: user_Db.image,
       description: user_Db.description,
+      isAdmin:user_Db.isAdmin,
+      isPremium:user_Db.isPremium,
       token,
     };
 
