@@ -18,6 +18,8 @@ import { ProtectedRoutes, ProtectedRoutes2 } from "./router/ProctectedRoutes";
 import GamesBar from "./Components/GamesBar/GamesBar";
 import LobbyFlight from "./Multimedia/Flight lobbylair.gif";
 import { useEffect, useState } from "react";
+import SendEmail from "./Components/ForgotPassword/sendEmail";
+import ResetPassword from "./Components/ForgotPassword/resetPassword";
 
 function ProjectCursor() {
   const [cursorX, setCursorX] = useState();
@@ -50,9 +52,10 @@ function App() {
   const location = useLocation();
   return (
     <div className="App">
-      {location.pathname !== "/" && location.pathname !== "/register" && (
-        <NavBar />
-      )}
+      {location.pathname !== "/" &&
+        location.pathname !== "/register" &&
+        location.pathname !== "/sendEmail" &&
+        location.pathname !== "/resetPassword/:token" && <NavBar />}
       <Routes>
         <Route element={<ProtectedRoutes2 />}>
           <Route path="/" element={<LandingPage />} />
@@ -69,6 +72,8 @@ function App() {
           <Route path="/user/:id" element={<UsersProfile />} />
           <Route exact path="/chat" element={<Chat />} />
         </Route>
+        <Route exact path="/sendEmail" element={<SendEmail />} />
+        <Route exact path="/resetPassword/:token" element={<ResetPassword />} />
       </Routes>
       <ProjectCursor />
     </div>

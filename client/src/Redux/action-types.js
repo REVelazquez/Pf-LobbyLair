@@ -21,3 +21,4 @@ export const ORDER='ORDER';
 export const GET_ALL_USERS = 'GET_ALL_USERS';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const DELETE_FAVORITE = 'DELETE_FAVORITE';
+
