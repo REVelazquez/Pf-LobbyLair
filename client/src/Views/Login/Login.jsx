@@ -178,6 +178,9 @@ const Login = () => {
                 <a href="/register" className="font-bold text-black">
                   Sign up
                 </a>
+                <a href="/sendEmail" className="font-bold text-black">
+                  forgot your password?
+                </a>
               </p>
             </Form>
           </Formik>

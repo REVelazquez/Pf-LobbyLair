@@ -44,6 +44,10 @@ const {
   createOrder,
   receiveWebhook,
 } = require("../controllers/mecadoPagoController.js");
+
+const { sendEmail } = require("../controllers/sendEmail");
+const { resetPassword } = require("../controllers/resetPassword");
+
 const router = Router();
 
 // Endpoint para obtener todos los games
@@ -138,6 +142,10 @@ router.get("/chat", sendMessage, getMessages);
 router.post("/payment", createOrder);
 
 router.post("/webhook", receiveWebhook);
+
+router.post("/sendEmail", sendEmail);
+
+router.post("/resetPassword", resetPassword);
 
 router.get("/success", (req, res) => res.send("Success"));
 
