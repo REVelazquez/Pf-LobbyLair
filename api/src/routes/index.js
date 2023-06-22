@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { body } = require("express-validator");
+const authenticateToken = require("../middleWare/middleWare");
 const {
   getGamesWithPagination,
   getGames,
@@ -65,10 +66,10 @@ router.get("/games/name/:name", getGamesByName);
 router.post("/games", postGames);
 
 // Endpoint para obtener todos los usuarios
-router.get("/users", getAllUsers);
+router.get("/users", authenticateToken, getAllUsers);
 
 // Endpoint para obtener un usuario por id
-router.get("/users/:id", getUserById);
+router.get("/users/:id", authenticateToken, getUserById);
 
 // Endpoint para obtener un usuario por nombre
 router.get("/users/:name", getUserByName);

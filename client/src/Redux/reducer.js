@@ -32,7 +32,7 @@ const initialState = {
   pagePosts: [],
   userPosts: [],
   user: localStorage.getItem("user")
-    ? JSON.stringify(localStorage.getItem("user"))
+    ? JSON.parse(localStorage.getItem("user"))
     : [],
   otherUser: [],
   myFavorites: [],

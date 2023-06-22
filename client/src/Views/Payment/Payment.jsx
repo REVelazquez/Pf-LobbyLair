@@ -8,13 +8,27 @@ const PaymentComponent = () => {
 
   const handlePaymentOption = async (option) => {
     setSelectedOption(option);
-    const response = await fetch('https://localhost:3001/payment', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ option }),
-    });
-    const data = await response.json();
-    console.log(data);
+  
+    try {
+      const response = await fetch('http://localhost:3001/create-order', {
+        method: 'POST',
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        if (data.links && data.links[1] && data.links[1].href) {
+          window.location.href = data.links[1].href;
+        } else {
+          console.error('Invalid response format: missing links[1].href');
+        }
+      } else {
+        console.error('Request failed with status:', response.status);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  
     setSelectedOption(null);
   };
 
