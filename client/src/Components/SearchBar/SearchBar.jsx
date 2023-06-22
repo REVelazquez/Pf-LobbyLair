@@ -34,49 +34,47 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex relative">
-      <div className="flex gap-2">
-        <input
-          ref={searchRef} // Agrega la referencia al input de búsqueda
-          placeholder="Search game..."
-          type="search"
-          value={searchName.name}
-          onChange={handleChange}
-          className="rounded text-center h-[30px] placeholder-center font-semibold text-black focus:outline-none"
-        />
-        <button className="text-white text-lg font-semibold no-underline hover:text-gray-500">
-          <HiOutlineMagnifyingGlass
-          size={30}/>
-        </button>
-      </div>
-      <div className="absolute w-full top-2 bg-gray-200 bg-opacity-6 rounded-lg grid grid-cols-1 gap-x-1">
-        {searchName.name.length !== 0 && (
-          <div className="absolute  top-9 shadow-lg bg-gray-50 bg-opacity-6 rounded-lg grid grid-cols-1 gap-x-1">
-            {game.length !== 0 ? (
-              game.map((match) => (
+  <div className="sticky">
+    <div className="flex gap-2">
+      <input
+        ref={searchRef}
+        placeholder="Search game..."
+        type="search"
+        value={searchName.name}
+        onChange={handleChange}
+        className="rounded text-center h-[30px] placeholder-center font-semibold text-black focus:outline-none"
+      />
+      <button className="text-white text-lg font-semibold no-underline hover:text-gray-500">
+        <HiOutlineMagnifyingGlass size={30} />
+      </button>
+    </div>
+    {searchName.name.length !== 0 && (
+      <div className="origin-top-left absolute left-0 mt-2 w-full">
+        <div className="rounded-md shadow-lg bg-gray-200 bg-opacity-6 ring-1 ring-black ring-opacity-5 divide-y divide-gray-300">
+          {game.length !== 0 ? (
+            <div className="flex flex-col">
+              {game.map((match) => (
                 <NavLink
                   key={match.id}
                   to={`/games/${match.id}`}
-                  className=" border-b border-gray-300 bg-gray-200 text-black italic font-bold text-sm p-3 hover:bg-gray-300 w-full hover:text-black text-center"
+                  className="border-b border-gray-300 bg-gray-200 text-black italic font-bold text-sm p-3 hover:bg-gray-300 hover:text-black text-center w-auto"
                 >
                   {match.name}
                 </NavLink>
-              ))
-            ) : (
-              <button
-                className="rounded-lg bg-gray-200 text-black italic font-bold text-sm p-3 cursor-default"
-                style={{
-                  boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
-                }}
-              >
-                No results
-              </button>
-            )}
-          </div>
-        )}
+              ))}
+            </div>
+          ) : (
+            <button
+            className="border-b border-gray-300 bg-gray-200 text-black italic font-bold text-sm p-3 cursor-default"
+            >
+              No results
+            </button>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    )}
+  </div>
+);
 };
 
 export default SearchBar;
