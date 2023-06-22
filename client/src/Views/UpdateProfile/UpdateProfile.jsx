@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../Redux/actions'
 import { useNavigate } from 'react-router-dom';
 
+
 export default function UpdateProfile() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
@@ -31,8 +32,9 @@ export default function UpdateProfile() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 pt-9 flex flex-col items-center justify-center">
-      <form className="w-80 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+    <div className="min-h-screen  pt-9 flex flex-col items-center justify-center">
+      <div className="flex">
+      <form className="w-80 bg-gray-300 shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
         <h2 className="text-xl font-bold mb-4 text-gray-800">Update Profile</h2>
         <div className="mb-4">
           <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">Name</label>
@@ -43,30 +45,6 @@ export default function UpdateProfile() {
             className="w-full p-2 border border-gray-300 rounded-[5rem]"
             placeholder="Enter your name"
             value={formData.name}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">Email</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className="w-full p-2 border border-gray-300 rounded-[5rem]"
-            placeholder="Enter your email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">Password</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            className="w-full p-2 border border-gray-300 rounded-[5rem]"
-            placeholder="Enter your password"
-            value={formData.password}
             onChange={handleChange}
           />
         </div>
@@ -115,6 +93,7 @@ export default function UpdateProfile() {
           </button>
         </div>
       </form>
+      </div>
     </div>
   );
 }
