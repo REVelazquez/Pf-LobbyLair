@@ -8,8 +8,9 @@ import LandingPage from "./LandingPage/LandingPage";
 import Favorites from "./Favorites/Favorites";
 import UpdateProfile from "./UpdateProfile/UpdateProfile";
 import UsersProfile from "./UsersProfile/UsersProfile";
+import AdminDashboard from "./AdminDashboard/AdminDashboard";
 
-export { Home, Login, Payment, Profile, Register, Chat, LandingPage, Favorites, UsersProfile, UpdateProfile};
+export { Home, Login, Payment, Profile, Register, Chat, LandingPage, Favorites, UsersProfile, UpdateProfile, AdminDashboard};
 
 
 

@@ -8,6 +8,7 @@ import {
   deleteFavorite,
 } from "../../Redux/actions";
 import { motion } from "framer-motion";
+import GamesBar from "../GamesBar/GamesBar";
 
 const GameDetail = () => {
   const dispatch = useDispatch();
