@@ -7,7 +7,7 @@ const Profile = () => {
   const users = useSelector((state) => state.otherUser) || [];
   const pathname = location.pathname;
   const id = pathname.split("/").find((str) => !isNaN(parseInt(str)));
-  const userDetail = users.find((u) => u.id == id);
+  const userDetail = users.find((u) => u.id === +id);
 
   return (
     <div className="m-10">
@@ -19,7 +19,7 @@ const Profile = () => {
       >
         <div className="flex items-center">
           <img
-            src="https://source.unsplash.com/120x120/?person"
+            src={userDetail.image}
             alt=""
             className="w-1/5 rounded-[25%] cursor-pointer p-5"
           />
