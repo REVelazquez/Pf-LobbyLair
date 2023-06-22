@@ -1,28 +1,34 @@
 import { async } from "@firebase/util";
 import axios from "axios";
 import {
-  GET_ALL_GAMES,
-  GET_GAMES_BY_NAME,
-  GET_GAME_BY_ID,
-  POST_GAME,
-  GET_POST_BY_USER_ID,
-  DELETE_POST,
-  GET_GAME_MODE,
-  CREATE_USER,
-  GET_USER_BY_ID,
-  GET_USER_BY_NAME,
-  GET_USER_BY_EMAIL,
-  LOG_OUT,
-  DELETE_USER,
-  UPDATE_USER,
-  GET_GAMES_WITH_PAGINATION,
-  GET_ALL_POSTS,
-  GET_POST_WITH_PAGINATION,
-  CREATE_POST,
-  ORDER,
-  GET_ALL_USERS,
-} from "./action-types";
-import { ErrorMessage } from "formik";
+
+    GET_ALL_GAMES,
+    GET_GAMES_BY_NAME,
+    GET_GAME_BY_ID,
+    POST_GAME,
+    GET_POST_BY_USER_ID,
+    DELETE_POST,
+    GET_GAME_MODE,
+    CREATE_USER,
+    GET_USER_BY_ID,
+    GET_USER_BY_NAME,
+    GET_USER_BY_EMAIL,
+    LOG_OUT,
+    DELETE_USER,
+    UPDATE_USER,
+    GET_GAMES_WITH_PAGINATION,
+    GET_ALL_POSTS,
+    GET_POST_WITH_PAGINATION,
+    CREATE_POST,
+    ORDER,
+    GET_ALL_USERS,
+    ADD_FAVORITE,
+    DELETE_FAVORITE,
+
+    
+} from './action-types';
+import { ErrorMessage } from 'formik';
+
 
 export const getAllGames = () => {
   return async (dispatch) => {
@@ -288,8 +294,23 @@ export const createPost = (payload) => {
     } catch (error) {
       throw new Error(error);
     }
-  };
-};
+
+
+}
+}
+
+export const addFavorite = (id,name,thumbnail) => {
+    
+    return {type:ADD_FAVORITE, payload: {id,name,thumbnail}
+
+}
+}
+export const deleteFavorite = (id) => {
+    return {type:DELETE_FAVORITE, payload: id}
+}
+
+  
+
 
 export const orderPostByCreation = (posts) => {
   return { type: ORDER, payload: posts };
@@ -313,3 +334,6 @@ export const getAllUsers = () => async (dispatch) => {
     throw new Error(error);
   }
 };
+
+
+

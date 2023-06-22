@@ -18,6 +18,9 @@ import {
   CREATE_POST,
   ORDER,
   GET_ALL_USERS,
+  ADD_FAVORITE,
+  DELETE_FAVORITE,
+  
 } from "./action-types";
 
 const initialState = {
@@ -32,6 +35,7 @@ const initialState = {
     ? JSON.parse(localStorage.getItem("user"))
     : [],
   otherUser: [],
+  myFavorites: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -133,6 +137,20 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         otherUser: action.payload,
+      };
+    case ADD_FAVORITE:
+      return {
+        ...state,
+        myFavorites: [...state.myFavorites,{id:action.payload.id,
+        name:action.payload.name,
+      thumbnail: action.payload.thumbnail} ]
+      };
+    case DELETE_FAVORITE:
+      return {
+        ...state,
+        myFavorites: state.myFavorites.filter(
+          (favorite) => favorite.id !== action.payload.id
+        ),
       };
     default:
       return {
