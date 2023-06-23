@@ -70,7 +70,7 @@ const Login = () => {
 
   return (
     <>
-      <section className="min-h-screen bg-gray-100 pt-9 flex flex-col items-center justify-center">
+      <section className="mt-24 bg-gray-200 h-[80%] w-[60%] flex flex-col ml-11 items-center rounded-[2rem] justify-center shadow-2xl">
         <img src={LobbyLogo} alt="LOBBYL" className="w-20 h-auto mt-4" />
         <div className="rounded-lg text-black italic font-bold text-sm cursor-default">
           <NavLink to="/home">Join to the lair!</NavLink>
@@ -79,21 +79,19 @@ const Login = () => {
           style={customStyles}
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
-          contentLabel="User Does Not Exist Modal"
-        >
+          contentLabel="User Does Not Exist Modal">
           <h2 className="text-xl font-bold mb-4 text-gray-800 text-center">
             User Does Not Exist
           </h2>
+          <div></div>
           <button
             onClick={closeModal}
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-auto "
-          >
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-2 mb-2">
             Close
           </button>
           <button
             onClick={gotoRegister}
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-auto "
-          >
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-auto">
             Go to Register
           </button>
         </Modal>
@@ -122,14 +120,12 @@ const Login = () => {
 
               return errors;
             }}
-            onSubmit={handleLogin}
-          >
+            onSubmit={handleLogin}>
             <Form>
               <div className="mb-4">
                 <label
                   htmlFor="email"
-                  className="mb-1 text-sm font-bold text-gray-800"
-                >
+                  className="mb-1 text-sm font-bold text-gray-800">
                   Your email
                 </label>
                 <Field
@@ -137,7 +133,7 @@ const Login = () => {
                   name="email"
                   id="email"
                   placeholder="name@company.com"
-                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
+                  className="w-full p-2 border border-gray-300 rounded-[1rem]"
                   required
                 />
                 <ErrorMessage
@@ -149,8 +145,7 @@ const Login = () => {
               <div className="mb-4">
                 <label
                   htmlFor="password"
-                  className="mb-1 text-sm font-bold text-gray-800"
-                >
+                  className="mb-1 text-sm font-bold text-gray-800">
                   Password
                 </label>
                 <Field
@@ -158,7 +153,7 @@ const Login = () => {
                   name="password"
                   id="password"
                   placeholder="Write your password"
-                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
+                  className="w-full p-2 border border-gray-300 rounded-[1rem]"
                   required
                 />
                 <ErrorMessage
@@ -169,8 +164,7 @@ const Login = () => {
               </div>
               <button
                 type="submit"
-                className="w-full bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer"
-              >
+                className="w-full bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer">
                 Sign in
               </button>
               <p className="mt-3 text-sm text-gray-800">
@@ -187,8 +181,7 @@ const Login = () => {
           <p className="text-sm text-gray-800 mt-1">Or sign in with</p>
           <button
             onClick={handleSignInWithGoogle}
-            className="w-full bg-black text-white border-none rounded-[5rem] p-3 text-xl font-bold cursor-pointer hover:bg-white hover:text-black hover:shadow-md"
-          >
+            className="w-full bg-black text-white border-none rounded-[5rem] p-3 text-xl font-bold cursor-pointer hover:bg-white hover:text-black hover:shadow-md">
             <FcGoogle className="inline-block mr-2" />
             Sign in with Google
           </button>

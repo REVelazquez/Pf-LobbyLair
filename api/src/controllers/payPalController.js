@@ -1,8 +1,8 @@
 require("dotenv").config();
+const { Payment, Subscriptions } = require("../db");
 const axios = require("axios");
 const { PAYPAL_API_SECRET, PAYPAL_API_CLIENT, PAYPAL_API } = process.env;
-const API = PAYPAL_API || "https://api-m.sandbox.paypal.com";
-
+const API = "https://api-m.sandbox.paypal.com";
 
 const createOrder = async (req, res) => {
   const order = {
@@ -39,23 +39,26 @@ const createOrder = async (req, res) => {
     const {
       data: { access_token },
     } = await axios.post(`${API}/v1/oauth2/token`, params, { headers });
+    console.log("a");
     const response = await axios.post(`${API}/v2/checkout/orders`, order, {
       headers: { Authorization: `Bearer ${access_token}` },
     });
 
     console.log(response.data);
     return res.json(response.data);
-  } 
-  
-  catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to create PayPal order' });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create PayPal order" });
   }
 };
+const jwt = require("jsonwebtoken");
+
 const captureOrder = async (req, res) => {
-  const { token } = req.query;
-  console.log(req.query);
+  const { token, amount, currency, subscriptionType } = req.query;
+
   try {
+    const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+    const userId = decodedToken.userId;
+
     const response = await axios.post(
       `${API}/v2/checkout/orders/${token}/capture`,
       {},
@@ -67,11 +70,18 @@ const captureOrder = async (req, res) => {
       }
     );
 
-    console.log(response.data);
-    return res.send("payment successful");
-    // Hashear el token después de utilizarlo
-    const hashedToken = await bcrypt.hash(token, 10);
-    // Aquí puedes almacenar o utilizar el valor hasheado del token en lugar del valor original
+    const payment = await Payment.create({
+      amount: parseInt(amount),
+      currency,
+      UserId: userId,
+    });
+
+    const subscription = await Subscriptions.create({
+      type: subscriptionType,
+    });
+    await subscription.addUser(userId);
+
+    return res.send("Payment successful");
   } catch (error) {
     console.error(error.response.data);
     return res.status(500).json("Failed to capture order");
