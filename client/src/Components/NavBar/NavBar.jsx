@@ -121,7 +121,7 @@ const NavBar = () => {
             </span>
           </div>
           <NavItem href="/home" text="Home" />
-          <NavItem href="/payment" text="Payment" />
+          <NavItem href="/subscription" text="Subscription" />
           <NavItem href="/favorites" text="Favorites" />
           <div className="relative">
             <img
