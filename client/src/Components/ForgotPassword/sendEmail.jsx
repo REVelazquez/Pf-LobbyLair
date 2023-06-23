@@ -1,19 +1,25 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const SendEmail = () => {
+  const notifyError = (message) => toast.error(message);
+  const notify = (message) => toast.success(message);
+
   const handleSendEmail = async (values) => {
     const { email } = values;
     try {
       await axios.post("http://localhost:3001/sendEmail", { email });
+      notify("Email sent successfully, check your inbox");
     } catch (error) {
-      alert(error.response.data.message || "Error al enviar el email");
+      notifyError(error.response.data.message || "Error sending email");
     }
   };
 
   return (
-    <section className="min-h-screen bg-gray-100 pt-9 flex flex-col items-center justify-center">
-      <div className="max-w-lg w-full mx-auto p-6 bg-white border border-gray-300 shadow-md rounded-md">
+    <section className="min-h-screen pt-9 flex flex-col items-center justify-center">
+      <div className="max-w-lg w-full mx-auto p-6 bg-gray-200 border  shadow-md rounded-md">
         <Formik
           initialValues={{
             email: "",
@@ -32,19 +38,23 @@ const SendEmail = () => {
           onSubmit={handleSendEmail}
         >
           <Form>
-            <div className="mb-10">
+            <div className="mb-3 ">
               <label
                 htmlFor="email"
-                className="text-xl font-bold mb-4 text-gray-800"
+                className="text-xl font-bold mt-3 text-gray-800"
               >
-                Tu correo electrónico
+                <p className="mb-4 text-l">
+             Please, enter your email address.
+                </p>
+
+           
               </label>
               <Field
                 type="email"
                 name="email"
                 id="email"
                 placeholder="nombre@empresa.com"
-                className="w-full p-3 border border-gray-300 rounded-[5rem]"
+                className="w-[69%] p-3 border border-gray-300 rounded-[3rem]"
                 required
               />
               <ErrorMessage
@@ -55,13 +65,14 @@ const SendEmail = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white border-none rounded-lg p-4 text-lg font-bold cursor-pointer hover:bg-blue-700"
+              className="w-[30%]  bg-gray-800 text-white  rounded-[5rem] p-3 text-lg font-bold cursor-pointer hover:bg-white hover:text-gray-800"
             >
-              Enviar correo electrónico
+              Send email
             </button>
           </Form>
         </Formik>
       </div>
+      <ToastContainer />
     </section>
   );
 };
