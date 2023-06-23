@@ -44,7 +44,7 @@ const {
 } = require("../controllers/chatController.js");
 const {
   createPreference,
-  feedback
+  feedback,
 } = require("../controllers/mecadoPagoController.js");
 
 const { sendEmail } = require("../controllers/sendEmail");
@@ -111,10 +111,10 @@ router.post(
 router.delete("/users/:id", deleteUser);
 
 // Endpoint para obtener los favoritos de un usuario
-router.get("/favorite/:userId", getFavorites);
+router.get("/favorite/:token", getFavorites);
 
 // Endpoint para eliminar un juego de los favoritos de un usuario
-router.delete("/favorite/:userId/:gameId", removeFavoriteGame);
+router.delete("/favorite", removeFavoriteGame);
 
 // Endpoint para agregar un juego a los favoritos de un usuario
 router.post("/favorite", createFavorite);

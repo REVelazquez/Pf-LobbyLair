@@ -1,5 +1,7 @@
 // import { async } from "@firebase/util";
 import axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 import {
 
     GET_ALL_GAMES,
@@ -28,10 +30,6 @@ import {
     DELETE_FAVORITE,
     DELETE_GAME,
     GET_ADMINS,
-
-    
-} from './action-types';
-// import { ErrorMessage } from 'formik';
 
 
 export const getAllGames = () => {
@@ -201,15 +199,19 @@ export const getGenres = ()=>{
   }
 }
 export const createUser = (payload) => {
+  const notifyError = (message) => toast.error(message);
+
   return async (dispatch) => {
     try {
       let newUser = await axios.post("http://localhost:3001/register", payload);
+   
       return dispatch({
         type: CREATE_USER,
         payload: newUser.data,
       });
+      
     } catch (error) {
-      alert("User already exists!");
+      notifyError("User already exists!");
     }
   };
 };
@@ -336,23 +338,28 @@ export const createPost = (payload) => {
     } catch (error) {
       throw new Error(error);
     }
+  };
+};
 
-
-}
-}
-
-export const addFavorite = (id,name,thumbnail) => {
-    
-    return {type:ADD_FAVORITE, payload: {id,name,thumbnail}
-
-}
-}
+export const getFavorite = () => {
+  return async (dispatch) => {
+    try {
+      const user = localStorage.getItem("user");
+      const token = JSON.parse(user).token;
+      const respuesta = await axios.get(
+        `http://localhost:3001/favorite/${token}`
+      );
+      const data = respuesta.data;
+      console.log(data);
+      return dispatch({ type: ADD_FAVORITE, payload: data });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+};
 export const deleteFavorite = (id) => {
-    return {type:DELETE_FAVORITE, payload: id}
-}
-
-  
-
+  return { type: DELETE_FAVORITE, payload: id };
+};
 
 export const orderPostByCreation = (posts) => {
   return { type: ORDER, payload: posts };

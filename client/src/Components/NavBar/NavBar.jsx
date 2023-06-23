@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { HiOutlineLightBulb, HiLightBulb} from "react-icons/hi";
+import { HiOutlineLightBulb, HiLightBulb } from "react-icons/hi";
 import LobbyLogo from "../../Multimedia/Logo Lobbylair.gif";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../Redux/actions";
@@ -44,7 +44,7 @@ const NavBar = () => {
   const handleThemeChange = () => {
     setTheme((prevTheme) => !prevTheme);
   };
-  
+
   useEffect(() => {
     if (theme) {
       document.body.classList.add("dark");
@@ -55,7 +55,7 @@ const NavBar = () => {
     }
     document.body.setAttribute("data-theme", theme ? "dark" : "light");
   }, [theme]);
-  
+
   const handleLogout = () => {
     try {
       localStorage.setItem("isAuthenticated", false);
@@ -91,7 +91,11 @@ const NavBar = () => {
             to="/home"
             className="w-[50px] h-[50px] bg-white rounded-full border-2 border-white inline-block overflow-hidden"
           >
-            <img src={LobbyLogo} alt="LOBBYL" className="scale-125 flex items-center justify-center" />
+            <img
+              src={LobbyLogo}
+              alt="LOBBYL"
+              className="scale-125 flex items-center justify-center"
+            />
           </NavLink>
           <SearchBar />
         </div>
@@ -117,7 +121,7 @@ const NavBar = () => {
             </span>
           </div>
           <NavItem href="/home" text="Home" />
-          <NavItem href="/payment" text="Payment" />
+          <NavItem href="/subscription" text="Subscription" />
           <NavItem href="/favorites" text="Favorites" />
           <div className="relative">
             <img
@@ -129,13 +133,13 @@ const NavBar = () => {
               onClick={handleMenuToggle}
             />
             {showMenu && (
-              <ul className="absolute top-16 right-0 bg-white p-1 rounded-lg  shadow-md border-2 border-gray-300 z-10 min-w-[10rem] flex flex-col gap-1">
+              <ul className="absolute top-12 right-0 bg-white p-1 rounded-lg  shadow-md border-2 border-gray-300 z-10 min-w-[10rem] flex flex-col gap-1">
                 <li>
-                  <ProfileItem 
-                  href={`/profile/${id}`} 
-                  text="Profile"
-                  onClick={handleProfileClick} 
-                />
+                  <ProfileItem
+                    href={`/profile/${id}`}
+                    text="Profile"
+                    onClick={handleProfileClick}
+                  />
                 </li>
                 
 

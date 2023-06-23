@@ -164,9 +164,7 @@ const reducer = (state = initialState, action) => {
     case ADD_FAVORITE:
       return {
         ...state,
-        myFavorites: [...state.myFavorites,{id:action.payload.id,
-        name:action.payload.name,
-      thumbnail: action.payload.thumbnail} ]
+        myFavorites: action.payload,
       };
     case DELETE_FAVORITE:
       return {
