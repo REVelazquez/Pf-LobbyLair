@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import axios from "axios";
 import GamesBar from "../GamesBar/GamesBar";
 
+
 const GameDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -63,49 +64,52 @@ const GameDetail = () => {
 
   return (
     <div className="">
-      <div className="md:w-[50%] ml-0 md:ml-1 "></div>
-
-      <div className="flex justify-center ">
-        <div
-          className="flex flex-col items-center justify-center w-[50%] h-[600px] bg-gray-200 rounded-lg p-3 mt-[4rem] mx-[5rem] shadow-lg transform rotate-x-2 rotate-y-2 perspective-lg"
-          style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)" }}
-        >
-          <div className="bg-gray-500 w-[3rem]">
-            {isFav ? (
-              <button onClick={handleFavorite} className="text-red-500">
-                ❤️
-              </button>
-            ) : (
-              <button onClick={handleFavorite} className="text-gray-500">
-                🤍
-              </button>
-            )}
-          </div>
+      <div
+        className=" h-[300px] bg-gray-300 rounded-lg p-3 mt-[2rem] mx-[2rem] shadow-lg transform rotate-x-2 rotate-y-2 perspective-lg"
+        style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)" }}
+      >
+        <div className="bg-gray-500 w-[3rem] h-[2rem] flex items-center justify-center mx-[2rem] ">
+          {isFav ? (
+            <button onClick={handleFavorite} className="text-red-500">
+              ❤️
+            </button>
+          ) : (
+            <button onClick={handleFavorite} className="text-gray-500 ">
+              🤍
+            </button>
+          )}
+        </div>
+        <div className="flex items-center mt-[1rem] mx-[1rem] ">
           <motion.div
-            className="flex items-center justify-center flex-col w-[45%] h-[45%] bg-gray-800 rounded-xl m-2 hover:bg-gray-500"
+            className="flex items-center justify-center w-[13rem] h-[13rem] bg-gray-800 rounded-xl m-2 hover:bg-gray-500"
             whileHover={{ scale: 1.1 }}
           >
             <img
               src={game.thumbnail}
-              className="mx-auto w-[13rem] h-[13rem]"
+              className="mx-auto w-full h-full"
               alt=""
             />
           </motion.div>
-          <h1 className="text-center text-2xl font-bold mt-[1rem] p-6 text-black cursor-default">
-            {game.name}
+          <h1 className="text-4xl font-bold  text-black cursor-default mx-[3rem]">
+            <div className= "mt-[-3rem]" >
+              {game.name}
+            </div>
+              <div className= "mt-[2rem]" >
+              {gameModes?.map(({ id, name }) => {
+                  return (
+                    <button
+                      onClick={() => handleOnClick(id)}
+                      key={"gameMode" + id}
+                      className="text-gray-200 block rounded-[5rem] text-center font-medium 
+                                  text-base px-3 py-1 bg-gray-900 hover:bg-black hover:text-white m-3 
+                                  transition-colors duration-300 ease-in-out"
+                    >
+                      New post of {name}
+                    </button>
+                  );
+                })}
+              </div>
           </h1>
-
-          {gameModes?.map(({ id, name }) => {
-            return (
-              <button
-                onClick={() => handleOnClick(id)}
-                key={"gameMode" + id}
-                className="text-gray-200 block rounded-[5rem] text-center font-medium px-6 py-3 bg-gray-900 hover:bg-black hover:text-white m-3 transition-colors duration-300 ease-in-out"
-              >
-                New post of {name}
-              </button>
-            );
-          })}
         </div>
       </div>
 

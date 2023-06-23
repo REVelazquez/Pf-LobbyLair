@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import axios from 'axios';
-import env from 'react-dotenv';
+
 
 const PaymentComponent = () => {
   const [preferenceId, setPreferenceId] = useState(null);

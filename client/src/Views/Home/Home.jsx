@@ -92,7 +92,7 @@ const Home = () => {
                           className="rounded-[1rem] w-[100%] h-full cursor-pointer p-3"
                         />
                         <h1 className="text-black font-bold text-sm mt-3">
-                          Game mode: {post.GameMode.name}
+                          Game mode: {post.GameMode?.name}
                         </h1>
                         <div className="flex mt-2">
                           <p className="mr-2 text-black font-bold text-sm">
