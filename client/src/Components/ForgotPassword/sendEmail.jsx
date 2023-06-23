@@ -32,10 +32,10 @@ const SendEmail = () => {
           onSubmit={handleSendEmail}
         >
           <Form>
-            <div className="mb-8">
+            <div className="mb-10">
               <label
                 htmlFor="email"
-                className="mb-4 text-sm font-bold text-gray-800"
+                className="text-xl font-bold mb-4 text-gray-800"
               >
                 Tu correo electrónico
               </label>
@@ -44,7 +44,7 @@ const SendEmail = () => {
                 name="email"
                 id="email"
                 placeholder="nombre@empresa.com"
-                className="w-full mt-4 p-3 border border-gray-300 rounded-lg"
+                className="w-full p-3 border border-gray-300 rounded-[5rem]"
                 required
               />
               <ErrorMessage

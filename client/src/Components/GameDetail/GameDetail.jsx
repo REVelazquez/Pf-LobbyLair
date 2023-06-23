@@ -1,61 +1,54 @@
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getGameById, getPostsWithPagination } from "../../Redux/actions";
+import {
+  getGameById,
+  getPostsWithPagination,
+  getFavorite,
+} from "../../Redux/actions";
 import { motion } from "framer-motion";
+import axios from "axios";
+import GamesBar from "../GamesBar/GamesBar";
+
 
 const GameDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { detail } = useParams();
+  const id = detail;
   const [isFav, setIsFav] = useState(false);
   const myFavorites = useSelector((state) => state.myFavorites);
 
-  // Obtener los datos de favoritos guardados en el Local Storage
-  const storedFavorites = localStorage.getItem("favorites");
-  const initialFavorites = storedFavorites ? JSON.parse(storedFavorites) : [];
-  const [favorites, setFavorites] = useState(initialFavorites);
-
-  const handleFavorite = () => {
+  const handleFavorite = async () => {
     if (isFav) {
       setIsFav(false);
-      dispatch(deleteFavorite(detail));
-  
-      // Restablecer el estado local de favoritos y el Local Storage
-      const updatedFavorites = favorites.filter((fav) => fav.id !== detail);
-      setFavorites(updatedFavorites);
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = user.token;
+      await axios.delete(
+        `http://localhost:3001/favorite?gameId=${id}&token=${token}`
+      );
     } else {
       setIsFav(true);
-      dispatch(addFavorite(detail, game.name, game.thumbnail));
-  
-      // Agregar el juego favorito al estado local y actualizar el Local Storage
-      const newFavorite = { id: detail, name: game.name, thumbnail: game.thumbnail };
-      const updatedFavorites = [...favorites, newFavorite];
-      setFavorites(updatedFavorites);
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-    }
-  };
-  useEffect(() => {
-    // Verificar si el juego está en la lista de favoritos al cargar el componente
-    if (myFavorites) {
-      myFavorites.forEach((fav) => {
-        if (fav.id === detail) {
-          setIsFav(true);
-        }
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = user.token;
+      await axios.post("http://localhost:3001/favorite", {
+        token,
+        id,
       });
     }
-  }, [myFavorites, detail]);
+  };
 
   useEffect(() => {
-    dispatch(getGameById(detail));
-    dispatch(getPostsWithPagination(detail));
-  }, [detail]);
+    if (myFavorites.some((fav) => fav.id === Number(id))) {
+      setIsFav(true);
+    } else setIsFav(false);
+  }, [id]);
 
   useEffect(() => {
-    setIsFav(false); // Reiniciar el estado de isFav al cambiar el parámetro 'detail'
-  }, [detail]);
+    dispatch(getGameById(id));
+    dispatch(getPostsWithPagination(id));
+    dispatch(getFavorite());
+  }, [id]);
 
   let game = useSelector((state) => state.game);
   let gamePosts = useSelector((state) => state.pagePosts);
@@ -64,62 +57,65 @@ const GameDetail = () => {
   const gameModes = game.GameModes;
 
   const handleOnClick = (id) => {
-    let gameId = detail;
+    let gameId = id;
     let gameModeId = id;
     navigate(`/post?gameId=${gameId}&gameModeId=${gameModeId}`);
   };
 
   return (
     <div className="">
-      <div className="md:w-[50%] ml-0 md:ml-1 "></div>
-      
-      <div className="flex justify-center ">
-        <div
-          className="flex flex-col items-center justify-center w-[50%] h-[600px] bg-gray-200 rounded-lg p-3 mt-[4rem] mx-[5rem] shadow-lg transform rotate-x-2 rotate-y-2 perspective-lg"
-          style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)" }}
-        >
-          <div className="bg-gray-500 w-[3rem]">
-  {isFav ? (
-    <button onClick={handleFavorite} className="text-red-500">
-      ❤️
-    </button>
-  ) : (
-    <button onClick={handleFavorite} className="text-gray-500">
-      🤍
-    </button>
-  )}
-</div>
+      <div
+        className=" h-[300px] bg-gray-300 rounded-lg p-3 mt-[2rem] mx-[2rem] shadow-lg transform rotate-x-2 rotate-y-2 perspective-lg"
+        style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)" }}
+      >
+        <div className="bg-gray-500 w-[3rem] h-[2rem] flex items-center justify-center mx-[2rem] ">
+          {isFav ? (
+            <button onClick={handleFavorite} className="text-red-500">
+              ❤️
+            </button>
+          ) : (
+            <button onClick={handleFavorite} className="text-gray-500 ">
+              🤍
+            </button>
+          )}
+        </div>
+        <div className="flex items-center mt-[1rem] mx-[1rem] ">
           <motion.div
-            className="flex items-center justify-center flex-col w-[45%] h-[45%] bg-gray-800 rounded-xl m-2 hover:bg-gray-500"
+            className="flex items-center justify-center w-[13rem] h-[13rem] bg-gray-800 rounded-xl m-2 hover:bg-gray-500"
             whileHover={{ scale: 1.1 }}
           >
             <img
               src={game.thumbnail}
-              className="mx-auto w-[13rem] h-[13rem]"
+              className="mx-auto w-full h-full"
               alt=""
             />
           </motion.div>
-          <h1 className="text-center text-2xl font-bold mt-[1rem] p-6 text-black cursor-default">
-            {game.name}
+          <h1 className="text-4xl font-bold  text-black cursor-default mx-[3rem]">
+            <div className= "mt-[-3rem]" >
+              {game.name}
+            </div>
+              <div className= "mt-[2rem]" >
+              {gameModes?.map(({ id, name }) => {
+                  return (
+                    <button
+                      onClick={() => handleOnClick(id)}
+                      key={"gameMode" + id}
+                      className="text-gray-200 block rounded-[5rem] text-center font-medium 
+                                  text-base px-3 py-1 bg-gray-900 hover:bg-black hover:text-white m-3 
+                                  transition-colors duration-300 ease-in-out"
+                    >
+                      New post of {name}
+                    </button>
+                  );
+                })}
+              </div>
           </h1>
-
-          {gameModes?.map(({ id, name }) => {
-            return (
-              <button
-                onClick={() => handleOnClick(id)}
-                key={"gameMode" + id}
-                className="text-gray-200 block rounded-[5rem] text-center font-medium px-6 py-3 bg-gray-900 hover:bg-black hover:text-white m-3 transition-colors duration-300 ease-in-out"
-              >
-                New post of {name}
-              </button>
-            );
-          })}
         </div>
       </div>
 
       <div className="w-1/3">
         <div className="mt-[3rem]">
-          <div key="Posts in detail">
+          <div key="Posts in id">
             {lastPosts?.map(({ id, createdAt, GameMode, text, User }) => {
               if (User && GameMode) {
                 return (
@@ -138,10 +134,8 @@ const GameDetail = () => {
                           Game mode: {GameMode.name}
                         </p>
                       </h1>
-                      
-                      <p className="text-black font-bold text-sm">
-                        Posted by:
-                      </p>
+
+                      <p className="text-black font-bold text-sm">Posted by:</p>
                       <motion.Link
                         to={`/user/${User.id}`}
                         whileHover={{ scale: 1.1 }}
@@ -173,7 +167,6 @@ const GameDetail = () => {
             })}
           </div>
         </div>
-        
       </div>
     </div>
   );

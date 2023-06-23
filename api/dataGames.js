@@ -1,4 +1,4 @@
-const allGames =[
+const allGames = [
   {
     id: "csgo",
     name: "Counter-Strike: Global Offensive",
@@ -79,7 +79,7 @@ const allGames =[
   {
     id: "rocketleague",
     name: "Rocket League",
-    gameMode: ["PvP","Team PvP" ],
+    gameMode: ["PvP", "Team PvP"],
     genres: ["Competitive", "Racing", "Platformer"],
     thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/rocketleague.png?alt=media&token=af0e5089-badf-4af8-9209-12602b9a910e"
   },
@@ -97,7 +97,7 @@ const allGames =[
     genres: ["FPS"],
     thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/overwatch2.png?alt=media&token=b149dfda-4c0f-4071-a119-943796a0f997"
   },
-  
+
   {
     id: "pubg",
     name: "PUBG: Battlegrounds",
@@ -115,7 +115,7 @@ const allGames =[
   {
     id: "valorant",
     name: "Valorant",
-    gameMode:["PvP", "Team PvP"],
+    gameMode: ["PvP", "Team PvP"],
     genres: ["FPS"],
     thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/Valorant.png?alt=media&token=0a414a87-184f-47ab-9b86-e5c157a97189"
   },
@@ -133,7 +133,7 @@ const allGames =[
     genres: ["FPS", "Action"],
     thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/rainbowsiege.png?alt=media&token=d16ed2cd-cf71-4da3-bb35-7bfb9dc1cb38"
   },
-  
+
   {
     id: "deadbydaylight",
     name: "Dead by Daylight",
@@ -144,7 +144,7 @@ const allGames =[
   {
     id: "left4dead2",
     name: "Left 4 Dead 2",
-    gameMode: ["PvP", "Co-op", "Team PvP" ],
+    gameMode: ["PvP", "Co-op", "Team PvP"],
     genres: ["FPS", "Survival", "Zombies"],
     thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/lfd2.png?alt=media&token=d44c5c9a-e5f6-4a46-a3c3-27b5e91ee1a5"
   },
@@ -205,7 +205,7 @@ const allGames =[
     genres: ["Survival", "Adventure"],
     thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/AoE2.png?alt=media&token=3af3ef4c-92cc-4fce-8505-a956ae1b958f"
   },
- 
+
   {
     id: "diablo3",
     name: "Diablo 3",
@@ -216,7 +216,7 @@ const allGames =[
   {
     id: "terraria",
     name: "Terraria",
-    gameMode: ["PvP","Team PvP", "Co-op"],
+    gameMode: ["PvP", "Team PvP", "Co-op"],
     genres: ["Adventure", "Survival", "Sandbox"],
     thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/AoE2.png?alt=media&token=3af3ef4c-92cc-4fce-8505-a956ae1b958f"
   },
@@ -224,28 +224,28 @@ const allGames =[
   {
     id: "amongus",
     name: "Among Us",
-    gameMode: ["PvP", "Co-op" ],
+    gameMode: ["PvP", "Co-op"],
     genres: ["Platformer", "Survival"],
     thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/amongus.png?alt=media&token=1ac69e9c-1376-44e1-84a4-750c3be12ded"
   },
   {
     id: "eldenring",
     name: "Elden Ring",
-    gameMode: ["PvP", "Co-op" ],
+    gameMode: ["PvP", "Co-op"],
     genres: ["Action", "RPG", "Adventure"],
     thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/elderring.png?alt=media&token=1c6bd9f1-330c-408f-aa0c-0205ad4a4212"
   },
   {
     id: "tropico6",
     name: "Tropico 6",
-    gameMode: ["PvP", "Team PvP", "Co-op" ],
+    gameMode: ["PvP", "Team PvP", "Co-op"],
     genres: ["RTS", "City Builder"],
     thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/tropico6.png?alt=media&token=31150505-7edd-4363-8a7b-77d41a8ba71f"
   },
   {
     id: "starcraft2",
     name: "Starcraft II",
-    gameMode:["PvP", "Team PvP", "Co-op" ],
+    gameMode: ["PvP", "Team PvP", "Co-op"],
     genres: ["RTS", "City Builder"],
     thumbnail: "https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/Starcraft2.png?alt=media&token=0b3702f9-64d1-4863-ae81-7ce571b83d00"
   }
