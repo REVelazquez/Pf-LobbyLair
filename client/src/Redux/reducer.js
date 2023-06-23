@@ -20,7 +20,6 @@ import {
   GET_ALL_USERS,
   ADD_FAVORITE,
   DELETE_FAVORITE,
-  
 } from "./action-types";
 
 const initialState = {
@@ -141,9 +140,7 @@ const reducer = (state = initialState, action) => {
     case ADD_FAVORITE:
       return {
         ...state,
-        myFavorites: [...state.myFavorites,{id:action.payload.id,
-        name:action.payload.name,
-      thumbnail: action.payload.thumbnail} ]
+        myFavorites: action.payload,
       };
     case DELETE_FAVORITE:
       return {
