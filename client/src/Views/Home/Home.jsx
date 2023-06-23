@@ -1,13 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { motion } from "framer-motion";
 
-import {
-  getAllPosts,
-  getAllUsers,
-  orderPostByCreation,
-} from "../../Redux/actions";
 import React, { useEffect, useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
