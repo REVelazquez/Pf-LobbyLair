@@ -69,9 +69,23 @@ const captureOrder = async (req, res) => {
 
     console.log(response.data);
     return res.send("payment successful");
-    // Hashear el token después de utilizarlo
-    const hashedToken = await bcrypt.hash(token, 10);
-    // Aquí puedes almacenar o utilizar el valor hasheado del token en lugar del valor original
+    // // Hashear el token después de utilizarlo
+    // const hashedToken = await bcrypt.hash(token, 10);
+    // // Aquí puedes almacenar o utilizar el valor hasheado del token en lugar del valor original
+    //  // Crear una nueva entrada en la tabla Payment
+    //  const payment = await Payment.create({
+    //   amount: "5", // O cualquier otro monto que corresponda
+    //   status: 'pending', // O cualquier otro estado inicial que corresponda
+    //   method: 'PayPal', // O el método de pago que estés utilizando
+    //   userId: req.user.id, // Suponiendo que tienes un middleware para autenticar al usuario y almacenar su información en req.user
+    // });
+
+    // // Asociar el pago al usuario
+    // const user = await User.findByPk(req.user.id);
+    // await user.addPayment(payment);
+
+    // console.log(response.data);
+    // return res.json(response.data);
   } catch (error) {
     console.error(error.response.data);
     return res.status(500).json("Failed to capture order");

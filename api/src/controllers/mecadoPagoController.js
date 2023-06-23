@@ -1,3 +1,4 @@
+const { User, Payment } = require("../db.js");
 const mercadopago = require("mercadopago");
 const express = require("express");
 const server = require("../app.js");
@@ -32,6 +33,21 @@ const createPreference = async (req, res) => {
       res.json({
         id: response.body.id,
       });
+      // // Crear una nueva entrada en la tabla Payment
+      // const payment = await Payment.create({
+      //   amount: req.body.amount,
+      //   status: 'pending', // O cualquier otro estado inicial que corresponda
+      //   method: 'Mercado Pago', // O el método de pago que estés utilizando
+      //   userId: req.user.id, // Suponiendo que tienes un middleware para autenticar al usuario y almacenar su información en req.user
+      // });
+
+      // // Asociar el pago al usuario
+      // const user = await User.findByPk(req.user.id);
+      // await user.addPayment(payment);
+
+      // res.json({
+      //   paymentId: payment.id,
+      // });
     })
     .catch(function (error) {
       console.log(error);
