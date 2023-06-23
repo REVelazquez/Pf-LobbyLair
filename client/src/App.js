@@ -6,10 +6,11 @@ import {
   Register,
   Chat,
   LandingPage,
-  Favorites,
+  Favorites, 
   UsersProfile,
   UpdateProfile,
   AdminDashboard,
+  Subscription,
 } from "./Views";
 import GameDetail from "./Components/GameDetail/GameDetail";
 import GamePosts from "./Components/GamePosts/GamePosts";
@@ -77,6 +78,7 @@ function App() {
           <Route path="/games/:detail" element={<GameDetail />} />
           <Route path="/post" element={<GamePosts />} />
           <Route path="/favorites" element={<Favorites />} />
+          <Route exact path="/subscription" element={<Subscription />} />
           <Route exact path="/payment" element={<Payment />} />
           <Route exact path="/profile/:id" element={<Profile />} />
           <Route exact path="/profile/:id/update" element={<UpdateProfile />} />

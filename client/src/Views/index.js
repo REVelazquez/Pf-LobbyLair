@@ -9,8 +9,10 @@ import Favorites from "./Favorites/Favorites";
 import UpdateProfile from "./UpdateProfile/UpdateProfile";
 import UsersProfile from "./UsersProfile/UsersProfile";
 import AdminDashboard from "./AdminDashboard/AdminDashboard";
+import Subscription from "./Subscription/Subscription";
 
-export { Home, Login, Payment, Profile, Register, Chat, LandingPage, Favorites, UsersProfile, UpdateProfile, AdminDashboard};
+export { Home, Login, Payment, Profile, Register, Chat, LandingPage, 
+        Favorites, UsersProfile, UpdateProfile, AdminDashboard, Subscription};
 
 
 
