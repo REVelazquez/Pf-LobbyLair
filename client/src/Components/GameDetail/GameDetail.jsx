@@ -8,6 +8,7 @@ import {
 } from "../../Redux/actions";
 import { motion } from "framer-motion";
 import axios from "axios";
+import GamesBar from "../GamesBar/GamesBar";
 
 const GameDetail = () => {
   const dispatch = useDispatch();
