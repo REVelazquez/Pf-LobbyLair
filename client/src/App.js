@@ -1,7 +1,6 @@
 import "./App.css";
 import {
   Home,
-  Payment,
   Profile,
   Register,
   Chat,
@@ -80,7 +79,6 @@ function App() {
           <Route path="/post" element={<GamePosts />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route exact path="/subscription" element={<Subscription />} />
-          <Route exact path="/payment" element={<Payment />} />
           <Route exact path="/profile/:id" element={<Profile />} />
           <Route exact path="/profile/:id/update" element={<UpdateProfile />} />
           <Route path="/user/:id" element={<UsersProfile />} />
