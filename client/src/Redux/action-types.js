@@ -4,6 +4,7 @@ export const GET_GAME_BY_ID = 'GET_GAME_BY_ID';
 export const POST_GAME = 'POST_GAME';
 export const GET_GAMES_WITH_PAGINATION= 'GET_GAMES_WITH_PAGINATION';
 export const GET_GAMEMODES= 'GAME_GAMEMODES';
+export const GET_GENRES= 'GET_GENRES'
 export const CREATE_USER = 'CREATE_USER';
 export const GET_USER_BY_ID = 'GET_USER_BY_ID';
 export const GET_USER_BY_EMAIL = 'GET_USER_BY_EMAIL';
@@ -21,4 +22,6 @@ export const ORDER='ORDER';
 export const GET_ALL_USERS = 'GET_ALL_USERS';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const DELETE_FAVORITE = 'DELETE_FAVORITE';
-
+export const DELETE_GAME= 'DELETE_GAME'
+export const GET_ADMINS= 'GET_ADMINS'
+export const GET_USERS_WITH_PAGINATION='GET_USERS_WITH_PAGINATION'
