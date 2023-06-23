@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import axios from 'axios';
 import env from 'react-dotenv';
+import detectEthereumProvider from '@metamask/detect-provider';
+import Web3 from 'web3';
 
 const PaymentComponent = () => {
   const [preferenceId, setPreferenceId] = useState(null);
@@ -11,6 +13,58 @@ const PaymentComponent = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const REACT_APP_KEY = env.REACT_APP_MERCADOPAGO_KEY;
   console.log(REACT_APP_KEY)
+  const [address, setAddress] = useState('');
+  const [amount, setAmount] = useState('');
+  const [privateKey, setPrivateKey] = useState('');
+
+  const connectToMetaMask = async () => {
+    try {
+      // Detecta el proveedor de MetaMask
+      const provider = await detectEthereumProvider();
+
+      if (provider) {
+        // Conecta la instancia de Web3 a MetaMask
+        const web3 = new Web3(provider);
+
+        // Solicita al usuario que se conecte a su cuenta de MetaMask
+        await provider.request({ method: 'eth_requestAccounts' });
+
+        // Obtiene la dirección de la cuenta del usuario
+        const accounts = await web3.eth.getAccounts();
+        const userAddress = accounts[0];
+
+        setAddress(userAddress);
+      } else {
+        console.error('MetaMask no está instalado');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleMetamaskPayment = async () => {
+    try {
+      // Realiza una solicitud POST al backend para iniciar la transacción de criptomonedas
+      const response = await fetch('/crypto/payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ address, amount, privateKey }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log('Transacción exitosa:', data.transactionHash);
+      } else {
+        console.error('Error al realizar la transacción de criptomonedas:', data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const createPreference = async () => {
     initMercadoPago(REACT_APP_KEY);
     try {
@@ -100,14 +154,14 @@ const PaymentComponent = () => {
           />
           <span className="font-bold text-black">MercadoPago</span>
         </div>
-      </div>
-
-      {selectedOption && (
-        <div className="mt-8">
-          <h2 className="text-xl font-bold mb-2">Selected option:</h2>
-          <p>{selectedOption === 'paypal' ? 'PayPal' : 'MercadoPago'}</p>
+        <div>
+          <button onClick={connectToMetaMask}>Conectar con MetaMask</button>
+          <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Dirección" />
+          <input type="text" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Cantidad" />
+          <input type="text" value={privateKey} onChange={(e) => setPrivateKey(e.target.value)} placeholder="Clave privada" />
+          <button onClick={handleMetamaskPayment}>Pagar con criptomonedas</button>
         </div>
-      )}
+      </div>
     </div>
   );
 };

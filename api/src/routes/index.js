@@ -49,7 +49,7 @@ const {
 
 const { sendEmail } = require("../controllers/sendEmail");
 const { resetPassword } = require("../controllers/resetPassword");
-
+const cryptoController = require('./controllers/cryptoController');
 const router = Router();
 
 // Endpoint para obtener todos los games
@@ -157,5 +157,7 @@ router.post("/sendEmail", sendEmail);
 router.post("/resetPassword", resetPassword);
 
 router.get("/success", (req, res) => res.send("Success"));
+//Endpoint para pago con crypto
+router.post('/crypto/payment', cryptoController.makeCryptoPayment);
 
 module.exports = router;

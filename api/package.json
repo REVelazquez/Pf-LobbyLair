@@ -30,7 +30,8 @@
     "nodemailer": "^6.9.3",
     "pg": "^8.10.0",
     "sequelize": "^6.31.1",
-    "socket.io": "^4.6.2"
+    "socket.io": "^4.6.2",
+    "web3": "^4.0.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
