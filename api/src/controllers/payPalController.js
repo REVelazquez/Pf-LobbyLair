@@ -70,7 +70,6 @@ const captureOrder = async (req, res) => {
       }
     );
 
-<<<<<<< HEAD
     console.log(response.data);
     return res.send("payment successful");
     // // Hashear el token después de utilizarlo
@@ -90,7 +89,7 @@ const captureOrder = async (req, res) => {
 
     // console.log(response.data);
     // return res.json(response.data);
-=======
+
     const payment = await Payment.create({
       amount: parseInt(amount),
       currency,
@@ -103,7 +102,7 @@ const captureOrder = async (req, res) => {
     await subscription.addUser(userId);
 
     return res.send("Payment successful");
->>>>>>> 351ef7432a4cae60112e169f9d629d6284d0073c
+  
   } catch (error) {
     console.error(error.response.data);
     return res.status(500).json("Failed to capture order");
