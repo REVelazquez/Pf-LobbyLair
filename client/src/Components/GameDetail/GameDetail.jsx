@@ -8,9 +8,6 @@ import {
 } from "../../Redux/actions";
 import { motion } from "framer-motion";
 import axios from "axios";
-import GamesBar from "../GamesBar/GamesBar";
-
-
 const GameDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -64,109 +61,104 @@ const GameDetail = () => {
 
   return (
     <div className="">
-      <div
-        className=" h-[300px] bg-gray-300 rounded-lg p-3 mt-[2rem] mx-[2rem] shadow-lg transform rotate-x-2 rotate-y-2 perspective-lg"
-        style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)" }}
-      >
-        <div className="bg-gray-500 w-[3rem] h-[2rem] flex items-center justify-center mx-[2rem] ">
-          {isFav ? (
-            <button onClick={handleFavorite} className="text-red-500">
-              ❤️
-            </button>
-          ) : (
-            <button onClick={handleFavorite} className="text-gray-500 ">
-              🤍
-            </button>
-          )}
-        </div>
-        <div className="flex items-center mt-[1rem] mx-[1rem] ">
-          <motion.div
-            className="flex items-center justify-center w-[13rem] h-[13rem] bg-gray-800 rounded-xl m-2 hover:bg-gray-500"
-            whileHover={{ scale: 1.1 }}
-          >
-            <img
-              src={game.thumbnail}
-              className="mx-auto w-full h-full"
-              alt=""
-            />
-          </motion.div>
-          <h1 className="text-4xl font-bold  text-black cursor-default mx-[3rem]">
-            <div className= "mt-[-3rem]" >
-              {game.name}
-            </div>
-              <div className= "mt-[2rem]" >
-              {gameModes?.map(({ id, name }) => {
+      <div className="w-[100%]">
+        <div
+          className=" h-[300px] w-[80%] mx-auto bg-gray-300  rounded-lg p-3 mt-[2rem]  shadow-lg transform rotate-x-2 rotate-y-2 perspective-lg"
+          style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)" }}>
+          <div className="bg-gray-500 w-[3rem] h-[2rem] flex items-center justify-center mx-[2rem] ">
+            {isFav ? (
+              <button onClick={handleFavorite} className="text-red-500">
+                ❤️
+              </button>
+            ) : (
+              <button onClick={handleFavorite} className="text-gray-500 ">
+                🤍
+              </button>
+            )}
+          </div>
+          <div className="flex items-center mt-[1rem] mx-[1rem] ">
+            <motion.div
+              className="flex items-center justify-center w-[11rem] h-[11rem] bg-gray-800 rounded-xl m-2 hover:bg-gray-500"
+              whileHover={{ scale: 1.1 }}>
+              <img
+                src={game.thumbnail}
+                className="mx-auto w-full h-full"
+                alt=""
+              />
+            </motion.div>
+            <h1 className="text-4xl font-bold  text-black cursor-default mx-[3rem]">
+              <div className="mt-[-3rem]">{game.name}</div>
+
+              <div className="mt-[2rem]">
+                {gameModes?.map(({ id, name }) => {
                   return (
-                    <button
+                    <motion.button
                       onClick={() => handleOnClick(id)}
                       key={"gameMode" + id}
                       className="text-gray-200 block rounded-[5rem] text-center font-medium 
-                                  text-base px-3 py-1 bg-gray-900 hover:bg-black hover:text-white m-3 
-                                  transition-colors duration-300 ease-in-out"
-                    >
+                                text-base px-3 py-1 bg-gray-900 hover:bg-black hover:text-white m-3 
+                                transition-colors duration-300 ease-in-out"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}>
                       New post of {name}
-                    </button>
+                    </motion.button>
                   );
                 })}
               </div>
-          </h1>
+            </h1>
+          </div>
         </div>
       </div>
 
-      <div className="w-1/3">
-        <div className="mt-[3rem]">
-          <div key="Posts in id">
-            {lastPosts?.map(({ id, createdAt, GameMode, text, User }) => {
-              if (User && GameMode) {
-                return (
-                  <div
-                    key={id}
-                    className=" items-start   my-[1rem]  border-2 border-crimsonrounded-lg shadow-md  w-[50rem] mx-auto mt-  border-crimson p-6 flex justify-between mb-[1rem]"
-                  >
-                    <div className=" bg-gray-300  w-[30%] flex flex-col justify-center items-center shadow-md">
+      <div key="Posts in id">
+        {lastPosts?.map(({ id, createdAt, GameMode, text, User }) => {
+          if (User && GameMode) {
+            return (
+              <div key={id} className=" ">
+                <div className="w-[80%] mx-auto mt-4 border-2 border-crimson p-2 flex flex-col items-start mb-1 ml-auto">
+                  <div className="bg-gray-300 flex rounded-xl items-center justify-between shadow-md w-[100%]">
+                    <div className="flex items-center">
                       <img
                         src="https://source.unsplash.com/120x120/?person"
                         alt=""
-                        className="rounded-[1rem] w-[5.9rem] h-full cursor-pointer p-3 "
+                        className={`rounded-[2rem] ${
+                          User?.name ? "w-[35%]" : "w-[50%]"
+                        } h-full cursor-pointer p-2`}
                       />
-                      <h1 className="text-sm font-bold text-black">
-                        <p className="text-sm text-black">
-                          Game mode: {GameMode.name}
-                        </p>
-                      </h1>
-
-                      <p className="text-black font-bold text-sm">Posted by:</p>
-                      <motion.Link
-                        to={`/user/${User.id}`}
-                        whileHover={{ scale: 1.1 }}
-                      >
-                        <p className="text-black  text-sm">{User.name}</p>
-                      </motion.Link>
-
-                      <div className="flex items-center mt-2">
-                        <p className="text-sm font-bold text-black mb-3 ">
-                          Created:{" "}
-                          {createdAt
-                            .slice(0, 10)
-                            .split("-")
-                            .reverse()
-                            .join("-")}
-                        </p>
+                      <div className="">
+                        <p className="text-black text-xs">Posted By:</p>
+                        <Link
+                          to={`/user/${User.id}`}
+                          whileHover={{ scale: 1.1 }}>
+                          <p className=" text-black text-xs font-bold ">
+                            {User.name}
+                          </p>
+                        </Link>
                       </div>
                     </div>
-                    <div className="w-[68%] h-full ">
-                      <h1 className="text-l mt-3 p-4 flex flex-col items-center text-left">
-                        {text}
-                      </h1>
+
+                    <div className="flex flex-col items-end">
+                      <div className="text-black  text-xs mr-9 ">
+                        Game mode:
+                        <h1 className="font-bold"> {GameMode.name}</h1>
+                      </div>
+
+                      <p className="text-xs text-black mr-4">
+                        Created:{" "}
+                        {createdAt.slice(0, 10).split("-").reverse().join("-")}
+                      </p>
                     </div>
                   </div>
-                );
-              } else {
-                return null;
-              }
-            })}
-          </div>
-        </div>
+                  <div className="w-[100%]  p-4 flex flex-col items-start text-left">
+                    {text}
+                  </div>
+                </div>
+              </div>
+            );
+          } else {
+            return null;
+          }
+        })}
       </div>
     </div>
   );

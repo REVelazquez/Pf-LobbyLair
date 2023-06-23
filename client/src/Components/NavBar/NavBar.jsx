@@ -121,7 +121,7 @@ const NavBar = () => {
             </span>
           </div>
           <NavItem href="/home" text="Home" />
-          <NavItem href="/payment" text="Payment" />
+          <NavItem href="/subscription" text="Subscription" />
           <NavItem href="/favorites" text="Favorites" />
           <div className="relative">
             <img
@@ -141,14 +141,16 @@ const NavBar = () => {
                     onClick={handleProfileClick}
                   />
                 </li>
-                <li>
+                
 
-                <ProfileItem 
+                {isAdmin && <div>
+                  <li><ProfileItem 
                   href={'/admindashboard'} 
                   text="Dashboard"
-                  onClick={handleProfileClick} 
+                  onClick={handleAdminDash} 
                   />
                   </li>
+                  </div>}
                 <li>
                   <ProfileItem text="Log Out" onClick={handleLogout} />
                 </li>
