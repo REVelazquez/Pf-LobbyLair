@@ -30,7 +30,7 @@ import {
     DELETE_FAVORITE,
     DELETE_GAME,
     GET_ADMINS,
-
+}from './action-types'
 
 export const getAllGames = () => {
   return async (dispatch) => {
