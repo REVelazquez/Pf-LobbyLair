@@ -1,13 +1,20 @@
 // cryptoController.js
-const Web3 = require('web3');
 require("dotenv").config();
-const {INFURA_API_KEY} = process.env.INFURA_API_KEY;
+const { Network, Alchemy } = require('alchemy-sdk');
+const {ALCHEMY_API_KEY} = process.env.ALCHEMY_API_KEY;
 // Configura el proveedor de Web3 para interactuar con la red Ethereum
-const providerUrl = 'https://mainnet.infura.io/v3/INFURA_API_KEY';
-const web3 = new Web3(new Web3.providers.HttpProvider(providerUrl));
+const settings = {
+  apiKey: ALCHEMY_API_KEY,
+  network: Network.ETH_MAINNET,
+};
+
+const alchemy = new Alchemy(settings);
+
+// get the latest block
+const latestBlock = alchemy.core.getBlock("latest").then(console.log);
 
 // Controlador para realizar una transacción de criptomonedas
-exports.makeCryptoPayment = async (req, res) => {
+const makeCryptoPayment = async (req, res) => {
   const { address, amount, privateKey } = req.body;
 
   try {
@@ -33,3 +40,6 @@ exports.makeCryptoPayment = async (req, res) => {
     res.status(500).json({ success: false, message: 'Error al realizar la transacción de criptomonedas' });
   }
 };
+module.exports ={
+  makeCryptoPayment
+}
