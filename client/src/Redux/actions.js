@@ -1,5 +1,7 @@
 import { async } from "@firebase/util";
 import axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 import {
   GET_ALL_GAMES,
   GET_GAMES_BY_NAME,
@@ -25,6 +27,7 @@ import {
   DELETE_FAVORITE,
 } from "./action-types";
 import { ErrorMessage } from "formik";
+
 
 export const getAllGames = () => {
   return async (dispatch) => {
@@ -170,15 +173,19 @@ export const gameMode = () => {
   };
 };
 export const createUser = (payload) => {
+  const notifyError = (message) => toast.error(message);
+
   return async (dispatch) => {
     try {
       let newUser = await axios.post("http://localhost:3001/register", payload);
+   
       return dispatch({
         type: CREATE_USER,
         payload: newUser.data,
       });
+      
     } catch (error) {
-      alert("User already exists!");
+      notifyError("User already exists!");
     }
   };
 };

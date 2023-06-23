@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import SendEmail from "./Components/ForgotPassword/sendEmail";
 import ResetPassword from "./Components/ForgotPassword/resetPassword";
 import { useSelector } from "react-redux";
+import 'react-toastify/dist/ReactToastify.css';
 
 function ProjectCursor() {
   const [cursorX, setCursorX] = useState();
