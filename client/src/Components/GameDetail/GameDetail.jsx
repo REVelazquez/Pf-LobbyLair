@@ -4,67 +4,50 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   getGameById,
   getPostsWithPagination,
-  addFavorite,
-  deleteFavorite,
+  getFavorite,
 } from "../../Redux/actions";
 import { motion } from "framer-motion";
+import axios from "axios";
 import GamesBar from "../GamesBar/GamesBar";
 
 const GameDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { detail } = useParams();
+  const id = detail;
   const [isFav, setIsFav] = useState(false);
   const myFavorites = useSelector((state) => state.myFavorites);
 
-  // Obtener los datos de favoritos guardados en el Local Storage
-  const storedFavorites = localStorage.getItem("favorites");
-  const initialFavorites = storedFavorites ? JSON.parse(storedFavorites) : [];
-  const [favorites, setFavorites] = useState(initialFavorites);
-
-  const handleFavorite = () => {
+  const handleFavorite = async () => {
     if (isFav) {
       setIsFav(false);
-      dispatch(deleteFavorite(detail));
-
-      // Restablecer el estado local de favoritos y el Local Storage
-      const updatedFavorites = favorites.filter((fav) => fav.id !== detail);
-      setFavorites(updatedFavorites);
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = user.token;
+      await axios.delete(
+        `http://localhost:3001/favorite?gameId=${id}&token=${token}`
+      );
     } else {
       setIsFav(true);
-      dispatch(addFavorite(detail, game.name, game.thumbnail));
-
-      // Agregar el juego favorito al estado local y actualizar el Local Storage
-      const newFavorite = {
-        id: detail,
-        name: game.name,
-        thumbnail: game.thumbnail,
-      };
-      const updatedFavorites = [...favorites, newFavorite];
-      setFavorites(updatedFavorites);
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-    }
-  };
-  useEffect(() => {
-    // Verificar si el juego está en la lista de favoritos al cargar el componente
-    if (myFavorites) {
-      myFavorites.forEach((fav) => {
-        if (fav.id === detail) {
-          setIsFav(true);
-        }
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = user.token;
+      await axios.post("http://localhost:3001/favorite", {
+        token,
+        id,
       });
     }
-  }, [myFavorites, detail]);
+  };
 
   useEffect(() => {
-    dispatch(getGameById(detail));
-    dispatch(getPostsWithPagination(detail));
-  }, [detail]);
+    if (myFavorites.some((fav) => fav.id === Number(id))) {
+      setIsFav(true);
+    } else setIsFav(false);
+  }, [id]);
 
   useEffect(() => {
-    setIsFav(false); // Reiniciar el estado de isFav al cambiar el parámetro 'detail'
-  }, [detail]);
+    dispatch(getGameById(id));
+    dispatch(getPostsWithPagination(id));
+    dispatch(getFavorite());
+  }, [id]);
 
   let game = useSelector((state) => state.game);
   let gamePosts = useSelector((state) => state.pagePosts);
@@ -73,7 +56,7 @@ const GameDetail = () => {
   const gameModes = game.GameModes;
 
   const handleOnClick = (id) => {
-    let gameId = detail;
+    let gameId = id;
     let gameModeId = id;
     navigate(`/post?gameId=${gameId}&gameModeId=${gameModeId}`);
   };
@@ -128,7 +111,7 @@ const GameDetail = () => {
 
       <div className="w-1/3">
         <div className="mt-[3rem]">
-          <div key="Posts in detail">
+          <div key="Posts in id">
             {lastPosts?.map(({ id, createdAt, GameMode, text, User }) => {
               if (User && GameMode) {
                 return (
