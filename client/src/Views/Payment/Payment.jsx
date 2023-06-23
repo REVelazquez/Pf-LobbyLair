@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import axios from 'axios';
-
+import env from 'react-dotenv';
 
 const PaymentComponent = () => {
   const [preferenceId, setPreferenceId] = useState(null);
   const stateUser = useSelector((state) => state.user);
   console.log(stateUser);
   const [selectedOption, setSelectedOption] = useState(null);
-  const REACT_APP_KEY = window.env.REACT_APP_MERCADOPAGO_KEY;
+  const REACT_APP_KEY = env.REACT_APP_MERCADOPAGO_KEY;
   console.log(REACT_APP_KEY)
   const createPreference = async () => {
     initMercadoPago(REACT_APP_KEY);
