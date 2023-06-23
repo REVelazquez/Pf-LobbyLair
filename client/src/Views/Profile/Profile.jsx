@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { getUserById } from "../../Redux/actions";
 import UpdateProfile from "../UpdateProfile/UpdateProfile";
-import {FaCrown} from 'react-icons/fa'
-import Premium from '../../Multimedia/Dragona premium.jpeg'
+import { FaCrown } from "react-icons/fa";
+import Premium from "../../Multimedia/Dragona premium.jpeg";
 
 const Profile = () => {
   const location = useLocation();
@@ -14,7 +14,6 @@ const Profile = () => {
   const [showImage, setShowImage] = useState(true);
   const isAdmin = userDetail.isAdmin;
   const isPremium = userDetail.isPremium;
-
 
   useEffect(() => {
     const pathname = location.pathname;
@@ -26,7 +25,6 @@ const Profile = () => {
     setEditMode(true);
     setShowImage(false);
   };
-
 
   const handleEditClose = () => {
     setEditMode(false);
@@ -42,35 +40,24 @@ const Profile = () => {
             style={{ boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)" }}
           >
             <div className="">
-
               {userDetail.image && (
                 <img className="w-1/4" src={userDetail.image} alt="" />
               )}
-
               <div className="flex flex-col space-y-2 w-full">
                 <div className="flex flex-row">
                   <h3 className="text-4xl font-bold text-left m-2 p-3 truncate border-b border-black w-2/2 text-black">
-                    {userDetail.name} 
+                    {userDetail.name}
                   </h3>
-
                   {isAdmin && (
                     <div>
                       <p>Admin </p>
                       <FaCrown />
                     </div>
                   )}
-
                 </div>
                 <div className="flex flex-col sm:flex-row sm:space-x-2">
                   <div className="m-4 space-x-2 pl-10">
                     <h1 className="text-black font-bold truncate">E-mail:</h1>
-
-                    <h1 className="text-black truncate">{userDetail.email}</h1>
-                    {isPremium && <img className="w-1/4" src={Premium} />}
-                  </div>
-                  <div className="m-4 space-x-2 pl-10">
-                    <h1 className="text-black font-bold truncate">Fecha de creación:</h1>
-
                     <h1 className="text-black truncate">
                       {userDetail.email}
                     </h1>
@@ -79,9 +66,6 @@ const Profile = () => {
                     )}
                   </div>
                   <div className="m-4 space-x-2 pl-10">
-
-                  {userDetail.perfilUrl && [<h1 className="text-black font-bold truncate">Profile Url</h1>, <p className="text-black truncate">{userDetail.perfilUrl}</p>]}
-
                     <h1 className="text-black font-bold truncate">
                       Fecha de creación:
                     </h1>
@@ -92,7 +76,6 @@ const Profile = () => {
                         .reverse()
                         .join("-")}
                     </h1>
-
                   </div>
                   <div className="m-4 space-x-2 pl-10 truncate">
                     {userDetail.perfilUrl && [
@@ -103,7 +86,6 @@ const Profile = () => {
                     ]}
                   </div>
                   <div className="m-4 space-x-2 pl-10">
-
                     {userDetail.description && [
                       <h1 className="text-black font-bold truncate">
                         Description:
@@ -113,7 +95,6 @@ const Profile = () => {
                       </p>,
                     ]}
                   </div>
-
                 </div>
               </div>
               <div className="flex justify-center mt-4 sm:ml-[5rem]">
