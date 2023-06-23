@@ -6,14 +6,15 @@ import { motion } from "framer-motion";
 import {
   getAllPosts,
   getAllUsers,
+  getFavorite,
   orderPostByCreation,
 } from "../../Redux/actions";
 
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [favoriteImages, setFavoriteImages] = useState([]);
-  
+  const fav = useSelector((state) => state.myFavorites);
+  const images = fav.map((favorite) => favorite.thumbnail);
 
   useEffect(() => {
     localStorage.setItem("isAuthenticated", true);
@@ -22,19 +23,10 @@ const Home = () => {
   useEffect(() => {
     dispatch(getAllPosts());
     dispatch(getAllUsers());
-  }, []);
-
-  useEffect(() => {
-    const favoritesFromLocalStorage = localStorage.getItem("favorites");
-    if (favoritesFromLocalStorage) {
-      const favorites = JSON.parse(favoritesFromLocalStorage);
-      const images = favorites.map((favorite) => favorite.thumbnail);
-      setFavoriteImages(images);
-    }
+    dispatch(getFavorite());
   }, []);
 
   const posts = useSelector((state) => state.posts);
-  const prueba = posts;
 
   const handlerOrder = (event) => {
     dispatch(orderPostByCreation(event.target.value));
@@ -59,7 +51,8 @@ const Home = () => {
                     name="Creation Order"
                     key="Order"
                     onChange={handlerOrder}
-                    className="appearance-none bg-gray-900 border text-white border-gray-300 rounded-md px-4 py-2 pr-8 leading-tight focus:outline-none focus:border-blue-500 text-sm">
+                    className="appearance-none bg-gray-900 border text-white border-gray-300 rounded-md px-4 py-2 pr-8 leading-tight focus:outline-none focus:border-blue-500 text-sm"
+                  >
                     <option value="A" className="bg-black text-white">
                       Old first
                     </option>
@@ -69,14 +62,15 @@ const Home = () => {
                     <svg
                       className="fill-current h-4 w-4"
                       xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20">
+                      viewBox="0 0 20 20"
+                    >
                       <path d="M10 12L6 8h8l-4 4z" />
                     </svg>
                   </div>
                 </div>
               </div>
             </div>
-            {prueba.map((post) => {
+            {posts.map((post) => {
               if (post && post.id) {
                 return (
                   <div className=" " key={post.id}>
@@ -133,7 +127,8 @@ const Home = () => {
           <motion.div
             drag
             dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
-            className="bg-gray-300 p-4 w-[59%] h-[8.8rem] rounded-[3rem] shadow-xl justify-center items-center mt-6 mx-[6.9rem]">
+            className="bg-gray-300 p-4 w-[59%] h-[8.8rem] rounded-[3rem] shadow-xl justify-center items-center mt-6 mx-[6.9rem]"
+          >
             <h1 className="text-l font-bold text-black">Get verified</h1>
             <p className="text-s text-black">
               Subscribe to unlock new features
@@ -141,7 +136,8 @@ const Home = () => {
             <motion.button
               className="bg-black text-white rounded-[6.9px] px-3 py-2 mt-3"
               whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}>
+              whileTap={{ scale: 0.9 }}
+            >
               Subscribe
             </motion.button>
           </motion.div>
@@ -151,14 +147,15 @@ const Home = () => {
               Favorite games:
             </h1>
             <div className="grid grid-cols-1 gap-4">
-              {favoriteImages.map((image, index) => (
+              {images.map((image, index) => (
                 <motion.div
                   key={index}
                   drag
                   dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
                   dragElastic={0.5}
                   onDragEnd={handleDragEnd}
-                  className="w-[6.9rem] mb-1 rounded-lg">
+                  className="w-[6.9rem] mb-1 rounded-lg"
+                >
                   <img
                     src={image}
                     alt={`Favorite ${index + 1}`}
