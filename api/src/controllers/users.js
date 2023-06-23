@@ -89,6 +89,20 @@ const getUserByEmail = async (req, res) => {
   }
 };
 
+const getAdminUsers = async (req, res) => {
+  const { isAdmin } = req.params;
+  try {
+    const admins = await User.findAll({
+      where: {
+        isAdmin: true 
+      }
+    });
+    res.status(200).json(admins);
+  } catch (error) {
+    return res.status(404).json({ message: "Error searching for Admins" });
+  }
+};
+
 const createUser = async (req, res) => {
   const { name, email, password} = req.body;
   const allUsers = await User.findAll();
@@ -219,6 +233,7 @@ module.exports = {
   getUserById,
   getUserByName,
   getUserByEmail,
+  getAdminUsers,
   createUser,
   updateUser,
   deleteUser,
