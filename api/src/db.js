@@ -60,11 +60,8 @@ ChatMessage.belongsTo(User);
 User.hasMany(Payment);
 Payment.belongsTo(User);
 
-Payment.belongsTo(User);
-User.hasMany(Payment);
-
-User.belongsTo(Subscriptions);
-Subscriptions.hasMany(User);
+User.hasOne(Subscriptions);
+Subscriptions.belongsTo(User);
 
 module.exports = {
   ...sequelize.models,

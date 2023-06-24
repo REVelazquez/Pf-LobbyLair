@@ -34,7 +34,7 @@ const DeleteGame = ({ handleOnDelete }) => {
       {allGames.map((game) => (
         <Draggable key={game.id.toString()} onStop={handleDrag(game.id)}>
          <div className="bg-gray-300 rounded p-4 shadow-3xl border-l-black">
-            <label htmlFor={`game-name-${game.id}`} className="block font-semibold">
+            <label htmlFor={`game-name-${game.id}`} className="block text-black">
               {game.name}
             </label>
             <button onClick={() => handleButton(game)} className="mt-2 text-red-700">

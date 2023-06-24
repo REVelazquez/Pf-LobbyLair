@@ -74,7 +74,7 @@ const Home = () => {
               if (post && post.id) {
                 return (
                   <div className=" " key={post.id}>
-                    <div className="truncate w-[80%] mx-auto mt-2 border-2 border-crimson p-2 flex flex-col items-start mb-1 ml-auto">
+                    <div className="w-[80%] mx-auto mt-2 border-2 border-crimson p-2 flex flex-col items-start mb-1 ml-auto">
                       <div className="bg-gray-300 flex rounded-xl items-center justify-between shadow-md w-[100%]">
                         <div className="flex items-center">
                           <img
@@ -90,7 +90,7 @@ const Home = () => {
                               <>
                                 <p className="text-black text-xs">Posted By:</p>
                                 <NavLink to={`/user/${post.User?.id}`}>
-                                  <p className="truncate text-black text-xs font-bold ">
+                                  <p className=" text-black text-xs font-bold ">
                                     {post.User?.name}
                                   </p>
                                 </NavLink>
