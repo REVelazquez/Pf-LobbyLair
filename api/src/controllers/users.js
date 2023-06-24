@@ -95,8 +95,8 @@ const getAdminUsers = async (req, res) => {
   try {
     const admins = await User.findAll({
       where: {
-        isAdmin: true 
-      }
+        isAdmin: true,
+      },
     });
     res.status(200).json(admins);
   } catch (error) {
@@ -157,7 +157,7 @@ const updateUser = async (req, res) => {
   if (isAdmin) updateFields.isAdmin = isAdmin;
   if (isPremium) updateFields.isPremium = isPremium;
   if (perfilUrl) updateFields.perfilUrl = perfilUrl;
-
+  console.log(isAdmin);
   try {
     const user = await User.update(updateFields, {
       where: {

@@ -27,23 +27,22 @@ import {
 } from "./action-types";
 
 const initialState = {
-  admins:[],
+  admins: [],
   games: [],
   game: [],
   gameMode: [],
-  genre:[],
+  genre: [],
   myFavorites: [],
   pageGames: [],
   posts: [],
   pagePosts: [],
-  pageUsers:[],
+  pageUsers: [],
   otherUser: [],
   user: localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user"))
-  : [],
-  users:[],
+    ? JSON.parse(localStorage.getItem("user"))
+    : [],
+  users: [],
   userPosts: [],
-
 };
 
 const reducer = (state = initialState, action) => {
@@ -92,8 +91,8 @@ const reducer = (state = initialState, action) => {
     case GET_ADMINS:
       return {
         ...state,
-        admins:action.payload
-      }
+        admins: action.payload,
+      };
     case LOG_OUT:
       return {
         ...state,
@@ -105,10 +104,10 @@ const reducer = (state = initialState, action) => {
         user: action.payload,
       };
     case DELETE_GAME:
-      return{
+      return {
         ...state,
-        user:action.payload
-      }
+        user: action.payload,
+      };
     case UPDATE_USER:
       return {
         ...state,
@@ -135,10 +134,10 @@ const reducer = (state = initialState, action) => {
         pagePosts: action.payload,
       };
     case GET_USERS_WITH_PAGINATION:
-      return{
+      return {
         ...state,
-        pageUsers:action.payload
-      }
+        pageUsers: action.payload,
+      };
     case CREATE_POST:
       return {
         ...state,
@@ -174,15 +173,15 @@ const reducer = (state = initialState, action) => {
         ),
       };
     case POST_GAME:
-      return{
+      return {
         ...state,
-        games:[...state.games, ...action.payload]
-      }
+        games: [...state.games, action.payload],
+      };
     case GET_GENRES:
-      return{
+      return {
         ...state,
-        genre:action.payload
-      }
+        genre: action.payload,
+      };
     default:
       return {
         ...state,
