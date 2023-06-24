@@ -60,7 +60,7 @@ const PaymentComponent = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center mt-7 h-screen ">
       <h1 className="text-2xl font-bold mb-8">Choose a payment option:</h1>
 
       <div className="flex gap-4">
@@ -78,11 +78,14 @@ const PaymentComponent = () => {
             className="w-12 h-12 mr-4 cursor-pointer"
           />
           <span className="font-bold text-black">PayPal</span>
-        </div>
+        </div> 
 
         <div
           className={`p-4 border rounded-md shadow-md flex items-center ${
+            
             selectedOption === "mercadopago" ? "bg-green-200" : "bg-white"
+
+            selectedOption === 'mercadopago' ? 'bg-blue-400' : 'bg-gray-100'
           }`}
           style={{ cursor: "pointer" }}
           onClick={() => handleMercadoPago("mercadopago")}

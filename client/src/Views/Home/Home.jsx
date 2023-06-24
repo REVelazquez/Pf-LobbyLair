@@ -43,10 +43,10 @@ const Home = () => {
           <div className="post-container mx-auto overflow-y-auto mt-[1rem] justify-start items-start border-r-2 border-gray-200">
             <div className="">
               <div className="items-center text">
-                <h1>Order:</h1>
+                <h1 className="ml-[12rem]">Order:</h1>
               </div>
               <div className="">
-                <div className="relative inline-flex">
+                <div className="relative left-12 ml-[9rem] inline-flex">
                   <select
                     name="Creation Order"
                     key="Order"
@@ -74,7 +74,7 @@ const Home = () => {
               if (post && post.id) {
                 return (
                   <div className=" " key={post.id}>
-                    <div className="w-[80%] mx-auto mt-2 border-2 border-crimson p-2 flex flex-col items-start mb-1 ml-auto">
+                    <div className="truncate w-[80%] mx-auto mt-2 border-2 border-crimson p-2 flex flex-col items-start mb-1 ml-auto">
                       <div className="bg-gray-300 flex rounded-xl items-center justify-between shadow-md w-[100%]">
                         <div className="flex items-center">
                           <img
@@ -90,7 +90,7 @@ const Home = () => {
                               <>
                                 <p className="text-black text-xs">Posted By:</p>
                                 <NavLink to={`/user/${post.User?.id}`}>
-                                  <p className=" text-black text-xs font-bold ">
+                                  <p className="truncate text-black text-xs font-bold ">
                                     {post.User?.name}
                                   </p>
                                 </NavLink>

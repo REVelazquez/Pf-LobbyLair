@@ -4,6 +4,7 @@ const { Op } = require("sequelize");
 const { validationResult } = require("express-validator");
 const hash = require("../utils/bcrypt");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 // Función para obtener todos los usuarios de la base de datos
 const getAllUsers = async (req, res) => {
   console.log("a");
@@ -228,6 +229,48 @@ const getUsersWithPagination = async (req, res) => {
   }
 };
 
+const getUserPayments = async (req, res) => {
+  try {
+    const token = req.headers.authorization;
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decodedToken.userId;
+
+    const user = await User.findByPk(userId, {
+      include: Payment,
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    return res.json(user.Payments);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Failed to get user payments" });
+  }
+};
+
+const getUserSubscriptions = async (req, res) => {
+  try {
+    const token = req.headers.authorization;
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decodedToken.userId;
+
+    const user = await User.findByPk(userId, {
+      include: Subscriptions,
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    return res.json(user.Subscriptions);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Failed to get user subscriptions" });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
@@ -238,4 +281,6 @@ module.exports = {
   updateUser,
   deleteUser,
   getUsersWithPagination,
+  getUserPayments,
+  getUserSubscriptions,
 };
