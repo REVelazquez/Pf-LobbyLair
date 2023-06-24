@@ -389,11 +389,11 @@ export const getAllUsers = () => async (dispatch) => {
 
 export const deleteGame = (id) => {
   const notifyError = (message) => toast.error(message);
-  const notifySuccess = (message) => toast.success(message);
+ 
   return async (dispatch) => {
     try {
       const gameId = await axios.delete(`http://localhost:3001/games/${id}`);
-      notifySuccess("Game deleted successfully!");
+      
       return dispatch({
         type: DELETE_GAME,
         payload: gameId.data,
