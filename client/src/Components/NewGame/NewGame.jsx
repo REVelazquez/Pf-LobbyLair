@@ -40,7 +40,7 @@ const NewGame = ({ handleOnNewGame }) => {
       setGameModes([...gameModes, event.target.value]);
       setData({ ...data, gameModes: [...gameModes, event.target.value] });
     } else {
-      const updatedGameModes = gameModes.filter((g) => g !== gameModes);
+      const updatedGameModes = gameModes.filter((g) => g !== event.target.value);
       setGameModes(updatedGameModes);
       setData({ ...data, gameModes: updatedGameModes });
     }
@@ -51,9 +51,9 @@ const NewGame = ({ handleOnNewGame }) => {
       setGenres([...genres, event.target.value]);
       setData({ ...data, genres: [...genres, event.target.value] });
     } else {
-      const updatedGenres = gameModes.filter((g) => g !== genres);
-      setGameModes(updatedGenres);
-      setData({ ...data, genre: updatedGenres });
+      const updatedGenres = genres.filter((g) => g !== event.target.value);
+      setGenres(updatedGenres);
+      setData({ ...data, genres: updatedGenres });
     }
   };
 
@@ -69,84 +69,74 @@ const NewGame = ({ handleOnNewGame }) => {
     handleOnNewGame();
   };
 
-    return (
-        <form key='New Game Form' onSubmit={handleOnSubmit}>
-            <label className="mb-1 text-sm font-bold text-gray-800" htmlFor="Name">Game Name</label>
-            <input type="text"
-             placeholder="Introduce a game name"
-             name="name"
-             className="p-1 m-1 border border-gray-300 rounded-[1rem]" value={data.name}
-              onChange={handleOnChange} />
-            <hr />
-            <label className="mb-1 text-sm font-bold text-gray-800" htmlFor="thumbnail">Thumbnail</label>
-            <input 
-             type="text"
-             className="p-1 m-1 border border-gray-300 rounded-[1rem]"
-             placeholder="Introduce an Url"
-             name="thumbnail"
-             value={data.thumbnail}
-             onChange={handleOnChange}
-             />
-            <hr />
-            <label className="mb-1 text-sm font-bold text-gray-800" htmlFor="">Game modes</label>
-            <div className="flex flex-row place-content-center">
+  return (
+    <form key="New Game Form" onSubmit={handleOnSubmit}>
+      <label className="mb-1 text-sm font-bold text-gray-800" htmlFor="Name">
+        Game Name
+      </label>
+      <input
+        type="text"
+        placeholder="Introduce a game name"
+        name="name"
+        className="p-1 m-1 border border-gray-300 rounded-[1rem]"
+        value={data.name}
+        onChange={handleOnChange}
+      />
+      <hr />
+      <label className="mb-1 text-sm font-bold text-gray-800" htmlFor="thumbnail">
+        Thumbnail
+      </label>
+      <input
+        type="text"
+        className="p-1 m-1 border border-gray-300 rounded-[1rem]"
+        placeholder="Introduce an Url"
+        name="thumbnail"
+        value={data.thumbnail}
+        onChange={handleOnChange}
+      />
+      <hr />
+      <label className="mb-1 text-sm font-bold text-gray-800" htmlFor="">
+        Game modes
+      </label>
+      <div className="flex flex-row place-content-center">
+        {allGameModes.map((gnr) => (
+          <div key={"a" + z++}>
+            <ul>
+              <li>
+                <input
+                  onChange={handleGameModesChanges}
+                  type="checkbox"
+                  value={gnr.name}
+                  className="p-1 m-1 border border-gray-300 rounded-[1rem]"
+                  name="name"
+                />
+                <label className="m-1 text-sm font-bold text-gray-800" htmlFor={"a" + z++}>
+                  {gnr.name}
+                </label>
+              </li>
+            </ul>
+          </div>
+        ))}
+      </div>
+      <hr />
 
-            {allGameModes.map((gnr)=>(
-                <div>
-                    <ul>
-                        <li>
-                            <input
-                            onChange={handleGameModesChanges}
-                             type="checkbox"
-                             value={gnr.name}
-                             className="p-1 m-1 border border-gray-300 rounded-[1rem]"
-                             key={'a'+z++}
-                              name="name" />
-                            <label className="m-1 text-sm font-bold text-gray-800"  htmlFor={'a'+z++}>{gnr.name}</label>
-                        </li>
-                    </ul>
-                </div>
-            ))}
-            </div>
-            <hr />
-
-            <label className="mb-1 text-sm font-bold text-gray-800" htmlFor="">Genres</label>
-            <div style={{display:'grid', gridTemplateColumns:'Repeat(6, 1fr)'}}>
-            {allGenres.map((gnr)=>(
-                <div>
-                    <ul>
-                        <li>
-                            <input type="checkbox" 
-                            onChange={handleGenresChange}
-                            value={gnr.name}
-                            className="p-1 m-1 border border-gray-300 rounded-[1rem]"
-                            key={'a'+x++} />
-                            <label className="m-1 text-sm font-bold text-gray-800" htmlFor={'a'+x++}>{gnr.name}</label>
-                        </li>
-                    </ul>
-                    
-                </div>
-            ))}
-            </div>
-
-            <hr/>
-            <button className="m-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" type="submit">New Game</button>
-        </form>
-    )
-
-      <label htmlFor="">Genres</label>
-      <div style={{ display: "grid", gridTemplateColumns: "Repeat(6, 1fr)" }}>
+      <label className="mb-1 text-sm font-bold text-gray-800" htmlFor="">
+        Genres
+      </label>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)" }}>
         {allGenres.map((gnr) => (
-          <div>
+          <div key={"a" + x++}>
             <ul>
               <li>
                 <input
                   type="checkbox"
                   onChange={handleGenresChange}
                   value={gnr.name}
-                  key={"a" + x++}
+                  className="p-1 m-1 border border-gray-300 rounded-[1rem]"
                 />
-                <label htmlFor={"a" + x++}>{gnr.name}</label>
+                <label className="m-1 text-sm font-bold text-gray-800" htmlFor={"a" + x++}>
+                  {gnr.name}
+                </label>
               </li>
             </ul>
           </div>
@@ -154,7 +144,12 @@ const NewGame = ({ handleOnNewGame }) => {
       </div>
 
       <hr />
-      <button type="submit">New Game</button>
+      <button
+        className="m-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        type="submit"
+      >
+        New Game
+      </button>
     </form>
   );
 };
