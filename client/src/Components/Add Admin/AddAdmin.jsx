@@ -47,7 +47,7 @@ const AddAdmin = () => {
   return (
     <>
       <form onSubmit={formik.handleSubmit} className="flex flex-col items-center">
-        <div className="flex items-center bg-gray-300 rounded-[3rem] my-5 border-cyan-950 py-3">
+        <div className="flex items-center bg-gray-50 rounded-[3rem] my-5 border-cyan-950 py-3">
           <input
             type="email"
             placeholder="Email address"
