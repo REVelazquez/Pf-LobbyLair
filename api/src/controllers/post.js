@@ -1,4 +1,4 @@
-const { Post, Game, User, GameMode, Genre } = require('../db.js');
+const { Post, Game, User, GameMode } = require('../db.js');
 const { Op } = require('sequelize');
 
 async function getPosts(req, res) {
@@ -25,15 +25,6 @@ async function getGameMode (req,res){
     return res.status(200).json(gameMode);
   } catch (error) {
     return res.status(500).json({ error: error.message });
-  }
-}
-const getGenres= async (req, res)=>{
-
-  try {
-    let genre = await Genre.findAll()
-    return res.status(200).json(genre)
-  } catch (error) {
-    return res.status(500).json({error:error.message})
   }
 }
 async function getPostsByUserId(req, res) {
@@ -198,8 +189,7 @@ module.exports = {
   createPost,
   getPostsWithPagination,
   deletePost,
-  getGameMode,
-  getGenres
+  getGameMode
   
 
 };

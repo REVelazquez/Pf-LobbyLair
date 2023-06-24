@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -L",
-    "test": "mocha -w ./tests/**/*.spec.js",
-    "build": "react-scripts build"
+    "test": "mocha -w ./tests/**/*.spec.js"
   },
   "author": "Henry",
   "license": "ISC",
@@ -16,7 +15,6 @@
   },
   "dependencies": {
     "@paypal/checkout-server-sdk": "^1.0.3",
-    "alchemy-sdk": "^2.9.1",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.19.0",
@@ -31,8 +29,7 @@
     "nodemailer": "^6.9.3",
     "pg": "^8.10.0",
     "sequelize": "^6.31.1",
-    "socket.io": "^4.6.2",
-    "web3": "^4.0.1"
+    "socket.io": "^4.6.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",

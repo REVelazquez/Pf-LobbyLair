@@ -2,11 +2,10 @@ import {
   GET_ALL_GAMES,
   GET_GAMES_BY_NAME,
   GET_GAME_BY_ID,
-  POST_GAME,
+  // POST_GAME,
   GET_USER_BY_ID,
   GET_USER_BY_NAME,
   GET_USER_BY_EMAIL,
-  GET_ADMINS,
   CREATE_USER,
   LOG_OUT,
   DELETE_USER,
@@ -21,29 +20,21 @@ import {
   GET_ALL_USERS,
   ADD_FAVORITE,
   DELETE_FAVORITE,
-  GET_GENRES,
-  DELETE_GAME,
-  GET_USERS_WITH_PAGINATION,
 } from "./action-types";
 
 const initialState = {
-  admins:[],
   games: [],
   game: [],
   gameMode: [],
-  genre:[],
-  myFavorites: [],
   pageGames: [],
   posts: [],
   pagePosts: [],
-  pageUsers:[],
-  otherUser: [],
-  user: localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user"))
-  : [],
-  users:[],
   userPosts: [],
-
+  user: localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : [],
+  otherUser: [],
+  myFavorites: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -82,18 +73,13 @@ const reducer = (state = initialState, action) => {
     case GET_USER_BY_NAME:
       return {
         ...state,
-        users: action.payload,
+        user: action.payload,
       };
     case GET_USER_BY_EMAIL:
       return {
         ...state,
         user: action.payload,
       };
-    case GET_ADMINS:
-      return {
-        ...state,
-        admins:action.payload
-      }
     case LOG_OUT:
       return {
         ...state,
@@ -104,11 +90,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
-    case DELETE_GAME:
-      return{
-        ...state,
-        user:action.payload
-      }
     case UPDATE_USER:
       return {
         ...state,
@@ -134,11 +115,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         pagePosts: action.payload,
       };
-    case GET_USERS_WITH_PAGINATION:
-      return{
-        ...state,
-        pageUsers:action.payload
-      }
     case CREATE_POST:
       return {
         ...state,
@@ -173,16 +149,6 @@ const reducer = (state = initialState, action) => {
           (favorite) => favorite.id !== action.payload.id
         ),
       };
-    case POST_GAME:
-      return{
-        ...state,
-        games:[...state.games, ...action.payload]
-      }
-    case GET_GENRES:
-      return{
-        ...state,
-        genre:action.payload
-      }
     default:
       return {
         ...state,
