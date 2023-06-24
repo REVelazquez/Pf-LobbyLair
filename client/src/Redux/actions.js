@@ -88,7 +88,6 @@ export const postGames = (payload) => {
       console.log(newGame);
       notifySuccess("Game created successfully!");
       return dispatch({
-        
         type: POST_GAME,
         payload: newGame.data,
       });
@@ -303,7 +302,7 @@ export const logOut = () => async (dispatch) => {
 
 export const deleteUser = (id) => async (dispatch) => {
   try {
-    const userId = await axios(`http://localhost:3001/users/${id}`);
+    const userId = await axios.delete(`http://localhost:3001/users/${id}`);
     return dispatch({
       type: DELETE_USER,
       payload: userId.data,
@@ -347,8 +346,10 @@ export const createPost = (payload) => {
 export const getFavorite = () => {
   return async (dispatch) => {
     try {
-      const user = localStorage.getItem("user");
-      const token = JSON.parse(user).token;
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = user.token;
+      console.log(user);
+      console.log(token);
       const respuesta = await axios.get(
         `http://localhost:3001/favorite/${token}`
       );
@@ -389,11 +390,11 @@ export const getAllUsers = () => async (dispatch) => {
 
 export const deleteGame = (id) => {
   const notifyError = (message) => toast.error(message);
- 
+
   return async (dispatch) => {
     try {
       const gameId = await axios.delete(`http://localhost:3001/games/${id}`);
-      
+
       return dispatch({
         type: DELETE_GAME,
         payload: gameId.data,
