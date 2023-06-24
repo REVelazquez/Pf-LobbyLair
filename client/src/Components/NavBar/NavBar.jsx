@@ -141,16 +141,14 @@ const NavBar = () => {
                     onClick={handleProfileClick}
                   />
                 </li>
-                
+                <li>
 
-                {isAdmin && <div>
-                  <li><ProfileItem 
+                <ProfileItem 
                   href={'/admindashboard'} 
                   text="Dashboard"
-                  onClick={handleAdminDash} 
+                  onClick={handleProfileClick} 
                   />
                   </li>
-                  </div>}
                 <li>
                   <ProfileItem text="Log Out" onClick={handleLogout} />
                 </li>

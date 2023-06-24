@@ -6,7 +6,6 @@ import {
   GET_USER_BY_ID,
   GET_USER_BY_NAME,
   GET_USER_BY_EMAIL,
-  GET_ADMINS,
   CREATE_USER,
   LOG_OUT,
   DELETE_USER,
@@ -21,9 +20,10 @@ import {
   GET_ALL_USERS,
   ADD_FAVORITE,
   DELETE_FAVORITE,
-  GET_GENRES,
+  GET_ADMINS,
   DELETE_GAME,
   GET_USERS_WITH_PAGINATION,
+  GET_GENRES,
 } from "./action-types";
 
 const initialState = {
@@ -81,18 +81,20 @@ const reducer = (state = initialState, action) => {
     case GET_USER_BY_NAME:
       return {
         ...state,
-        users: action.payload,
+        user: action.payload,
       };
     case GET_USER_BY_EMAIL:
       return {
         ...state,
         user: action.payload,
       };
+
     case GET_ADMINS:
       return {
         ...state,
         admins: action.payload,
       };
+
     case LOG_OUT:
       return {
         ...state,

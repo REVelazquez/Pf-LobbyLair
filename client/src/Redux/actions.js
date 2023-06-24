@@ -1,4 +1,4 @@
-// import { async } from "@firebase/util";
+import { async } from "@firebase/util";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -19,9 +19,9 @@ import {
   DELETE_USER,
   UPDATE_USER,
   GET_GAMES_WITH_PAGINATION,
-  GET_USERS_WITH_PAGINATION,
-  GET_POST_WITH_PAGINATION,
   GET_ALL_POSTS,
+  GET_POST_WITH_PAGINATION,
+  GET_USERS_WITH_PAGINATION,
   CREATE_POST,
   ORDER,
   GET_ALL_USERS,
@@ -30,6 +30,7 @@ import {
   DELETE_GAME,
   GET_ADMINS,
 } from "./action-types";
+import { ErrorMessage } from "formik";
 
 export const getAllGames = () => {
   return async (dispatch) => {
@@ -107,7 +108,6 @@ export const getPostsByUserId = (id) => {
     }
   };
 };
-
 export const getPostsWithPagination = (currentPage, gameid, gamemodeid) => {
   return async (dispatch) => {
     try {
@@ -133,6 +133,7 @@ export const getPostsWithPagination = (currentPage, gameid, gamemodeid) => {
     }
   };
 };
+
 export const getUsersWithPagination = (currentPage) => {
   return async (dispatch) => {
     const userPaginated = await axios.get(
@@ -144,6 +145,7 @@ export const getUsersWithPagination = (currentPage) => {
     });
   };
 };
+
 export const getAllPosts = () => {
   return async (dispatch) => {
     try {
@@ -171,7 +173,7 @@ export const deletePost = (payload) => {
     }
   };
 };
-export const getGameModes = () => {
+export const gameMode = () => {
   return async (dispatch) => {
     try {
       let newGame = await axios.get("http://localhost:3001/games/mode");
@@ -297,7 +299,7 @@ export const logOut = () => async (dispatch) => {
 
 export const deleteUser = (id) => async (dispatch) => {
   try {
-    const userId = await axios.delete(`http://localhost:3001/users/${id}`);
+    const userId = await axios(`http://localhost:3001/users/${id}`);
     return dispatch({
       type: DELETE_USER,
       payload: userId.data,
@@ -388,6 +390,20 @@ export const deleteGame = (id) => {
       return dispatch({
         type: DELETE_GAME,
         payload: gameId.data,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+};
+
+export const getGameModes = () => {
+  return async (dispatch) => {
+    try {
+      let newGame = await axios.get("http://localhost:3001/games/mode");
+      return dispatch({
+        type: GET_GAME_MODE,
+        payload: newGame.data,
       });
     } catch (error) {
       throw new Error(error);

@@ -29,10 +29,12 @@ const {
   getUserById,
   getUserByName,
   getUserByEmail,
-  getAdminUsers,
   createUser,
   updateUser,
   deleteUser,
+  getUserPayments,
+  getUserSubscriptions,
+  getAdminUsers,
 } = require("../controllers/users.js");
 const {
   handleLogin,
@@ -65,6 +67,7 @@ router.get("/games/page", getGamesWithPagination);
 router.get("/games/genres", getGenres);
 
 router.get("/games/mode/", getGameMode);
+
 // Endpoint para obtener un game por id
 router.get("/games/:id", getGamesById);
 
@@ -149,12 +152,14 @@ router.get("/chat", sendMessage, getMessages);
 //Endpoint para mecado pago
 router.post("/payment", createPreference);
 
-router.post("/feedback", feedback);
+router.get("/feedback", feedback);
 
 router.post("/sendEmail", sendEmail);
 
 router.post("/resetPassword", resetPassword);
 
 router.get("/success", (req, res) => res.send("Success"));
+
+router.get("/probando", getUserPayments);
 
 module.exports = router;
