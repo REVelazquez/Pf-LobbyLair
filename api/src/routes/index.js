@@ -62,7 +62,7 @@ router.delete("/games/:id", deleteGame);
 router.get("/games/page", getGamesWithPagination);
 
 //Ruta para obtener generos
-router.get('/games/genres', getGenres)
+router.get("/games/genres", getGenres);
 
 router.get("/games/mode/", getGameMode);
 // Endpoint para obtener un game por id
@@ -78,7 +78,7 @@ router.post("/games", postGames);
 router.get("/users", getAllUsers);
 
 // //Endopoint para obtener los Administradores
-router.get('/users/admins', getAdminUsers)
+router.get("/users/admins", getAdminUsers);
 
 // Endpoint para obtener un usuario por id
 router.get("/users/:id", authenticateToken, getUserById);
@@ -99,13 +99,13 @@ router.post(
       .matches(/^(?=.*[!@#$%^&*])(?=.*[A-Z])/)
       .withMessage(
         "Password must contain special characters and uppercase letters"
-        ),
-      ],
-      createUser
-      );
-      
-      // Endpoint para actualizar un usuario
-      router.put("/users/:id", updateUser);
+      ),
+  ],
+  createUser
+);
+
+// Endpoint para actualizar un usuario
+router.put("/users/:id", updateUser);
 
 // Endpoint para eliminar un usuario
 router.delete("/users/:id", deleteUser);
@@ -121,7 +121,6 @@ router.post("/favorite", createFavorite);
 
 // Endpoint para obtener usuarios con paginación y filtros
 router.get("/users/page/:page", getUsersWithPagination); // Ruta para obtener usuarios con paginación y filtros
-
 
 //Endpoint para obtener todos los posts
 router.get("/posts", getPosts);
