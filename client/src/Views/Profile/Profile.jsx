@@ -116,15 +116,19 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div className="w-9/20">
-          {showImage && (
-            <div
-              className="text-center bg-gray-300 rounded-lg min-h-[29rem]"
-              style={{ boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)" }}
-            >
-              Aquí no sé si agregaremos una imagen, publicidad o qué carajo
-            </div>
-          )}
+<div className="w-3/12">
+  {showImage && (
+    <div
+      className="text-center bg-gray-300 rounded-lg w-full h-full"
+      style={{ boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)" }}
+    >
+      <img
+        src="https://i.pinimg.com/originals/f8/cc/4c/f8cc4c28ad1c2f88189e8202d27ddb62.jpg"
+        alt="img-profile"
+        className="w-full h-full object-cover rounded"
+      />
+    </div>
+  )}
           {editMode && !showImage && (
             <div>
               <UpdateProfile />
