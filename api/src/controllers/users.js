@@ -66,7 +66,6 @@ const getUserByName = async (req, res) => {
 // Función para buscar un usuario por su email
 const getUserByEmail = async (req, res) => {
   const { email } = req.params;
-  console.log("Email received from params:", email);
   try {
     // Se busca el usuario en la base de datos por su email
     const user = await User.findAll({
@@ -80,8 +79,7 @@ const getUserByEmail = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
-    res.json(user);
+    res.json(...user);
   } catch (error) {
     console.error(error);
     return res
