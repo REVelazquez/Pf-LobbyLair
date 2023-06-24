@@ -85,6 +85,7 @@ const PaymentComponent = () => {
             
             selectedOption === "mercadopago" ? "bg-green-200" : "bg-white"
 
+            selectedOption === 'mercadopago' ? 'bg-blue-400' : 'bg-gray-100'
           }`}
           style={{ cursor: "pointer" }}
           onClick={() => handleMercadoPago("mercadopago")}
