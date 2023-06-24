@@ -10,6 +10,7 @@ import {
   GET_POST_BY_USER_ID,
   DELETE_POST,
   GET_GAME_MODE,
+  GET_GENRES,
   CREATE_USER,
   GET_USER_BY_ID,
   GET_USER_BY_NAME,
@@ -20,14 +21,16 @@ import {
   GET_GAMES_WITH_PAGINATION,
   GET_ALL_POSTS,
   GET_POST_WITH_PAGINATION,
+  GET_USERS_WITH_PAGINATION,
   CREATE_POST,
   ORDER,
   GET_ALL_USERS,
   ADD_FAVORITE,
   DELETE_FAVORITE,
+  DELETE_GAME,
+  GET_ADMINS,
 } from "./action-types";
 import { ErrorMessage } from "formik";
-
 
 export const getAllGames = () => {
   return async (dispatch) => {
@@ -80,6 +83,7 @@ export const postGames = (payload) => {
   return async (dispatch) => {
     try {
       let newGame = await axios.post("http://localhost:3001/games", payload);
+      console.log(newGame);
       return dispatch({
         type: POST_GAME,
         payload: newGame.data,
@@ -129,6 +133,19 @@ export const getPostsWithPagination = (currentPage, gameid, gamemodeid) => {
     }
   };
 };
+
+export const getUsersWithPagination = (currentPage) => {
+  return async (dispatch) => {
+    const userPaginated = await axios.get(
+      `http://localhost:3001/users/page/${currentPage}`
+    );
+    return dispatch({
+      type: GET_USERS_WITH_PAGINATION,
+      payload: userPaginated.data,
+    });
+  };
+};
+
 export const getAllPosts = () => {
   return async (dispatch) => {
     try {
@@ -146,10 +163,7 @@ export const getAllPosts = () => {
 export const deletePost = (payload) => {
   return async (dispatch) => {
     try {
-      let newGame = await axios.post(
-        "http://localhost:3001/games/delete",
-        payload
-      );
+      let newGame = await axios.delete("http://localhost:3001/post", payload);
       return dispatch({
         type: DELETE_POST,
         payload: newGame.data,
@@ -172,18 +186,30 @@ export const gameMode = () => {
     }
   };
 };
+export const getGenres = () => {
+  return async (dispatch) => {
+    try {
+      let genres = await axios.get("http://localhost:3001/games/genres");
+      return dispatch({
+        type: GET_GENRES,
+        payload: genres.data,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+};
 export const createUser = (payload) => {
   const notifyError = (message) => toast.error(message);
 
   return async (dispatch) => {
     try {
       let newUser = await axios.post("http://localhost:3001/register", payload);
-   
+
       return dispatch({
         type: CREATE_USER,
         payload: newUser.data,
       });
-      
     } catch (error) {
       notifyError("User already exists!");
     }
@@ -231,6 +257,20 @@ export const getUserByEmail = (email) => async (dispatch) => {
   } catch (error) {
     throw new Error(error);
   }
+};
+
+export const getAdminUsers = () => {
+  return async (dispatch) => {
+    try {
+      const admins = await axios.get("http://localhost:3001/users/admins");
+      return dispatch({
+        type: GET_ADMINS,
+        payload: admins.data,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 };
 
 export const logIn = (payload) => async (dispatch) => {
@@ -341,4 +381,32 @@ export const getAllUsers = () => async (dispatch) => {
   } catch (error) {
     throw new Error(error);
   }
+};
+
+export const deleteGame = (id) => {
+  return async (dispatch) => {
+    try {
+      const gameId = await axios.delete(`http://localhost:3001/games/${id}`);
+      return dispatch({
+        type: DELETE_GAME,
+        payload: gameId.data,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+};
+
+export const getGameModes = () => {
+  return async (dispatch) => {
+    try {
+      let newGame = await axios.get("http://localhost:3001/games/mode");
+      return dispatch({
+        type: GET_GAME_MODE,
+        payload: newGame.data,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 };

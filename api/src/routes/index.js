@@ -16,6 +16,7 @@ const {
   deletePost,
   getPostsWithPagination,
   getGameMode,
+  getGenres,
 } = require("../controllers/post.js");
 const {
   getFavorites,
@@ -33,6 +34,7 @@ const {
   deleteUser,
   getUserPayments,
   getUserSubscriptions,
+  getAdminUsers,
 } = require("../controllers/users.js");
 const {
   handleLogin,
@@ -61,7 +63,11 @@ router.delete("/games/:id", deleteGame);
 // Ruta para obtener juegos con paginación y filtros
 router.get("/games/page", getGamesWithPagination);
 
+//Ruta para obtener generos
+router.get("/games/genres", getGenres);
+
 router.get("/games/mode/", getGameMode);
+
 // Endpoint para obtener un game por id
 router.get("/games/:id", getGamesById);
 
@@ -73,6 +79,9 @@ router.post("/games", postGames);
 
 // Endpoint para obtener todos los usuarios
 router.get("/users", getAllUsers);
+
+// //Endopoint para obtener los Administradores
+router.get("/users/admins", getAdminUsers);
 
 // Endpoint para obtener un usuario por id
 router.get("/users/:id", authenticateToken, getUserById);

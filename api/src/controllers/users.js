@@ -90,6 +90,20 @@ const getUserByEmail = async (req, res) => {
   }
 };
 
+const getAdminUsers = async (req, res) => {
+  const { isAdmin } = req.params;
+  try {
+    const admins = await User.findAll({
+      where: {
+        isAdmin: true,
+      },
+    });
+    res.status(200).json(admins);
+  } catch (error) {
+    return res.status(404).json({ message: "Error searching for Admins" });
+  }
+};
+
 const createUser = async (req, res) => {
   const { name, email, password } = req.body;
   const allUsers = await User.findAll();
@@ -143,7 +157,7 @@ const updateUser = async (req, res) => {
   if (isAdmin) updateFields.isAdmin = isAdmin;
   if (isPremium) updateFields.isPremium = isPremium;
   if (perfilUrl) updateFields.perfilUrl = perfilUrl;
-
+  console.log(isAdmin);
   try {
     const user = await User.update(updateFields, {
       where: {
@@ -266,4 +280,5 @@ module.exports = {
   getUsersWithPagination,
   getUserPayments,
   getUserSubscriptions,
+  getAdminUsers,
 };
