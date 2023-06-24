@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { User } = require("../db");
+const { User, Payment, Subscriptions } = require("../db");
 const { Op } = require("sequelize");
 const { validationResult } = require("express-validator");
 const hash = require("../utils/bcrypt");
@@ -230,15 +230,14 @@ const getUsersWithPagination = async (req, res) => {
 };
 
 const getUserPayments = async (req, res) => {
+  const { token } = req.query;
   try {
-    const token = req.headers.authorization;
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decodedToken.userId;
 
     const user = await User.findByPk(userId, {
       include: Payment,
     });
-
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -251,11 +250,10 @@ const getUserPayments = async (req, res) => {
 };
 
 const getUserSubscriptions = async (req, res) => {
+  const { token } = req.query;
   try {
-    const token = req.headers.authorization;
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decodedToken.userId;
-
     const user = await User.findByPk(userId, {
       include: Subscriptions,
     });
@@ -264,7 +262,7 @@ const getUserSubscriptions = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    return res.json(user.Subscriptions);
+    return res.json(user.Subscription);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Failed to get user subscriptions" });
@@ -276,11 +274,11 @@ module.exports = {
   getUserById,
   getUserByName,
   getUserByEmail,
-  getAdminUsers,
   createUser,
   updateUser,
   deleteUser,
   getUsersWithPagination,
   getUserPayments,
   getUserSubscriptions,
+  getAdminUsers,
 };

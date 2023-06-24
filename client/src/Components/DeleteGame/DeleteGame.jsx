@@ -32,6 +32,7 @@ const DeleteGame = () => {
 
   return (
     <>
+
       <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {allGames.map((game) => (
           <Draggable key={game.id.toString()} onStop={handleDrag(game.id)}>

@@ -33,11 +33,13 @@ const ImagePreloader = ({ src }) => {
 const GamesBar = () => {
   const dispatch = useDispatch();
 
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [btnUp, setBtnUp] = useState(true);
   const [btnDown, setBtnDown] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     dispatch(getGamesWithPagination(currentPage));
   }, [currentPage, dispatch]);
 
@@ -63,8 +65,6 @@ const GamesBar = () => {
     if (currentPage !== games.totalPages) {
       const nextPage = currentPage + 1;
       setCurrentPage(nextPage);
-    }else{
-      setCurrentPage(1)
     }
   };
 
@@ -72,9 +72,6 @@ const GamesBar = () => {
     if (currentPage > 1) {
       const nextPage = currentPage - 1;
       setCurrentPage(nextPage);
-    }else{
-      const maxPage=games.totalPages
-      setCurrentPage(maxPage)
     }
   };
 
