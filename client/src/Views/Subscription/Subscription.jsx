@@ -4,17 +4,17 @@ import PaymentComponent from "../Payment/Payment";
 const Subscription = () => {
   const subscriptionPlans = [
     {
-      title: "Básico",
+      title: "Basic",
       price: "$20",
       features: ["Feature 1", "Feature 2", "Feature 3", "Feature 4"]
     },
     {
-      title: "Duradero",
+      title: "Durable",
       price: "$80",
       features: ["Feature 1", "Feature 2", "Feature 3", "Feature 4"]
     },
     {
-      title: "Extendido",
+      title: "Extended",
       price: "$140",
       features: ["Feature 1", "Feature 2", "Feature 3", "Feature 4"]
     }
