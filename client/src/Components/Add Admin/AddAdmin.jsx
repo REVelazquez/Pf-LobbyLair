@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 const AddAdmin = () => {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ const AddAdmin = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: ""
+      email: "",
     },
     validate: (values) => {
       const errors = {};
@@ -25,14 +25,13 @@ const AddAdmin = () => {
       const { email } = values;
       const res = await axios(`http://localhost:3001/users/email/${email}`);
       const user = res.data;
-      
+
       if (user.length === 0) {
         notify("User successfully added as admin");
         resetForm();
         return;
       }
-
-      const userId = user[0].id;
+      const userId = user.id;
       try {
         await axios.put(`http://localhost:3001/users/${userId}`, {
           isAdmin: true,
@@ -41,12 +40,15 @@ const AddAdmin = () => {
       } catch (error) {
         notifyError(error.message);
       }
-    }
+    },
   });
 
   return (
     <>
-      <form onSubmit={formik.handleSubmit} className="flex flex-col items-center">
+      <form
+        onSubmit={formik.handleSubmit}
+        className="flex flex-col items-center"
+      >
         <div className="flex items-center bg-gray-50 rounded-[3rem] my-5 border-cyan-950 py-3">
           <input
             type="email"
