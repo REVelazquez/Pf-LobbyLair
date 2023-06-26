@@ -7,6 +7,7 @@ const ProtectedRoutes = () => {
 
 const ProtectedRoutes2 = () => {
   const isAuthenticated = localStorage.getItem("isAuthenticated");
+  if(!isAuthenticated)   localStorage.setItem("isAuthenticated", false)
   return isAuthenticated === "false" ? <Outlet /> : <Navigate to="/home" />;
 };
 
