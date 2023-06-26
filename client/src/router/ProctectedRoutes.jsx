@@ -14,4 +14,10 @@ const ProtectedRoutes2 = () => {
   );
 };
 
-export { ProtectedRoutes, ProtectedRoutes2 };
+const ProtectedAdminRoute = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const isAdmin = user.isAdmin;
+  return isAdmin === true ? <Outlet /> : <Navigate to="/home" />;
+};
+
+export { ProtectedRoutes, ProtectedRoutes2, ProtectedAdminRoute };
