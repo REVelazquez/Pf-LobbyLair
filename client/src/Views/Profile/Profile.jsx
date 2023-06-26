@@ -91,14 +91,6 @@ const Profile = () => {
                 >
                   Editar
                 </button>
-                {editMode && !showImage && (
-                  <button
-                    className="flex bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer hover:bg-blue-700 text-white font-bold"
-                    onClick={handleEditClose}
-                  >
-                    Cerrar
-                  </button>
-                )}
               </div>
             </div>
           </div>
@@ -118,7 +110,7 @@ const Profile = () => {
           )}
           {editMode && !showImage && (
             <div>
-              <UpdateProfile />
+              <UpdateProfile handleEditClose={handleEditClose}/>
             </div>
           )}
         </div>
