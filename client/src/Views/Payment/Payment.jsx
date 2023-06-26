@@ -13,11 +13,13 @@ const PaymentComponent = () => {
   const createPreference = async () => {
     initMercadoPago(REACT_APP_KEY);
     try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = user.token;
       const response = await axios.post("http://localhost:3001/payment", {
-        description: "MercadoPago",
-        price: 100,
-        quantity: 1,
-        currency_id: "ARS",
+        token: token,
+        amount: 100,
+        type: "premium",
+        currency: "ARS",
       });
       const { id } = response.data;
       return id;
@@ -30,12 +32,17 @@ const PaymentComponent = () => {
     setSelectedOption(option);
 
     try {
-      const response = await fetch("http://localhost:3001/create-order", {
-        method: "POST",
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = user.token;
+      const response = await axios.post("http://localhost:3001/create-order", {
+        token: token,
+        amount: 30,
+        type: "premium",
+        currency: "USD",
       });
 
-      if (response.ok) {
-        const data = await response.json();
+      if (response) {
+        const data = response.data;
         console.log(data);
         if (data.links && data.links[1] && data.links[1].href) {
           window.location.href = data.links[1].href;
@@ -78,14 +85,11 @@ const PaymentComponent = () => {
             className="w-12 h-12 mr-4 cursor-pointer"
           />
           <span className="font-bold text-black">PayPal</span>
-        </div> 
+        </div>
 
         <div
           className={`p-4 border rounded-md shadow-md flex items-center ${
-            
             selectedOption === "mercadopago" ? "bg-green-200" : "bg-white"
-
-         
           }`}
           style={{ cursor: "pointer" }}
           onClick={() => handleMercadoPago("mercadopago")}
