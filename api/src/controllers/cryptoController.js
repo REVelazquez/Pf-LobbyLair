@@ -26,13 +26,15 @@ async function getEthereumPriceInARS() {
     return ars;
   } catch (error) {
     console.error('Error al obtener el precio de Ethereum:', error);
-    throw error;
+    res.send.status(500).Error(error);
   }
 }
 getEthereumPriceInUSD();
 getEthereumPriceInARS();
 // Función para enviar ethers utilizando MetaMask y Alchemy
-async function makeCryptoPayment(destinatario, cantidadDolares) {
+const makeCryptoPayment = async(req,res) => {
+  const { destinatario, cantidadDolares } = req.body;
+
   try {
     console.log(cantidadDolares);
      // Verificar si la cantidad es un número válido
