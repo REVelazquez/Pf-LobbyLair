@@ -9,9 +9,9 @@ const PaymentComponent = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const REACT_APP_KEY = window.env.REACT_APP_MERCADOPAGO_KEY;
   const createPreference = async () => {
+    initMercadoPago(REACT_APP_KEY);
     const user = JSON.parse(localStorage.getItem("user"));
     const token = user.token;
-    initMercadoPago(REACT_APP_KEY);
     try {
       const response = await axios.post("http://localhost:3001/payment", {
         token,

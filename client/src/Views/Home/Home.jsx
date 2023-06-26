@@ -43,10 +43,10 @@ const Home = () => {
           <div className="post-container mx-auto overflow-y-auto mt-[1rem] justify-start items-start border-r-2 border-gray-200">
             <div className="">
               <div className="items-center text">
-                <h1>Order:</h1>
+                <h1 className="ml-[12rem]">Order:</h1>
               </div>
               <div className="">
-                <div className="relative inline-flex">
+                <div className="relative left-12 ml-[9rem] inline-flex">
                   <select
                     name="Creation Order"
                     key="Order"

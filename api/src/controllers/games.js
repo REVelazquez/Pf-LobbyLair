@@ -111,15 +111,14 @@ async function getGamesByName(req, res) {
 }
 
 async function postGames(req, res) {
-  const { name, thumbnail, gameMode, genres } = req.body;
-
+  const { name, thumbnail, gameModes, genres } = req.body;
   try {
     let game = await Game.create({
       name,
       thumbnail,
     });
 
-    for (const mode of gameMode) {
+    for (const mode of gameModes) {
       const [createdGameMode] = await GameMode.findOrCreate({
         where: { name: mode },
       });
@@ -132,7 +131,21 @@ async function postGames(req, res) {
       });
       await game.addGenre(createdGenre);
     }
-    return res.status(201).json(game);
+
+    const gameData = await Game.findByPk(game.id, {
+      include: [
+        {
+          model: GameMode,
+          through: { attributes: [] },
+        },
+        {
+          model: Genre,
+          through: { attributes: [] },
+        },
+      ],
+    });
+    console.log(gameData.dataValues);
+    return res.status(201).json(gameData.dataValues);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
