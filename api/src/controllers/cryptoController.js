@@ -1,54 +1,50 @@
-// cryptoController.js
+const { ethers } = require('ethers');
 require("dotenv").config();
-const { Network, Alchemy } = require("alchemy-sdk");
-const { ALCHEMY_API_KEY } = process.env.ALCHEMY_API_KEY;
-// Configura el proveedor de Web3 para interactuar con la red Ethereum
-const settings = {
-  apiKey: ALCHEMY_API_KEY,
-  network: Network.ETH_MAINNET,
-};
+const { ALCHEMY_API_KEY, METAMASK_PRIVATE_KEY } = process.env;
 
-const alchemy = new Alchemy(settings);
+// Crea una instancia de proveedor utilizando Alchemy
+const provider = new ethers.providers.JsonRpcProvider(`https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_API_KEY}`);
 
-// get the latest block
-const latestBlock = alchemy.core.getBlock("latest").then();
-
-// Controlador para realizar una transacción de criptomonedas
-const makeCryptoPayment = async (req, res) => {
-  const { address, amount, privateKey } = req.body;
-
+// Función para enviar ethers utilizando MetaMask y Alchemy
+async function makeCryptoPayment(direccionDestinatario, cantidad) {
   try {
-    // Crea una transacción
+    console.log(cantidad);
+     // Verificar si la cantidad es un número válido
+     if (isNaN(cantidad) || cantidad <= 0) {
+      throw new Error('La cantidad proporcionada no es un número válido');
+    }
+    // Obtiene la clave privada de tu cuenta (asegúrate de mantenerla segura)
+    const privateKey = METAMASK_PRIVATE_KEY;
+
+    // Conecta con la cuenta utilizando la clave privada
+    const wallet = new ethers.Wallet(privateKey, provider);
+
+    // Convierte la cantidad a un número decimal
+    const cantidadDecimal = parseFloat(cantidad);
+
+    // Verifica si la conversión fue exitosa
+    if (isNaN(cantidadDecimal)) {
+      throw new Error('La cantidad proporcionada no es un número válido');
+    }
+
+    // Construye la transacción
     const transaction = {
-      from: address,
-      to: "recipient-address",
-      value: web3.utils.toWei(amount.toString(), "ether"),
+      to: direccionDestinatario,
+      value: ethers.utils.parseEther(cantidadDecimal.toString())
     };
 
-    // Firma la transacción con la clave privada del remitente
-    const signedTx = await web3.eth.accounts.signTransaction(
-      transaction,
-      privateKey
-    );
+    // Firma y envía la transacción
+    const signedTransaction = await wallet.sendTransaction(transaction);
+    const receipt = await signedTransaction.wait();
 
-    // Envía la transacción a la red Ethereum
-    const result = await web3.eth.sendSignedTransaction(
-      signedTx.rawTransaction
-    );
-
-    res
-      .status(200)
-      .json({ success: true, transactionHash: result.transactionHash });
+    return receipt;
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Error al realizar la transacción de criptomonedas",
-      });
+    throw error;
   }
-};
+}
+
 module.exports = {
-  makeCryptoPayment,
+  makeCryptoPayment
 };
+
