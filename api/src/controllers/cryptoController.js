@@ -70,4 +70,3 @@ const makeCryptoPayment = async(req,res) => {
 module.exports = {
   makeCryptoPayment
 };
-
