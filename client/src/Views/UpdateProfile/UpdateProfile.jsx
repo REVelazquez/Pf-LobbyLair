@@ -62,7 +62,7 @@ export default function UpdateProfile({ handleEditClose }) {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="perfilUrl" className="block text-gray-700 text-sm font-bold mb-2 ">Perfil URL</label>
+          <label htmlFor="perfilUrl" className="block text-gray-700 text-sm font-bold mb-2 ">URL Profile</label>
           <input
             type="text"
             name="perfilUrl"
@@ -96,7 +96,7 @@ export default function UpdateProfile({ handleEditClose }) {
             className="bg-black text-white border-none rounded-[5rem] p-3 text-l hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-4"
             onClick={handleEditClose}
           >
-            Cerrar
+            Close
           </button>
         </div>
       </form>
