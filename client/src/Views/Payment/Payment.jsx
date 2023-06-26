@@ -103,13 +103,6 @@ const PaymentComponent = () => {
           <span className="font-bold text-black">MercadoPago</span>
         </div>
       </div>
-
-      {selectedOption && (
-        <div className="mt-8">
-          <h2 className="text-xl font-bold mb-2">Selected option:</h2>
-          <p>{selectedOption === "paypal" ? "PayPal" : "MercadoPago"}</p>
-        </div>
-      )}
     </div>
   );
 };
