@@ -9,8 +9,11 @@ import {
   Favorites,
   UsersProfile,
   UpdateProfile,
-  AdminDashboard,
   Subscription,
+  AdminDashboard,
+  UsersDashboard,
+  DataSetDashboard,
+  SettingsDashboard,
 } from "./Views";
 import GameDetail from "./Components/GameDetail/GameDetail";
 import GamePosts from "./Components/GamePosts/GamePosts";
@@ -90,6 +93,9 @@ function App() {
           <Route exact path="/chat" element={<Chat />} />
           <Route element={<ProtectedAdminRoute />}>
             <Route path="/admindashboard" element={<AdminDashboard />} />
+            <Route path="/admindashboard/users" element={<UsersDashboard />} />
+            <Route path="/admindashboard/settings" element={<SettingsDashboard />} />
+            <Route path="/admindashboard/dataset" element={<DataSetDashboard />} />
           </Route>
         </Route>
         <Route exact path="/sendEmail" element={<SendEmail />} />
