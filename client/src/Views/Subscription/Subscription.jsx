@@ -84,7 +84,7 @@ const Subscription = () => {
               className="bg-[#1f2937] hover:bg-blue-700 text-white font-bold py-2 px-7 rounded mt-6"
               onClick={() => handlePlanSelection(index)}
             >
-              {selectedPlan === index ? "Start your trial" : "Start your trial"}
+              {selectedPlan === index ? "Buy now" : "Buy now"}
             </button>
           </div>
         ))}
