@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAdminUsers, updateUser } from "../../Redux/actions";
+import axios from "axios";
 
 const DeleteAdmin = ({ afterDeleteAdmin }) => {
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -11,14 +13,17 @@ const DeleteAdmin = ({ afterDeleteAdmin }) => {
 
   const adminUsers = useSelector((state) => state.admins);
 
-  const handleDeleteAdmin = (adminId) => {
+  const handleDeleteAdmin = async (adminId) => {
     const adminToUpdate = adminUsers.find((admin) => admin.id === adminId);
     if (adminToUpdate) {
       const updatedAdmin = {
         ...adminToUpdate,
         isAdmin: false,
       };
-      dispatch(updateUser(adminId, updatedAdmin));
+      await axios.put(`http://localhost:3001/users/${adminId}`, {
+        isAdmin: "false",
+      });
+      console.log(adminId);
       afterDeleteAdmin();
     }
   };
@@ -30,6 +35,7 @@ const DeleteAdmin = ({ afterDeleteAdmin }) => {
           <div key={admin.id}>
             <label htmlFor="Name">{admin.name}</label>{" "}
             <button onClick={() => handleDeleteAdmin(admin.id)}>
+      
               Delete admin
             </button>
           </div>

@@ -6,24 +6,31 @@ import {
   Register,
   Chat,
   LandingPage,
-  Favorites, 
+  Favorites,
   UsersProfile,
   UpdateProfile,
-  AdminDashboard,
   Subscription,
+  AdminDashboard,
+  UsersDashboard,
+  DataSetDashboard,
+  SettingsDashboard,
 } from "./Views";
 import GameDetail from "./Components/GameDetail/GameDetail";
 import GamePosts from "./Components/GamePosts/GamePosts";
 import { Routes, Route, useLocation } from "react-router-dom";
 import NavBar from "./Components/NavBar/NavBar";
-import { ProtectedRoutes, ProtectedRoutes2 } from "./router/ProctectedRoutes";
+import {
+  ProtectedAdminRoute,
+  ProtectedRoutes,
+  ProtectedRoutes2,
+} from "./router/ProctectedRoutes";
 import GamesBar from "./Components/GamesBar/GamesBar";
 import LobbyFlight from "./Multimedia/Flight lobbylair.gif";
 import { useEffect, useState } from "react";
 import SendEmail from "./Components/ForgotPassword/sendEmail";
 import ResetPassword from "./Components/ForgotPassword/resetPassword";
 import { useSelector } from "react-redux";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 function ProjectCursor() {
   const [cursorX, setCursorX] = useState();
@@ -55,7 +62,6 @@ function ProjectCursor() {
 function App() {
   const location = useLocation();
 
-
   return (
     <div className="App">
       {location.pathname !== "/" &&
@@ -85,7 +91,12 @@ function App() {
           <Route exact path="/profile/:id/update" element={<UpdateProfile />} />
           <Route path="/user/:id" element={<UsersProfile />} />
           <Route exact path="/chat" element={<Chat />} />
-          <Route path='/admindashboard' element={<AdminDashboard/>}/>
+          <Route element={<ProtectedAdminRoute />}>
+            <Route path="/admindashboard" element={<AdminDashboard />} />
+            <Route path="/admindashboard/users" element={<UsersDashboard />} />
+            <Route path="/admindashboard/settings" element={<SettingsDashboard />} />
+            <Route path="/admindashboard/dataset" element={<DataSetDashboard />} />
+          </Route>
         </Route>
         <Route exact path="/sendEmail" element={<SendEmail />} />
         <Route exact path="/resetPassword/:token" element={<ResetPassword />} />

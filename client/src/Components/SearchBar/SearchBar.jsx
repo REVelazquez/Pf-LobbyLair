@@ -28,11 +28,10 @@ const SearchBar = () => {
   const handleChange = async (event) => {
     setSearchName({ name: event.target.value });
     const response = await axios.get(
-      `http://localhost:3001/games/page?name=${event.target.value}` 
+      `http://localhost:3001/games/page?name=${event.target.value}`
     );
-    setGame(response.data.games);
+    setGame(response.data.games.slice(0, 5)); // Obtener solo los primeros 5 resultados
   };
-
   return (
   <div className="sticky">
     <div className="flex gap-2">
