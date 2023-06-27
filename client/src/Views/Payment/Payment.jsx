@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import axios from "axios";
 import {ethers} from "ethers";
-const PaymentComponent = ({ amount, type, currency }) => {
+const PaymentComponent = ({ amount, type, currency, address }) => {
 
   const [preferenceId, setPreferenceId] = useState(null);
   const stateUser = useSelector((state) => state.user);
