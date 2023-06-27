@@ -29,44 +29,70 @@ async function getEthereumPriceInARS() {
     res.send.status(500).Error(error);
   }
 }
-getEthereumPriceInUSD();
-getEthereumPriceInARS();
 // Función para enviar ethers utilizando MetaMask y Alchemy
 const makeCryptoPayment = async(req,res) => {
-  const { destinatario, cantidadDolares } = req.body;
-
-  try {
-    console.log(cantidadDolares);
-     // Verificar si la cantidad es un número válido
-     if (isNaN(cantidadDolares) || cantidadDolares <= 0) {
-      throw new Error('La cantidad proporcionada no es un número válido');
-    }
-    // Obtiene la clave privada de tu cuenta (asegúrate de mantenerla segura)
-    const privateKey = METAMASK_PRIVATE_KEY;
-    // Obtener el precio actual de Ethereum en dólares
-    const ethPriceUSD = await getEthereumPriceInUSD();
+  const { amount, currency, address } = req.body;
+  // Obtiene la clave privada de tu cuenta (asegúrate de mantenerla segura)
+  const privateKey = METAMASK_PRIVATE_KEY;
+  if(currency === 'ARS'){
+    try {
+      console.log('cantidad de pesos',amount);
+       // Verificar si la cantidad es un número válido
+       if (isNaN(amount) || amount <= 0) {
+        throw new Error('La cantidad proporcionada no es un número válido');
+      }
+    // Obtener el precio actual de Ethereum en pesos
+    const ethPriceARS = await getEthereumPriceInARS();
     // Calcular la cantidad equivalente en ETH
-    const cantidadETH = cantidadDolares / ethPriceUSD;
+    const cantidadETH = amount / ethPriceARS;
     // Conecta con la cuenta utilizando la clave privada
     const wallet = new ethers.Wallet(privateKey, provider);
 
      // Construir la transacción
      const transaction = {
-      to: destinatario,
+      to: address,
       value: ethers.utils.parseEther(cantidadETH.toString())
     };
 
     // Firma y envía la transacción
     const signedTransaction = await wallet.sendTransaction(transaction);
     const receipt = await signedTransaction.wait();
-
-    return receipt;
+    res.json({ receipt });
   } catch (error) {
     console.error(error);
     throw error;
   }
-}
+  
+  }else if(currency === 'USD'){
+    try {
+      console.log('cantidad de dolares',amount);
+       // Verificar si la cantidad es un número válido
+       if (isNaN(amount) || amount <= 0) {
+        throw new Error('La cantidad proporcionada no es un número válido');
+      }
+    // Obtener el precio actual de Ethereum en dólares
+    const ethPriceUSD = await getEthereumPriceInUSD();
+    // Calcular la cantidad equivalente en ETH
+    const cantidadETH = amount / ethPriceUSD;
+    // Conecta con la cuenta utilizando la clave privada
+    const wallet = new ethers.Wallet(privateKey, provider);
 
+     // Construir la transacción
+     const transaction = {
+      to: address,
+      value: ethers.utils.parseEther(cantidadETH.toString())
+    };
+
+    // Firma y envía la transacción
+    const signedTransaction = await wallet.sendTransaction(transaction);
+    const receipt = await signedTransaction.wait();
+    res.json({ receipt });
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+  } 
+}
 module.exports = {
   makeCryptoPayment
 };

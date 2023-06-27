@@ -2,15 +2,75 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import axios from "axios";
-
-const PaymentComponent = ({ amount, type, currency }) => {
+import {ethers} from "ethers";
+const PaymentComponent = ({ amount, type, currency, address }) => {
 
   const [preferenceId, setPreferenceId] = useState(null);
   const stateUser = useSelector((state) => state.user);
   console.log(stateUser);
   const [selectedOption, setSelectedOption] = useState(null);
   const REACT_APP_KEY = window.env.REACT_APP_MERCADOPAGO_KEY;
-  console.log(REACT_APP_KEY);
+  const [errorMessage, setErrorMessage] = useState(null);
+	const [defaultAccount, setDefaultAccount] = useState(null);
+	const [userBalance, setUserBalance] = useState(null);
+	const [connButtonText, setConnButtonText] = useState('Connect Wallet');
+  const connectWalletHandler = async () => {
+		if (window.ethereum && window.ethereum.isMetaMask) {
+			console.log('MetaMask Here!');
+			window.ethereum.request({ method: 'eth_requestAccounts'})
+			.then(result => {
+				accountChangedHandler(result[0]);
+				setConnButtonText('Wallet Connected');
+				getAccountBalance(result[0]);
+        
+			})
+			.catch(error => {
+				setErrorMessage(error.message);
+			});
+		} else {
+			console.log('Need to install MetaMask');
+			setErrorMessage('Please install MetaMask browser extension to interact');
+		}
+    try {
+      const response = await axios.post('http://localhost:3001/crypto/payment', 
+      {
+       amount: amount,
+       currency: currency,
+       address: address
+      })
+        return response.data;
+    } catch (error) {
+        console.log(error);
+      }
+	}
+
+	// update account, will cause component re-render
+	const accountChangedHandler = (newAccount) => {
+		setDefaultAccount(newAccount);
+		getAccountBalance(newAccount.toString());
+	}
+
+	const getAccountBalance = (account) => {
+		window.ethereum.request({method: 'eth_getBalance', params: [account, 'latest']})
+		.then(balance => {
+			setUserBalance(ethers.utils.formatEther(balance));
+		})
+		.catch(error => {
+			setErrorMessage(error.message);
+		});
+	};
+
+	const chainChangedHandler = () => {
+		// reload the page to avoid any errors with chain change mid use of application
+		window.location.reload();
+	}
+
+
+	// listen for account changes
+	window.ethereum.on('accountsChanged', accountChangedHandler);
+
+	window.ethereum.on('chainChanged', chainChangedHandler);
+	
   const createPreference = async () => {
     initMercadoPago(REACT_APP_KEY);
     try {
@@ -107,7 +167,27 @@ const PaymentComponent = ({ amount, type, currency }) => {
           />
           <span className="font-bold text-black">MercadoPago</span>
         </div>
-      </div>
+        <div
+          className={`p-4 border rounded-md shadow-md grid items-center ${
+          selectedOption === "metamask" ? "bg-orange-200" : "bg-white"
+          }`}
+          onClick={connectWalletHandler}
+          >
+          <img
+            src="https://logowik.com/content/uploads/images/metamask4112.jpg"
+            alt="MetaMask"
+            style={{ cursor: "pointer" }}
+            className="w-28 h-22 mr-4 items-center cursor-pointer"
+          />
+          <div>
+          <h3>Address: {defaultAccount}</h3>
+          </div>
+          <div>
+          <h3>Balance: {userBalance}</h3>
+          </div>
+          {errorMessage}
+          </div>
+        </div>
     </div>
   );
 };
