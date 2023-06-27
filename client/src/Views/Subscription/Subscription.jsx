@@ -33,7 +33,7 @@ const Subscription = () => {
 
   const handlePlanSelection = (index) => {
     if (selectedPlan === index) {
-      // Si se hace clic en la tarjeta seleccionada, la deseleccionamos
+    
       setSelectedPlan(null);
       setShowPayment(false);
     } else {
@@ -116,3 +116,4 @@ const Subscription = () => {
 };
 
 export default Subscription;
+
