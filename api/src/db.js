@@ -41,6 +41,7 @@ const {
   ChatMessage,
   Payment,
   Subscriptions,
+  Response,
 } = sequelize.models;
 Game.belongsToMany(Genre, { through: "Game_Genre" });
 Genre.belongsToMany(Game, { through: "Game_Genre" });
@@ -62,6 +63,9 @@ Payment.belongsTo(User);
 
 User.hasOne(Subscriptions);
 Subscriptions.belongsTo(User);
+
+Post.hasMany(Response);
+Response.belongsTo(Post);
 
 module.exports = {
   ...sequelize.models,
