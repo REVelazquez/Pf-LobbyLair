@@ -14,7 +14,11 @@ import {
   UsersDashboard,
   DataSetDashboard,
   SettingsDashboard,
+  Feedback,
+
+ 
 } from "./Views";
+
 import GameDetail from "./Components/GameDetail/GameDetail";
 import GamePosts from "./Components/GamePosts/GamePosts";
 import { Routes, Route, useLocation } from "react-router-dom";
@@ -66,6 +70,7 @@ function App() {
     <div className="App">
       {location.pathname !== "/" &&
         location.pathname !== "/register" &&
+        location.pathname !== "/feedback" &&
         !location.pathname.startsWith("/resetPassword") &&
         !location.pathname.startsWith("/sendEmail") && <NavBar />}
       {location.pathname === "/home" ? (
@@ -83,6 +88,8 @@ function App() {
         <Route exact path="/register" element={<Register />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
+          <Route path="/feedback" element={<Feedback />} />
+       
           <Route path="/games/:detail" element={<GameDetail />} />
           <Route path="/post" element={<GamePosts />} />
           <Route path="/favorites" element={<Favorites />} />
@@ -98,8 +105,10 @@ function App() {
             <Route path="/admindashboard/users" element={<UsersDashboard />} />
             <Route path="/admindashboard/settings" element={<SettingsDashboard />} />
             <Route path="/admindashboard/dataset" element={<DataSetDashboard />} />
+            
           </Route>
         </Route>
+      
         <Route exact path="/sendEmail" element={<SendEmail />} />
         <Route exact path="/resetPassword/:token" element={<ResetPassword />} />
       </Routes>
