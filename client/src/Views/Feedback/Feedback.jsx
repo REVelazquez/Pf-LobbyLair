@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { FcApproval } from 'react-icons/fc';
 import { motion } from "framer-motion";
 
-function FeedBack() {
+function Feedback() {
   const [typedText, setTypedText] = useState("");
   const sentence = "Your transaction has been processed successfully.";
 
@@ -58,4 +58,4 @@ function FeedBack() {
   );
 }
 
-export default FeedBack;
+export default Feedback;
