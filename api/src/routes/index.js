@@ -160,7 +160,9 @@ router.post("/resetPassword", resetPassword);
 
 router.get("/success", (req, res) => res.send("Success"));
 
-router.get("/probando", getUserPayments);
+router.get("/user/payment", getUserPayments);
+
+router.get("/user/subscription", getUserSubscriptions);
 
 //Endpoint para pagos con crypto
 router.post("/crypto/payment", makeCryptoPayment);
