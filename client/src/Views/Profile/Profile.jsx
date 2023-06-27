@@ -61,7 +61,7 @@ const Profile = () => {
                     )}
                   </div>
                   <div className="m-4 space-x-2 pl-10">
-                    <h1 className="text-black font-bold truncate">Fecha de creaciÃ³n:</h1>
+                    <h1 className="text-black font-bold truncate">Creation date:</h1>
                     <h1 className="text-black truncate">
                       {userDetail.createdAt
                         .slice(0, 10)
@@ -89,16 +89,8 @@ const Profile = () => {
                   className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer hover:bg-blue-700 text-white font-bold"
                   onClick={handleEditClick}
                 >
-                  Editar
+                  Edit
                 </button>
-                {editMode && !showImage && (
-                  <button
-                    className="flex bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer hover:bg-blue-700 text-white font-bold"
-                    onClick={handleEditClose}
-                  >
-                    Cerrar
-                  </button>
-                )}
               </div>
             </div>
           </div>
@@ -118,7 +110,7 @@ const Profile = () => {
           )}
           {editMode && !showImage && (
             <div>
-              <UpdateProfile />
+              <UpdateProfile handleEditClose={handleEditClose}/>
             </div>
           )}
         </div>

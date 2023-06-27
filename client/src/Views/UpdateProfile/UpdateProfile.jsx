@@ -4,7 +4,7 @@ import { updateUser } from '../../Redux/actions'
 import { useNavigate } from 'react-router-dom';
 import Profile from '../Profile/Profile';
 
-export default function UpdateProfile() {
+export default function UpdateProfile({ handleEditClose }) {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const id = user.id;
@@ -29,6 +29,7 @@ export default function UpdateProfile() {
     e.preventDefault();
     dispatch(updateUser(id, formData));
     navigate(`/profile/${id}`);
+    handleEditClose(); // Cerrar el modo de edición en Profile
   };
 
   return (
@@ -61,7 +62,7 @@ export default function UpdateProfile() {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="perfilUrl" className="block text-gray-700 text-sm font-bold mb-2 ">Perfil URL</label>
+          <label htmlFor="perfilUrl" className="block text-gray-700 text-sm font-bold mb-2 ">URL Profile</label>
           <input
             type="text"
             name="perfilUrl"
@@ -71,6 +72,7 @@ export default function UpdateProfile() {
             value={formData.perfilUrl}
             onChange={handleChange}
           />
+        </div>
         <div className="mb-4 mt-4">
           <label htmlFor="description" className="block text-gray-700 text-sm font-bold mb-2">Description</label>
           <textarea
@@ -83,13 +85,18 @@ export default function UpdateProfile() {
             onChange={handleChange}
           />
         </div>
-        </div>
         <div className="flex items-center justify-center">
           <button
             type="submit"
-            className=" bg-black text-white border-none rounded-[5rem] p-3 text-l hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-black text-white border-none rounded-[5rem] p-3 text-l hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Update
+          </button>
+          <button
+            className="bg-black text-white border-none rounded-[5rem] p-3 text-l hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-4"
+            onClick={handleEditClose}
+          >
+            Close
           </button>
         </div>
       </form>

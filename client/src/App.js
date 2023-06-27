@@ -29,8 +29,8 @@ import LobbyFlight from "./Multimedia/Flight lobbylair.gif";
 import { useEffect, useState } from "react";
 import SendEmail from "./Components/ForgotPassword/sendEmail";
 import ResetPassword from "./Components/ForgotPassword/resetPassword";
-import { useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
+import AdminNav from "./Components/AdminNav/AdminNav";
 
 function ProjectCursor() {
   const [cursorX, setCursorX] = useState();
@@ -75,6 +75,7 @@ function App() {
       ) : location.pathname === "/post" ? (
         <GamesBar />
       ) : null}
+      {location.pathname.startsWith('/admindashboard') && <AdminNav/>}
       <Routes>
         <Route element={<ProtectedRoutes2 />}>
           <Route path="/" element={<LandingPage />} />
@@ -92,6 +93,7 @@ function App() {
           <Route path="/user/:id" element={<UsersProfile />} />
           <Route exact path="/chat" element={<Chat />} />
           <Route element={<ProtectedAdminRoute />}>
+            
             <Route path="/admindashboard" element={<AdminDashboard />} />
             <Route path="/admindashboard/users" element={<UsersDashboard />} />
             <Route path="/admindashboard/settings" element={<SettingsDashboard />} />

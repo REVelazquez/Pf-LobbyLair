@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import axios from "axios";
 
-const PaymentComponent = () => {
+const PaymentComponent = ({ amount, type, currency }) => {
+
   const [preferenceId, setPreferenceId] = useState(null);
   const stateUser = useSelector((state) => state.user);
   console.log(stateUser);
@@ -17,9 +18,9 @@ const PaymentComponent = () => {
       const token = user.token;
       const response = await axios.post("http://localhost:3001/payment", {
         token: token,
-        amount: 100,
-        type: "premium",
-        currency: "ARS",
+        amount: amount, 
+        type: type, 
+        currency: currency, 
       });
       const { id } = response.data;
       return id;
@@ -36,9 +37,9 @@ const PaymentComponent = () => {
       const token = user.token;
       const response = await axios.post("http://localhost:3001/create-order", {
         token: token,
-        amount: 30,
-        type: "premium",
-        currency: "USD",
+        amount: amount, 
+        type: type, 
+        currency: currency, 
       });
 
       if (response) {
