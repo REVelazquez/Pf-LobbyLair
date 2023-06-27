@@ -54,7 +54,7 @@ const GameDetail = () => {
   const gameModes = game.GameModes;
 
   const handleOnClick = (id) => {
-    let gameId = id;
+    let gameId = game.id;
     let gameModeId = id;
     navigate(`/post?gameId=${gameId}&gameModeId=${gameModeId}`);
   };
@@ -64,7 +64,8 @@ const GameDetail = () => {
       <div className="w-[100%]">
         <div
           className=" h-[300px] w-[80%] mx-auto bg-gray-300  rounded-lg p-3 mt-[2rem]  shadow-lg transform rotate-x-2 rotate-y-2 perspective-lg"
-          style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)" }}>
+          style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)" }}
+        >
           <div className="bg-gray-500 w-[3rem] h-[2rem] flex items-center justify-center mx-[2rem] ">
             {isFav ? (
               <button onClick={handleFavorite} className="text-red-500">
@@ -79,7 +80,8 @@ const GameDetail = () => {
           <div className="flex items-center mt-[1rem] mx-[1rem] ">
             <motion.div
               className="flex items-center justify-center w-[11rem] h-[11rem] bg-gray-800 rounded-xl m-2 hover:bg-gray-500"
-              whileHover={{ scale: 1.1 }}>
+              whileHover={{ scale: 1.1 }}
+            >
               <img
                 src={game.thumbnail}
                 className="mx-auto w-full h-full"
@@ -99,7 +101,8 @@ const GameDetail = () => {
                                 text-base px-3 py-1 bg-gray-900 hover:bg-black hover:text-white m-3 
                                 transition-colors duration-300 ease-in-out"
                       whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}>
+                      whileTap={{ scale: 0.9 }}
+                    >
                       New post of {name}
                     </motion.button>
                   );
@@ -129,7 +132,8 @@ const GameDetail = () => {
                         <p className="text-black text-xs">Posted By:</p>
                         <Link
                           to={`/user/${User.id}`}
-                          whileHover={{ scale: 1.1 }}>
+                          whileHover={{ scale: 1.1 }}
+                        >
                           <p className=" text-black text-xs font-bold ">
                             {User.name}
                           </p>

@@ -201,12 +201,14 @@ const GamePosts = () => {
 
   useEffect(() => {
     setLoading(true);
-    dispatch(getPostsWithPagination(currentPage, gameid, gamemodeid)).then(() => {
-      setLoading(false);
-      console.log("Posts obtenidos:", pagedPosts);
-    });
+    dispatch(getPostsWithPagination(currentPage, gameid, gamemodeid)).then(
+      () => {
+        setLoading(false);
+        console.log("Posts obtenidos:", pagedPosts);
+      }
+    );
   }, [currentPage, dispatch, refresh]);
-  
+
   useEffect(() => {
     if (currentPage === 1) {
       setBtnNext(true);
@@ -224,7 +226,6 @@ const GamePosts = () => {
     { length: post.totalPages },
     (_, index) => index + 1
   );
-  
 
   const handleOnClick = (event) => {
     const selectedPage = parseInt(event.target.value);
@@ -257,7 +258,6 @@ const GamePosts = () => {
   return (
     <div>
       <div className="">
-
         <div className="post-container mx-auto mt-[4rem] overflow-y-auto w-[80%]">
           <div className="flex justify-center">
             <form className="flex items-center mt-3" onSubmit={handleSubmit}>
