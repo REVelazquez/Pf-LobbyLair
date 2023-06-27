@@ -26,12 +26,28 @@ const SearchBar = () => {
   }, []);
 
   const handleChange = async (event) => {
-    setSearchName({ name: event.target.value });
+    const inputValue = event.target.value;
+    setSearchName({ name: inputValue });
+    if (inputValue.length === 0) {
+      setGame([]);
+      return;
+    }
     const response = await axios.get(
-      `http://localhost:3001/games/page?name=${event.target.value}`
+      `http://localhost:3001/games/page?name=${inputValue}`
     );
-    setGame(response.data.games.slice(0, 5)); // Obtener solo los primeros 5 resultados
+    const matches = response.data.games.filter((match) =>
+      match.name.toLowerCase().includes(inputValue.toLowerCase())
+    );
+    const matchesWithFirstLetter = matches.filter((match) =>
+      match.name.toLowerCase().startsWith(inputValue.toLowerCase())
+    );
+    const finalMatches = [...matchesWithFirstLetter, ...matches];
+    const uniqueMatches = Array.from(new Set(finalMatches.map((match) => match.id))).map((id) =>
+      finalMatches.find((match) => match.id === id)
+    );
+    setGame(uniqueMatches.slice(0, 5));
   };
+  
   return (
   <div className="sticky">
     <div className="flex gap-2">
