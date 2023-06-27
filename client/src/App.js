@@ -14,7 +14,7 @@ import {
   UsersDashboard,
   DataSetDashboard,
   SettingsDashboard,
-  FeedBack,
+  Feedback,
 
  
 } from "./Views";
@@ -88,7 +88,7 @@ function App() {
         <Route exact path="/register" element={<Register />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
-          <Route path="/feedback" element={<FeedBack />} />
+          <Route path="/feedback" element={<Feedback />} />
        
           <Route path="/games/:detail" element={<GameDetail />} />
           <Route path="/post" element={<GamePosts />} />

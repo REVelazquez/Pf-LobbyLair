@@ -13,14 +13,14 @@ import AdminDashboard from "./AdminDashboard/AdminDashboard";
 import UsersDashboard from "./UsersDashboard/UsersDashboard";
 import DataSetDashboard from "./DataSetDasboard/DataSetDashboard";
 import SettingsDashboard from "./SettingsDashboard/SettingsDashboard";
-import FeedBack from "./FeedBack/FeedBack";
+import Feedback from "./Feedback/Feedback";
 
 
 
 
 export { Home, Login, Payment, Profile, Register, Chat, LandingPage, 
         Favorites, UsersProfile, UpdateProfile, AdminDashboard, Subscription,
-        UsersDashboard, DataSetDashboard, SettingsDashboard, FeedBack };
+        UsersDashboard, DataSetDashboard, SettingsDashboard, Feedback };
 
 
 
