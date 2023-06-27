@@ -8,6 +8,7 @@ const {
   getGamesByName,
   postGames,
   deleteGame,
+  updateGame,
 } = require("../controllers/games.js");
 const {
   getPosts,
@@ -48,6 +49,11 @@ const {
   createPreference,
   feedback,
 } = require("../controllers/mecadoPagoController.js");
+const {
+  createResponse,
+  getResponse,
+  deleteResponse,
+} = require("../controllers/Response.js");
 
 const { sendEmail } = require("../controllers/sendEmail");
 const { resetPassword } = require("../controllers/resetPassword");
@@ -164,6 +170,11 @@ router.get("/user/payment", getUserPayments);
 
 router.get("/user/subscription", getUserSubscriptions);
 
+router.post("/response", createResponse);
+
+router.get("/response/:PostId", getResponse);
+
+router.delete("/response/:id", deleteResponse);
 //Endpoint para pagos con crypto
 router.post("/crypto/payment", makeCryptoPayment);
 
