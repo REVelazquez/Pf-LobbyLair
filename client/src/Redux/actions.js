@@ -85,7 +85,6 @@ export const postGames = (payload) => {
   return async (dispatch) => {
     try {
       let newGame = await axios.post("http://localhost:3001/games", payload);
-      console.log(newGame);
       notifySuccess("Game created successfully!");
       return dispatch({
         type: POST_GAME,
@@ -318,7 +317,6 @@ export const updateUser = (id, payload) => async (dispatch) => {
       `http://localhost:3001/users/${id}`,
       payload
     );
-    console.log(userId.data);
     return dispatch({
       type: UPDATE_USER,
       payload: userId.data,
@@ -348,13 +346,10 @@ export const getFavorite = () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
       const token = user.token;
-      console.log(user);
-      console.log(token);
       const respuesta = await axios.get(
         `http://localhost:3001/favorite/${token}`
       );
       const data = respuesta.data;
-      console.log(data);
       return dispatch({ type: ADD_FAVORITE, payload: data });
     } catch (error) {
       throw new Error(error);
