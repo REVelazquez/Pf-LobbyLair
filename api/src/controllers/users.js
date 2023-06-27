@@ -155,7 +155,6 @@ const updateUser = async (req, res) => {
   if (isAdmin) updateFields.isAdmin = isAdmin;
   if (isPremium) updateFields.isPremium = isPremium;
   if (perfilUrl) updateFields.perfilUrl = perfilUrl;
-  console.log(isAdmin);
   try {
     const user = await User.update(updateFields, {
       where: {
@@ -230,6 +229,7 @@ const getUsersWithPagination = async (req, res) => {
 const getUserPayments = async (req, res) => {
   const { token } = req.query;
   try {
+    console.log(token);
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decodedToken.userId;
 
