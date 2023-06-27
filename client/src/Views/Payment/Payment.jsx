@@ -14,33 +14,34 @@ const PaymentComponent = ({ amount, type, currency }) => {
 	const [defaultAccount, setDefaultAccount] = useState(null);
 	const [userBalance, setUserBalance] = useState(null);
 	const [connButtonText, setConnButtonText] = useState('Connect Wallet');
-  const connectWalletHandler = () => {
+  const connectWalletHandler = async () => {
 		if (window.ethereum && window.ethereum.isMetaMask) {
 			console.log('MetaMask Here!');
-
 			window.ethereum.request({ method: 'eth_requestAccounts'})
 			.then(result => {
 				accountChangedHandler(result[0]);
 				setConnButtonText('Wallet Connected');
 				getAccountBalance(result[0]);
-        axios.post('http://localhost:3001/crypto/payment', {token: result[0], amount: amount, currency: currency, type: type})
-        .then(res => {
-          console.log(res);
-
-        })
-        .catch(error => {
-          console.log(error);
-        })
+        
 			})
 			.catch(error => {
 				setErrorMessage(error.message);
-			
 			});
-
 		} else {
 			console.log('Need to install MetaMask');
 			setErrorMessage('Please install MetaMask browser extension to interact');
 		}
+    try {
+      const response = await axios.post('http://localhost:3001/crypto/payment', 
+      {
+       amount: amount,
+       currency: currency,
+       address: address
+      })
+        return response.data;
+    } catch (error) {
+        console.log(error);
+      }
 	}
 
 	// update account, will cause component re-render
