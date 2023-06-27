@@ -31,7 +31,7 @@ const createPreference = async (req, res) => {
       },
     ],
     back_urls: {
-      success: `http://localhost:3001/feedback?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
+      success: `http://localhost:3000/feedback?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
       failure: "http://localhost:3001/feedback",
       pending: "http://localhost:3001/feedback",
     },
@@ -69,6 +69,7 @@ const feedback = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
+
   }
 };
 module.exports = {
