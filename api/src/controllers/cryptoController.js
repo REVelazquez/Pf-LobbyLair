@@ -59,8 +59,7 @@ const makeCryptoPayment = async(req,res) => {
     // Firma y envía la transacción
     const signedTransaction = await wallet.sendTransaction(transaction);
     const receipt = await signedTransaction.wait();
-
-    return receipt;
+    res.json({ receipt });
   } catch (error) {
     console.error(error);
     throw error;

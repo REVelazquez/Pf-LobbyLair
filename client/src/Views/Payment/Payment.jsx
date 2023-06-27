@@ -23,6 +23,14 @@ const PaymentComponent = ({ amount, type, currency }) => {
 				accountChangedHandler(result[0]);
 				setConnButtonText('Wallet Connected');
 				getAccountBalance(result[0]);
+        axios.post('http://localhost:3001/crypto/payment', {token: result[0], amount: amount, currency: currency, type: type})
+        .then(res => {
+          console.log(res);
+
+        })
+        .catch(error => {
+          console.log(error);
+        })
 			})
 			.catch(error => {
 				setErrorMessage(error.message);
