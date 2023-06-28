@@ -67,6 +67,9 @@ Subscriptions.belongsTo(User);
 Post.hasMany(Response);
 Response.belongsTo(Post);
 
+User.hasMany(Response);
+Response.belongsTo(User);
+
 module.exports = {
   ...sequelize.models,
   conn: sequelize,

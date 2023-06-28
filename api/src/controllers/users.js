@@ -267,10 +267,10 @@ const getUserSubscriptions = async (req, res) => {
   }
 };
 
-const getPassword = (req, res) => {
+const getPassword = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = User.findByPk(id);
+    const user = await User.findByPk(id);
     res.json(user.password);
   } catch (error) {
     console.error(error);

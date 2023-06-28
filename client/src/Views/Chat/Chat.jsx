@@ -2,10 +2,10 @@ import { PrettyChatWindow } from "react-chat-engine-pretty";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-const ChatsPage = async (props) => {
+const ChatsPage = (props) => {
   const user = useSelector((state) => state.user);
 
-  const res = await axios.get(`http://localhost:3001/user/password/${user.id}`);
+  const res = axios.get(`http://localhost:3001/user/password/${user.id}`);
   const pass = res.data;
 
   return (
