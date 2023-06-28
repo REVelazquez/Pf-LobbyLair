@@ -19,6 +19,8 @@ const Home = () => {
   const images = fav.map((favorite) => favorite.thumbnail);
   
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     localStorage.setItem("isAuthenticated", true);
   }, []);
