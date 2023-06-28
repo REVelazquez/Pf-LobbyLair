@@ -36,6 +36,7 @@ const {
   getUserPayments,
   getUserSubscriptions,
   getAdminUsers,
+  getPassword,
 } = require("../controllers/users.js");
 const {
   handleLogin,
@@ -178,5 +179,7 @@ router.get("/response/:PostId", getResponse);
 router.delete("/response/:id", deleteResponse);
 //Endpoint para pagos con crypto
 router.post("/crypto/payment", makeCryptoPayment);
+
+router.get("/user/password/:id", getPassword);
 
 module.exports = router;

@@ -19,6 +19,8 @@ const Home = () => {
   const images = fav.map((favorite) => favorite.thumbnail);
   
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     localStorage.setItem("isAuthenticated", true);
   }, []);
@@ -30,7 +32,6 @@ const Home = () => {
   }, []);
 
   const posts = useSelector((state) => state.posts);
-  const user=useSelector(state=>state.user)
 
   const handlerOrder = (event) => {
     dispatch(orderPostByCreation(event.target.value));
