@@ -34,7 +34,7 @@ const Profile = () => {
   const renderProfile = () => {
     return (
       <div className="flex flex-col md:flex-row">
-        <div className="w-full md:w-3/4 pr-5">
+        <div className="w-full md:w-3/4 pr-4">
           <div className="bg-gray-300 rounded-lg min-h-[20rem]" style={{ boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)" }}>
             <div className="">
               {userDetail.image && (
@@ -47,20 +47,20 @@ const Profile = () => {
                   </h3>
                   {isAdmin && (
                     <div className="flex items-center">
-                      <p className="mr-1">Admin</p>
+                      <p className="text-black font-bold truncate">Admin</p>
                       <FaCrown />
                     </div>
                   )}
                 </div>
                 <div className="flex flex-col md:flex-row md:space-x-2">
-                  <div className="m-4 space-x-2 pl-10">
+                  <div className="m-4 space-x-2 pl-10 flex-1">
                     <h1 className="text-black font-bold truncate">E-mail:</h1>
                     <h1 className="text-black truncate">{userDetail.email}</h1>
                     {isPremium && (
-                      <img className="w-1/4 md:w-1/6" src={Premium} alt="" />
+                      <img className="w-1/4 md:w-1/3" src={Premium} alt="" />
                     )}
                   </div>
-                  <div className="m-4 space-x-2 pl-10">
+                  <div className="m-4 space-x-2 pl-10 flex-1">
                     <h1 className="text-black font-bold truncate">Creation date:</h1>
                     <h1 className="text-black truncate">
                       {userDetail.createdAt
@@ -70,21 +70,25 @@ const Profile = () => {
                         .join("-")}
                     </h1>
                   </div>
-                  <div className="m-4 space-x-2 pl-10 truncate">
-                    {userDetail.perfilUrl && [
-                      <h1 className="text-black font-bold">Profile Url</h1>,
-                      <p className="text-black truncate">{userDetail.perfilUrl}</p>,
-                    ]}
+                  <div className="m-4 space-x-2 pl-10 flex-1 truncate">
+                    {userDetail.perfilUrl && (
+                      <>
+                        <h1 className="text-black font-bold">Profile Url</h1>
+                        <p className="text-black truncate">{userDetail.perfilUrl}</p>
+                      </>
+                    )}
                   </div>
-                  <div className="m-4 space-x-2 pl-10">
-                    {userDetail.description && [
-                      <h1 className="text-black font-bold truncate">Description:</h1>,
-                      <p className="text-black truncate">{userDetail.description}</p>,
-                    ]}
+                  <div className="m-4 space-x-2 pl-10 flex-1">
+                    {userDetail.description && (
+                      <>
+                        <h1 className="text-black font-bold truncate">Description:</h1>
+                        <p className="text-black truncate">{userDetail.description}</p>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
-              <div className="flex justify-center mt-4 md:ml-[5rem] ">
+              <div className="flex justify-center mt-4 md:ml-[5rem]">
                 <button
                   className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer hover:bg-blue-700 text-white font-bold"
                   onClick={handleEditClick}
@@ -110,15 +114,15 @@ const Profile = () => {
           )}
           {editMode && !showImage && (
             <div>
-              <UpdateProfile handleEditClose={handleEditClose}/>
+              <UpdateProfile handleEditClose={handleEditClose} />
             </div>
           )}
         </div>
       </div>
     );
   };
-  
+
   return <div className="m-10">{renderProfile()}</div>;
-  };
-  
-  export default Profile;
+};
+
+export default Profile;

@@ -79,81 +79,81 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="bg-[#1f2937] p-[1rem] sticky">
-      <div className="flex justify-between items-center max-w-[1050px] mx-auto">
-        <div className="flex items-center gap-[2.5rem]">
-          <NavLink
-            to="/home"
-            className="w-[50px] h-[50px] bg-white rounded-full border-2 border-white inline-block overflow-hidden"
-          >
-            <img
-              src={LobbyLogo}
-              alt="LOBBYL"
-              className="scale-125 flex items-center justify-center"
-            />
-          </NavLink>
-          <SearchBar />
+  <nav className="bg-[#1f2937] p-[1rem] sticky">
+    <div className="flex justify-between items-center max-w-[1050px] mx-auto">
+      <div className="flex items-center gap-[2.5rem]">
+        <NavLink
+        to="/home"
+        className="w-[50px] h-[50px] bg-white rounded-full border-2 border-white inline-block overflow-hidden"
+        >
+        <img
+          src={LobbyLogo}
+          alt="LOBBYL"
+          className="scale-125 flex items-center justify-center"
+        />
+        </NavLink>
+        <SearchBar />
         </div>
         <div className="flex items-center gap-6 relative">
           <div className="flex items-center gap-[0.5rem]">
             {theme ? (
-              <HiOutlineLightBulb
-                size={20}
-                color="white"
-                onClick={handleThemeChange}
-                style={{ cursor: "pointer" }}
-              />
-            ) : (
-              <HiLightBulb
-                size={20}
-                color="white"
-                onClick={handleThemeChange}
-                style={{ cursor: "pointer" }}
-              />
-            )}
-            <span className="text-white text-lg font-bold hover:text-gray-300">
-              {theme ? "Light" : "Dark"}
-            </span>
+            <HiOutlineLightBulb
+            size={20}
+            color="white"
+            onClick={handleThemeChange}
+            style={{ cursor: "pointer" }}
+          />
+          ) : (
+          <HiLightBulb
+            size={20}
+            color="white"
+            onClick={handleThemeChange}
+            style={{ cursor: "pointer" }}
+          />
+          )}
+          <span className="text-white text-lg font-bold hover:text-gray-300">
+          {theme ? "Light" : "Dark"}
+          </span>
           </div>
-          <NavItem href="/home" text="Home" />
-          <NavItem href="/subscription" text="Subscription" />
-          <NavItem href="/favorites" text="Favorites" />
+          <NavItem href="/home" text="Home" className="hidden md:block" />
+          <NavItem href="/subscription" text="Subscription" className="hidden md:block" />
+          <NavItem href="/favorites" text="Favorites" className="hidden md:block" />
           <div className="relative">
             <img
-              src="https://source.unsplash.com/64x64/?person"
-              alt=""
-              width={40}
-              height={40}
-              style={{ borderRadius: "50%", cursor: "pointer" }}
-              onClick={handleMenuToggle}
-            />
-            {showMenu && (
-              <ul className="absolute top-12 right-0 bg-white p-1 rounded-lg  shadow-md border-2 border-gray-300 z-10 min-w-[10rem] flex flex-col gap-1">
-                <li>
-                  <ProfileItem
-                    href={`/profile/${id}`}
-                    text="Profile"
-                    onClick={handleProfileClick}
-                  />
-                </li>
-                {isAdmin === true && (
-                  <li>
-                    <ProfileItem
-                      href={"/admindashboard"}
-                      text="Dashboard"
-                      onClick={handleProfileClick}
-                    />
-                  </li>
-                )}
-                <li>
-                  <ProfileItem text="Log Out" onClick={handleLogout} />
-                </li>
+             src="https://source.unsplash.com/64x64/?person"
+             alt=""
+             width={40}
+             height={40}
+             style={{ borderRadius: "50%", cursor: "pointer" }}
+             onClick={handleMenuToggle}
+             />
+             {showMenu && (
+             <ul className="absolute top-12 right-0 bg-white p-1 rounded-lg shadow-md border-2 border-gray-300 z-10 min-w-[10rem] flex flex-col gap-1">
+              <li>
+              <ProfileItem
+                href={`/profile/${id}`}
+                text="Profile"
+                onClick={handleProfileClick}
+              />
+            </li>
+            {isAdmin === true && (
+              <li>
+                <ProfileItem
+                  href={"/admindashboard"}
+                  text="Dashboard"
+                  onClick={handleProfileClick}
+                />
+              </li>
+              )}
+              <li>
+                <ProfileItem text="Log Out" onClick={handleLogout} />
+              </li>
               </ul>
-            )}
-          </div>
+          )}
         </div>
       </div>
-    </nav>
+    </div>
+  </nav>
   );
 };
 
