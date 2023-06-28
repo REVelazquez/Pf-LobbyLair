@@ -29,6 +29,11 @@ import {
   DELETE_FAVORITE,
   DELETE_GAME,
   GET_ADMINS,
+  CREATE_RESPONSE,
+  GET_RESPONSE,
+  DELETE_RESPONSE,
+  GET_RESPONSE_BY_POST_ID
+
 } from "./action-types";
 import { ErrorMessage } from "formik";
 
@@ -413,3 +418,58 @@ export const getGameModes = () => {
     }
   };
 };
+ 
+
+export const getResponse = (postId) => {
+  return async (dispatch) => {
+    try {
+      dispatch(getResponseByPostId(postId)); // Agrega esta línea para despachar la acción
+
+      const response = await axios.get(`http://localhost:3001/response/${postId}`);
+      
+      const payload = {
+        [postId]: response.data, // Anidar las respuestas dentro del postId correspondiente
+      };
+
+      return dispatch({
+        type: GET_RESPONSE,
+        payload: payload,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+};
+
+export const createResponse = (text, postId) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post("http://localhost:3001/response", { text, postId });
+      return dispatch({
+        type: CREATE_RESPONSE,
+        payload: response.data,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+};
+
+
+export const deleteResponse = (responseId) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(`http://localhost:3001/response/${responseId}`);
+      return dispatch({
+        type: DELETE_RESPONSE,
+        payload: response.data,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+};
+export const getResponseByPostId = (postId) => ({
+  type: GET_RESPONSE_BY_POST_ID,
+  payload: postId,
+})

@@ -8,6 +8,7 @@ import {
 } from "../../Redux/actions";
 import { motion } from "framer-motion";
 import axios from "axios";
+import { imageDef } from "../../Multimedia/imageDefault";
 const GameDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ const GameDetail = () => {
   const id = detail;
   const [isFav, setIsFav] = useState(false);
   const myFavorites = useSelector((state) => state.myFavorites);
+
+
 
   const handleFavorite = async () => {
     if (isFav) {
@@ -47,8 +50,10 @@ const GameDetail = () => {
     dispatch(getFavorite());
   }, [id]);
 
+  const user=useSelector(state=>state.user)
   let game = useSelector((state) => state.game);
   let gamePosts = useSelector((state) => state.pagePosts);
+  
 
   let lastPosts = gamePosts.posts;
   const gameModes = game.GameModes;
@@ -121,23 +126,22 @@ const GameDetail = () => {
                 <div className="w-[80%] mx-auto mt-4 border-2 border-crimson p-2 flex flex-col items-start mb-1 ml-auto">
                   <div className="bg-gray-300 flex rounded-xl items-center justify-between shadow-md w-[100%]">
                     <div className="flex items-center">
-                      <img
-                        src="https://source.unsplash.com/120x120/?person"
-                        alt=""
-                        className={`rounded-[2rem] ${
-                          User?.name ? "w-[35%]" : "w-[50%]"
-                        } h-full cursor-pointer p-2`}
-                      />
+                    {
+                            User.image?.length >1 ? <img src={User.image} className={`rounded-[2rem] h-12`}/>
+                            : <img src={imageDef} className={`rounded-[2rem] h-12`} />
+                          }
                       <div className="">
                         <p className="text-black text-xs">Posted By:</p>
-                        <Link
-                          to={`/user/${User.id}`}
-                          whileHover={{ scale: 1.1 }}
-                        >
-                          <p className=" text-black text-xs font-bold ">
-                            {User.name}
-                          </p>
-                        </Link>
+                        <button onClick={
+                                  ()=>{
+                                    if(User.id === user.id) navigate(`/profile/${user.id}`)
+                                    else{navigate (`/user/${User.id}`)}
+                                  }}>
+
+                                  <p className=" text-black text-xs font-bold ">
+                                    {User?.name}
+                                  </p>
+                                </button>
                       </div>
                     </div>
 

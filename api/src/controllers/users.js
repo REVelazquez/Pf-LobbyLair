@@ -103,7 +103,7 @@ const getAdminUsers = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, image } = req.body;
   const allUsers = await User.findAll();
   const userExists = allUsers.find((user) => user.email === email);
   if (userExists) {
@@ -117,6 +117,7 @@ const createUser = async (req, res) => {
         email: email,
         password: password,
         isAdmin: false,
+        image:image,
         perfilUrl: "",
         isPremium: false,
       },
@@ -267,8 +268,7 @@ const getUserSubscriptions = async (req, res) => {
   }
 };
 
-const getPassword = async(req, res) => {
-
+const getPassword = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findByPk(id);
