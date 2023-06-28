@@ -2,13 +2,13 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { Payment, Subscriptions, User } = require("../db");
 const axios = require("axios");
-const { PAYPAL_API_SECRET, PAYPAL_API_CLIENT, PAYPAL_API } = process.env;
+const { PAYPAL_API_SECRET, PAYPAL_API_CLIENT, PAYPAL_API, SECRET_KEY } = process.env;
 const API = PAYPAL_API || "https://api-m.sandbox.paypal.com";
 
 const createOrder = async (req, res) => {
   const { amount, currency, type, token } = req.body;
 
-  const user = jwt.verify(token, process.env.SECRET_KEY);
+  const user = jwt.verify(token, SECRET_KEY);
 
   if (!user) {
     return res.status(401).json({ error: "Unauthorized" });
