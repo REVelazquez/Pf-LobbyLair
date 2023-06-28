@@ -32,7 +32,6 @@ const Home = () => {
   }, []);
 
   const posts = useSelector((state) => state.posts);
-  const user=useSelector(state=>state.user)
 
   const handlerOrder = (event) => {
     dispatch(orderPostByCreation(event.target.value));

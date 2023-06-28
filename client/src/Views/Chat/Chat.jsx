@@ -17,7 +17,6 @@ const Chat = (props) => {
 
     fetchSecret();
   }, [user.id]);
-
   return (
     <div style={{ height: '100vh', width: '100vw' }}>
       {secret && (
