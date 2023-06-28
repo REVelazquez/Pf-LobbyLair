@@ -14,11 +14,15 @@
     "formik": "^2.4.2",
     "framer-motion": "^10.12.16",
     "install": "^0.13.0",
+    "jsonwebtoken": "^9.0.0",
     "npm": "^9.7.1",
     "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
+<<<<<<< HEAD
     "react-chartjs-2": "^5.2.0",
+=======
+>>>>>>> 8e73529745af6abdfe5e8fe48c0bac8a190f63d2
     "react-chat-engine-pretty": "^0.1.8",
     "react-dom": "^18.2.0",
     "react-dotenv": "^0.1.3",
