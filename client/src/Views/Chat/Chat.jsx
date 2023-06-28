@@ -19,4 +19,5 @@ const ChatsPage = async (props) => {
     </div>
   );
 };
+
 export default ChatsPage;

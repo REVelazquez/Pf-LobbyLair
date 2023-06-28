@@ -1,10 +1,10 @@
-require('dotenv').config();
 const hash = require("../utils/bcrypt");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User } = require("../db.js");
 const { where } = require("sequelize");
-const {CHAT_ENGINE_PRIVATE_KEY, CHAT_ENGINE_PROJECT_ID, SECRET_KEY } = process.env
+const axios = require("axios");
+
 const handleLogin = async (req, res) => {
   const { email, password } = req.body;
 
@@ -23,7 +23,7 @@ const handleLogin = async (req, res) => {
       return res.status(404).json({ message: "Email or Password are invalid" });
     }
 
-    const token = jwt.sign(user_Db.dataValues, SECRET_KEY, {
+    const token = jwt.sign(user_Db.dataValues, process.env.SECRET_KEY, {
       expiresIn: 60 * 60 * 24 * 7,
     });
 
@@ -51,18 +51,6 @@ const handleLogin = async (req, res) => {
     return res.json(respuesta);
   } catch (err) {
     res.status(500).json({ message: "Internal server error" });
-  }
-  try {
-    const r = await axios.get("https://api.chatengine.io/users/me/", {
-      headers: {
-        "Project-ID": CHAT_ENGINE_PROJECT_ID,
-        "User-Name": user_Db.name,
-        "User-Secret": password,
-      },
-    });
-    return res.status(r.status).json(r.data);
-  } catch (e) {
-    return res.status(e.response.status).json(e.response.data);
   }
 };
 
@@ -107,16 +95,6 @@ const handleSignUp = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Internal server error" });
-  }
-  try {
-    const r = await axios.post(
-      "https://api.chatengine.io/users/",
-      { name, password, email},
-      { headers: { "Private-Key": CHAT_ENGINE_PRIVATE_KEY } }
-    );
-    return res.status(r.status).json(r.data);
-  } catch (e) {
-    return res.status(e.response.status).json(e.response.data);
   }
 };
 
