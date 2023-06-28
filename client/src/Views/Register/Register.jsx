@@ -16,6 +16,7 @@ const Register = () => {
     email: "",
     password: "",
     name: "",
+    image: 'gs://lobbylair-pf.appspot.com/Logo.webp'
   });
   const handleRegister = async (e) => {
     e.preventDefault();

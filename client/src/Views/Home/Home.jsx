@@ -3,18 +3,21 @@ import { useNavigate, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 
+
 import {
   getAllPosts,
   getAllUsers,
   getFavorite,
   orderPostByCreation,
 } from "../../Redux/actions";
+import { imageDef } from "../../Multimedia/imageDefault";
 
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const fav = useSelector((state) => state.myFavorites);
   const images = fav.map((favorite) => favorite.thumbnail);
+  
 
   useEffect(() => {
     localStorage.setItem("isAuthenticated", true);
@@ -27,6 +30,7 @@ const Home = () => {
   }, []);
 
   const posts = useSelector((state) => state.posts);
+  const user=useSelector(state=>state.user)
 
   const handlerOrder = (event) => {
     dispatch(orderPostByCreation(event.target.value));
@@ -35,6 +39,7 @@ const Home = () => {
   const handleDragEnd = (event, info) => {
     console.log("Image dragged and dropped!");
   };
+
 
   return (
     <>
@@ -77,26 +82,30 @@ const Home = () => {
                     <div className="w-[80%] mx-auto mt-2 border-2 border-crimson p-2 flex flex-col items-start mb-1 ml-auto">
                       <div className="bg-gray-300 flex rounded-xl items-center justify-between shadow-md w-[100%]">
                         <div className="flex items-center">
-                          <img
-                            src="https://source.unsplash.com/120x120/?person"
-                            alt=""
-                            className={`rounded-[2rem] ${
-                              post.User?.name ? "w-[35%]" : "w-[50%]"
-                            } h-full cursor-pointer p-2`}
-                          />
-
+                          {
+                            post.User.image?.length >1 ? <img src={post.User.image} className={`rounded-[2rem] h-10 w-10`}/>
+                            : <img src={imageDef} className={`rounded-[2rem] h-10 w-10`} />
+                          }
                           <div className="">
                             {post.User?.name && (
                               <>
                                 <p className="text-black text-xs">Posted By:</p>
-                                <NavLink to={`/user/${post.User?.id}`}>
+                                <button onClick={
+                                  ()=>{
+                                    if(post.User.id === user.id) navigate(`/profile/${user.id}`)
+                                    else{navigate (`/user/${post.User.id}`)}
+                                  }}>
+
                                   <p className=" text-black text-xs font-bold ">
                                     {post.User?.name}
                                   </p>
-                                </NavLink>
+                                </button>
                               </>
                             )}
                           </div>
+                        </div>
+                        <div>
+                          <h1>{post.Game.name}</h1>
                         </div>
                         <div className="flex flex-col items-end">
                           <div className="text-black  text-xs mr-9 ">

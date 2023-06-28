@@ -5,6 +5,7 @@ import { getUserById } from "../../Redux/actions";
 import UpdateProfile from "../UpdateProfile/UpdateProfile";
 import { FaCrown } from "react-icons/fa";
 import Premium from "../../Multimedia/Dragona premium.jpeg";
+import { imageDef } from "../../Multimedia/imageDefault";
 
 const Profile = () => {
   const location = useLocation();
@@ -14,32 +15,32 @@ const Profile = () => {
   const [showImage, setShowImage] = useState(true);
   const isAdmin = userDetail.isAdmin;
   const isPremium = userDetail.isPremium;
-
   useEffect(() => {
     const pathname = location.pathname;
     const id = pathname.split("/").filter((str) => !isNaN(parseInt(str)))[0];
     dispatch(getUserById(id));
   }, []);
-
+  
   const handleEditClick = () => {
     setEditMode(true);
     setShowImage(false);
   };
-
+  
   const handleEditClose = () => {
     setEditMode(false);
     setShowImage(true);
   };
-
+  
+  console.log(userDetail);
   const renderProfile = () => {
     return (
       <div className="flex flex-col md:flex-row">
         <div className="w-full md:w-3/4 pr-5">
           <div className="bg-gray-300 rounded-lg min-h-[20rem]" style={{ boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)" }}>
             <div className="">
-              {userDetail.image && (
-                <img className="w-1/4 md:w-1/6" src={userDetail.image} alt="" />
-              )}
+              {userDetail.image?.length > 1 ? (
+                <img className="w-32  w-32" src={userDetail.image} alt="" />
+              ): <img className="w-32 h-32" src={imageDef}  />}
               <div className="flex flex-col space-y-2 w-full">
                 <div className="flex flex-row">
                   <h3 className="text-4xl font-bold text-left m-2 p-3 truncate border-b border-black w-full md:w-2/3 text-black">
