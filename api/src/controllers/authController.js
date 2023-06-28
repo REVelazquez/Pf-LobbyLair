@@ -44,7 +44,7 @@ const handleLogin = async (req, res) => {
       headers: {
         "Project-ID": process.env.CHAT_ENGINE_PROJECT_ID,
         "User-Name": username,
-        "User-Secret": password,
+        "User-Secret": user_Db.dataValues.password,
       },
     });
 
@@ -84,7 +84,7 @@ const handleSignUp = async (req, res) => {
       "https://api.chatengine.io/users/",
       {
         username: name,
-        secret: password,
+        secret: hashedPassword,
         email,
         first_name: name,
         last_name: name,
