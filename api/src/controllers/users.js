@@ -267,6 +267,17 @@ const getUserSubscriptions = async (req, res) => {
   }
 };
 
+const getPassword = (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = User.findByPk(id);
+    res.json(user.password);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Failed to get password" });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
@@ -279,4 +290,5 @@ module.exports = {
   getUserPayments,
   getUserSubscriptions,
   getAdminUsers,
+  getPassword,
 };
