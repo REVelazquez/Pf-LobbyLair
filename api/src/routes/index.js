@@ -178,7 +178,7 @@ router.get("/response/:PostId", getResponse);
 
 router.delete("/response/:id", deleteResponse);
 //Endpoint para pagos con crypto
-router.post("/crypto/payment", makeCryptoPayment);
+router.post("/crypto/payment/:address", makeCryptoPayment);
 
 router.get("/user/password/:id", getPassword);
 

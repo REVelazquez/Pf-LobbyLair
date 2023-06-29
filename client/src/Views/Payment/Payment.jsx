@@ -3,74 +3,48 @@ import { useSelector } from "react-redux";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import axios from "axios";
 import { ethers } from "ethers";
+import TxList from "./TxList";
 const PaymentComponent = ({ amount, type, currency, address }) => {
   const [preferenceId, setPreferenceId] = useState(null);
   const stateUser = useSelector((state) => state.user);
   const [selectedOption, setSelectedOption] = useState(null);
   const REACT_APP_KEY = window.env.REACT_APP_MERCADOPAGO_KEY;
   const [errorMessage, setErrorMessage] = useState(null);
-  const [defaultAccount, setDefaultAccount] = useState(null);
-  const [userBalance, setUserBalance] = useState(null);
-  const [connButtonText, setConnButtonText] = useState("Connect Wallet");
-  const connectWalletHandler = async () => {
-    if (window.ethereum && window.ethereum.isMetaMask) {
-      console.log("MetaMask Here!");
-      window.ethereum
-        .request({ method: "eth_requestAccounts" })
-        .then((result) => {
-          accountChangedHandler(result[0]);
-          setConnButtonText("Wallet Connected");
-          getAccountBalance(result[0]);
-        })
-        .catch((error) => {
-          setErrorMessage(error.message);
-        });
-    } else {
-      console.log("Need to install MetaMask");
-      setErrorMessage("Please install MetaMask browser extension to interact");
-    }
+  // const [defaultAccount, setDefaultAccount] = useState(null);
+  // const [userBalance, setUserBalance] = useState(null);
+  // const [connButtonText, setConnButtonText] = useState("Connect Wallet");
+  const [txs, setTxs] = useState([]);
+  const startPayment = async ({ setErrorMessage, setTxs, ether, addr }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3001/crypto/payment",
-        {
-          amount: amount,
-          currency: currency,
-          address: address,
-        }
-      );
-      return response.data;
-    } catch (error) {
-      console.log(error);
+      if (!window.ethereum)
+        throw new Error("No crypto wallet found. Please install it.");
+  
+      await window.ethereum.send("eth_requestAccounts");
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      ethers.utils.getAddress(addr);
+      const tx = await signer.sendTransaction({
+        to: addr,
+        value: ethers.utils.parseEther(ether)
+      });
+      console.log({ ether, addr });
+      console.log("tx", tx);
+      setTxs([tx]);
+    } catch (err) {
+      setErrorMessage(errorMessage);
     }
   };
-
-  // update account, will cause component re-render
-  const accountChangedHandler = (newAccount) => {
-    setDefaultAccount(newAccount);
-    getAccountBalance(newAccount.toString());
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    setErrorMessage();
+    await startPayment({
+      setErrorMessage,
+      setTxs,
+      ether: data.get("ether"),
+      addr: data.get("addr")
+    });
   };
-
-  const getAccountBalance = (account) => {
-    window.ethereum
-      .request({ method: "eth_getBalance", params: [account, "latest"] })
-      .then((balance) => {
-        setUserBalance(ethers.utils.formatEther(balance));
-      })
-      .catch((error) => {
-        setErrorMessage(error.message);
-      });
-  };
-
-  const chainChangedHandler = () => {
-    // reload the page to avoid any errors with chain change mid use of application
-    window.location.reload();
-  };
-
-  // listen for account changes
-  window.ethereum.on("accountsChanged", accountChangedHandler);
-
-  window.ethereum.on("chainChanged", chainChangedHandler);
-
   const createPreference = async () => {
     initMercadoPago(REACT_APP_KEY);
     try {
@@ -128,6 +102,7 @@ const PaymentComponent = ({ amount, type, currency, address }) => {
   };
 
   return (
+    <>
     <div className="flex flex-col items-center mt-7 h-screen ">
       <h1 className="text-2xl font-bold mb-8">Choose a payment option:</h1>
 
@@ -167,28 +142,46 @@ const PaymentComponent = ({ amount, type, currency, address }) => {
           />
           <span className="font-bold text-black">MercadoPago</span>
         </div>
-        <div
-          className={`p-4 border rounded-md shadow-md grid items-center ${
-            selectedOption === "metamask" ? "bg-orange-200" : "bg-white"
-          }`}
-          onClick={connectWalletHandler}
-        >
-          <img
-            src="https://logowik.com/content/uploads/images/metamask4112.jpg"
-            alt="MetaMask"
-            style={{ cursor: "pointer" }}
-            className="w-28 h-22 mr-4 items-center cursor-pointer"
-          />
-          <div>
-            <h3>Address: {defaultAccount}</h3>
-          </div>
-          <div>
-            <h3>Balance: {userBalance}</h3>
-          </div>
-          {errorMessage}
-        </div>
       </div>
     </div>
+    <form className="w-auto lg:w-1/2 sm:w-auto" onSubmit={handleSubmit}>
+  <div className="credit-card w-full shadow-lg mx-auto rounded-xl bg-white">
+    <main className="mt-4 p-12">
+      <h1 className="text-xl font-semibold text-gray-700 text-center">
+        Send ETH payment
+      </h1>
+      <div className="">
+        <div className="my-3">
+          <input
+            type="text"
+            name="addr"
+            className="input input-bordered block w-full focus:ring focus:outline-none"
+            placeholder="Recipient Address"
+          />
+        </div>
+        <div className="my-3">
+          <input
+            name="ether"
+            type="text"
+            className="input input-bordered block w-full focus:ring focus:outline-none"
+            placeholder="Amount in ETH"
+          />
+        </div>
+      </div>
+    </main>
+    <footer className="p-4">
+      <button
+        type="submit"
+        className="btn btn-primary submit-button focus:ring focus:outline-none w-full"
+      >
+        Pay now
+      </button>
+      <errorMessage message={errorMessage} />
+      <TxList txs={txs} />
+    </footer>
+  </div>
+</form>
+    </>
   );
 };
 
