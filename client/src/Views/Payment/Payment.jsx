@@ -6,7 +6,6 @@ import { ethers } from "ethers";
 const PaymentComponent = ({ amount, type, currency, address }) => {
   const [preferenceId, setPreferenceId] = useState(null);
   const stateUser = useSelector((state) => state.user);
-  console.log(stateUser);
   const [selectedOption, setSelectedOption] = useState(null);
   const REACT_APP_KEY = window.env.REACT_APP_MERCADOPAGO_KEY;
   const [errorMessage, setErrorMessage] = useState(null);

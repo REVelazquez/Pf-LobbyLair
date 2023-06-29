@@ -8,7 +8,6 @@ const {
   getGamesByName,
   postGames,
   deleteGame,
-  updateGame,
 } = require("../controllers/games.js");
 const {
   getPosts,
@@ -22,6 +21,7 @@ const {
 const {
   getFavorites,
   createFavorite,
+  getAllFavorites,
   removeFavoriteGame,
 } = require("../controllers/favorite.js");
 const {
@@ -120,6 +120,7 @@ router.put("/users/:id", updateUser);
 // Endpoint para eliminar un usuario
 router.delete("/users/:id", deleteUser);
 
+router.get('/favorite', getAllFavorites)
 // Endpoint para obtener los favoritos de un usuario
 router.get("/favorite/:token", getFavorites);
 

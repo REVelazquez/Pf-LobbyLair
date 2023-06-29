@@ -41,6 +41,29 @@ function Feedback() {
     };
   }, []);
 
+  useEffect(() => {
+    const sendFeedbackData = async () => {
+      try {
+        const response = await axios.get("/feedback", {
+          userId,
+          amount,
+          currency,
+          type,
+        });
+
+        if (response.status === 200) {
+          console.log("Feedback data sent successfully");
+        } else {
+          console.log("Failed to send feedback data");
+        }
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    };
+
+    sendFeedbackData();
+  }, [userId, amount, currency, type]);
+
   return (
     <div>
       <main className="h-screen">
@@ -56,6 +79,7 @@ function Feedback() {
                   <FcApproval className="text-[#0e0e0e] inline-block mr-2" />
                   {typedText}
                 </motion.h2>
+
                 <p className="text-xl font-bold mt-4">
                   you paid: {amount} {currency} for a {type} subscription
                 </p>
