@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import Response from "../Response/Response";
 import {
   getGameById,
   getPostsWithPagination,
@@ -16,6 +17,7 @@ const GameDetail = () => {
   const id = detail;
   const [isFav, setIsFav] = useState(false);
   const myFavorites = useSelector((state) => state.myFavorites);
+  
 
 
 
@@ -161,6 +163,9 @@ const GameDetail = () => {
                     {text}
                   </div>
                 </div>
+                <div className="items-center justify-center">
+                      <Response postId={id} userId={User.id} />
+                    </div>
               </div>
             );
           } else {
