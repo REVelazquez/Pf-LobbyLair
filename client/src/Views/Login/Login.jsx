@@ -1,37 +1,35 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import {  useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/firebase";
-import { useDispatch, useSelector } from "react-redux";
-import { logIn } from "../../Redux/actions";
+import { useDispatch } from "react-redux";
+import { createUser, getUserByEmail, logIn } from "../../Redux/actions";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { FcGoogle } from "react-icons/fc";
-import Modal from 'react-modal';
-import LobbyLogo from '../../Multimedia/Logo Lobbylair.gif'
+import LobbyLogo from "../../Multimedia/Logo Lobbylair.gif";
+import { NavLink } from "react-router-dom";
+import Modal from "react-modal";
 
 const customStyles = {
   overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     zIndex: 9999,
   },
   content: {
-    width: '300px',
-    height: '200px',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    padding: '2rem',
-    borderRadius: '0.5rem',
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.25)',
+    width: "300px",
+    height: "200px",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    padding: "2rem",
+    borderRadius: "0.5rem",
+    boxShadow: "0 0 10px rgba(0, 0, 0, 0.25)",
   },
 };
-
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user);
-  const [showModal, setShowModal] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const openModal = () => {
@@ -41,134 +39,186 @@ const Login = () => {
     setModalIsOpen(false);
   };
 
-  const gotoRegister = ()=>{
+  const gotoRegister = () => {
     setModalIsOpen(false);
     navigate("/register");
-  }
+  };
 
   const handleLogin = async (values) => {
     try {
       const validateUser = await dispatch(logIn(values));
-      localStorage.setItem("isAuthenticated", true)
-
-       navigate("/home");
+      if (validateUser) {
+        localStorage.setItem("isAuthenticated", true);
+        localStorage.setItem("user", JSON.stringify(validateUser.payload));
+        navigate("/home");
+      }
     } catch (error) {
-      openModal()
+      openModal();
     }
   };
 
   const handleSignInWithGoogle = async () => {
     const googleProvider = new GoogleAuthProvider();
-    
+
     try {
       const res = await signInWithPopup(auth, googleProvider);
-      console.log(res);
+      const user = res.user;
+      const resDb = await dispatch(getUserByEmail(user.email));
+      const userDb = resDb.payload;
+      const email = userDb.email;
+      if (userDb.id) {
+        const validateUser = await dispatch(logIn({ email, password: email }));
+        localStorage.setItem("isAuthenticated", true);
+        localStorage.setItem("user", JSON.stringify(validateUser.payload));
+        navigate("/home");
+      } else {
+        const { email, displayName } = user;
+        await dispatch(
+          createUser({ email, name: displayName, password: email })
+        );
+        const resDb = await dispatch(getUserByEmail(user.email));
+        const userDb = resDb.payload;
+        const emailDb = userDb.email;
+        const validateUser = await dispatch(
+          logIn({ email: emailDb, password: emailDb })
+        );
+        localStorage.setItem("isAuthenticated", true);
+        localStorage.setItem("user", JSON.stringify(validateUser.payload));
+        navigate("/home");
+      }
     } catch (error) {
-      openModal()
+      openModal();
     }
   };
 
   return (
-
-
-    <section className="min-h-screen bg-gray-100 pt-9 flex flex-col items-center justify-center">
-
-           <img src={LobbyLogo} alt="LOBBYL" className="w-20 h-auto mt-4" />
+    <>
+      <section className="min-h-screen bg-gray-100 pt-9 flex flex-col items-center justify-center">
+        <img src={LobbyLogo} alt="LOBBYL" className="w-20 h-auto mt-4" />
         <div className="rounded-lg text-black italic font-bold text-sm cursor-default">
-          <p >Join to the lair!</p>
-
+          <NavLink to="/home">Join to the lair!</NavLink>
         </div>
-      <div className="w-72 p-4 bg-white rounded shadow-md">
-   
-      <div className="max-w-180 mx-auto text-center flex items-center justify-center">
+        <Modal
+          style={customStyles}
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          contentLabel="User Does Not Exist Modal"
+        >
+          <h2 className="text-xl font-bold mb-4 text-gray-800 text-center">
+            User Does Not Exist
+          </h2>
+          <button
+            onClick={closeModal}
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-auto "
+          >
+            Close
+          </button>
+          <button
+            onClick={gotoRegister}
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-auto "
+          >
+            Go to Register
+          </button>
+        </Modal>
+        <div>
+          <h1 className="text-xl font-bold mb-4 text-gray-800">
+            Sign in to your account
+          </h1>
+          <Formik
+            initialValues={{
+              email: "",
+              password: "",
+            }}
+            validate={(values) => {
+              const errors = {};
 
-       </div>
-       <Modal 
-        style={customStyles}
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="User Does Not Exist Modal"
+              if (
+                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+              ) {
+                errors.email = "Invalid email format";
+              }
+
+              if (!/(?=.*[A-Z])(?=.*[!@#$%^&*])/.test(values.password)) {
+                errors.password =
+                  "Password must contain at least one uppercase letter and one symbol";
+              }
+
+              return errors;
+            }}
+            onSubmit={handleLogin}
+          >
+            <Form>
+              <div className="mb-4">
+                <label
+                  htmlFor="email"
+                  className="mb-1 text-sm font-bold text-gray-800"
+                >
+                  Your email
+                </label>
+                <Field
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="name@company.com"
+                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
+                  required
+                />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className="text-red-500 text-sm"
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="password"
+                  className="mb-1 text-sm font-bold text-gray-800"
+                >
+                  Password
+                </label>
+                <Field
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Write your password"
+                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
+                  required
+                />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="text-red-500 text-sm"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer"
               >
-          <h2 className="text-xl font-bold mb-4 text-gray-800 text-center">User Does Not Exist</h2>
-             <button onClick={closeModal} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-auto "
-             >Close</button>
-             <button onClick={gotoRegister} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-auto "
-             >Go to Register</button>
-            </Modal>
-            <div>
-
-<h1 className="text-xl font-bold mb-4 text-gray-800">
-  Sign in to your account
-</h1>
-<Formik
-  initialValues={{
-    email: '',
-    password: '',
-  }}
-  validate={(values) => {
-    const errors = {};
-
-    if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)){
-      errors.email = 'Invalid email format';
-  }
-
-  if (!/(?=.*[A-Z])(?=.*[!@#$%^&*])/.test(values.password)) {
-      errors.password = 'Password must contain at least one uppercase letter and one symbol';
-    }
-
-    return errors;
-  }}
-  onSubmit={handleLogin}
->
-  <Form>
-    <div className="mb-4">
-      <label htmlFor="email" className="mb-1 text-sm font-bold text-gray-800">
-        Your email
-      </label>
-      <Field
-        type="email"
-        name="email"
-        id="email"
-        placeholder="name@company.com"
-        className="w-full p-2 border border-gray-300 rounded-[5rem]"
-        required
-      />
-      <ErrorMessage name="email" component="div" className="text-red-500 text-sm" />
-    </div>
-    <div className="mb-4">
-      <label htmlFor="password" className="mb-1 text-sm font-bold text-gray-800">
-        Password
-      </label>
-      <Field
-        type="password"
-        name="password"
-        id="password"
-        placeholder="Write your password"
-        className="w-full p-2 border border-gray-300 rounded-[5rem]"
-        required
-      />
-      <ErrorMessage name="password" component="div" className="text-red-500 text-sm" />
-    </div>
-    <button type="submit" className="w-full bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer">
-      Sign in
-    </button>
-    <p className="mt-3 text-sm text-gray-800">
-      Don’t have an account yet?{' '}
-      <a href="/register" className="font-bold text-black">
-        Sign up
-      </a>
-    </p>
-  </Form>
-</Formik>
-<p className="text-sm text-gray-800 mt-1">Or sign in with</p>
-<button onClick={handleSignInWithGoogle} className="w-full bg-black text-white border-none rounded-[5rem] p-3 text-xl font-bold cursor-pointer hover:bg-white hover:text-black hover:shadow-md">
-<FcGoogle className="inline-block mr-2" />
-  Sign in with Google
-</button>
-</div>
-</div>
-</section>
-);
+                Sign in
+              </button>
+              <p className="mt-3 text-sm text-gray-800">
+                Don’t have an account yet?{" "}
+                <a href="/register" className="font-bold text-black">
+                  Sign up
+                </a>
+              </p>
+              <a href="/sendEmail" className="font-bold text-black text-sm">
+                forgot your password?
+              </a>
+            </Form>
+          </Formik>
+          <p className="text-sm text-gray-800 mt-1">Or sign in with</p>
+          <button
+            onClick={handleSignInWithGoogle}
+            className="w-full bg-black text-white border-none rounded-[5rem] p-3 text-xl font-bold cursor-pointer hover:bg-white hover:text-black hover:shadow-md"
+          >
+            <FcGoogle className="inline-block mr-2" />
+            Sign in with Google
+          </button>
+        </div>
+      </section>
+    </>
+  );
 };
 
 export default Login;

@@ -4,7 +4,9 @@ import Style from './Loader.module.css'
 
 const Loader = ()=>{
     return(
-        <img src={LobbyLogo} alt="lobbylogo"  className={Style.animation} />
+        <div className="w-[6.9rem] h-[9rem] animate-pulse rounded-full">
+
+        </div>
     )
 }
 

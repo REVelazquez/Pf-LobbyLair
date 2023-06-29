@@ -1,20 +1,41 @@
 import { useState } from "react";
-import { auth, createUserWithEmailAndPassword } from "../../firebase/firebase";
 import { createUser } from "../../Redux/actions";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import LobbyLogo from "../../Multimedia/Logo Lobbylair.gif";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Register = () => {
+   const notifyError = (message) => toast.error(message);
+   const notify = (message) => toast.success(message);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
   const [data, setData] = useState({
     email: "",
     password: "",
-    confirmPassword: "",
     name: "",
+    image: 'gs://lobbylair-pf.appspot.com/Logo.webp'
   });
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    try {
+      const validateUser = await dispatch(createUser(data)); // Esperar a que se resuelva la promesa
+      console.log(validateUser);
+      if (validateUser) {
+        notify("User created successfully, Login to continue");
+        setTimeout(() => {
+          navigate("/");
+        }, 3000); 
+      }
+      
+    } catch (error) {
+       notifyError(error);
+    }
+
+  };
+
   const [errors, setErrors] = useState({
     email: "",
     password: "",
@@ -74,27 +95,8 @@ const Register = () => {
     );
   };
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-
-    if (!isFormValid()) {
-      return;
-    }
-
-    try {
-      dispatch(createUser(data));
-      if (user) {
-        navigate("/");
-      }
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-
-
   return (
-    <section style={{ backgroundColor: "#f3f4f6" }}>
+    <section className="min-h-screen bg-gray-100 pt-9 flex flex-col items-center justify-center">
       <div
         style={{
           display: "flex",
@@ -116,7 +118,7 @@ const Register = () => {
             color: "#111827",
           }}
         >
-          logo
+          <img src={LobbyLogo} alt="LOBBYL" className="w-20 h-auto mt-4" />
         </a>
         <div
           style={{
@@ -135,13 +137,7 @@ const Register = () => {
               marginBottom: "1.5rem",
             }}
           >
-            <h1
-              style={{
-                fontSize: "1.25rem",
-                fontWeight: "bold",
-                lineHeight: "1.5",
-                color: "#111827",
-              }}
+            <h1 className="text-xl font-bold mb-4 text-gray-800"
             >
               Create an account
             </h1>
@@ -149,12 +145,7 @@ const Register = () => {
               <div style={{ marginBottom: "1rem" }}>
                 <label
                   htmlFor="name"
-                  style={{
-                    marginBottom: "0.5rem",
-                    fontSize: "0.875rem",
-                    fontWeight: "medium",
-                    color: "#111827",
-                  }}
+                  className="mb-1 text-sm font-bold text-gray-800"
                 >
                   Your name
                 </label>
@@ -162,32 +153,17 @@ const Register = () => {
                   type="name"
                   name="name"
                   id="name"
-                  style={{
-                    backgroundColor: "#f9fafb",
-                    border: "1px solid #d1d5db",
-                    color: "#111827",
-                    fontSize: "0.875rem",
-                    borderRadius: "0.375rem",
-                    padding: "0.625rem",
-                    width: "100%",
-                  }}
+                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
                   placeholder="name"
                   required
-                  onChange={(e) =>
-                    setData({ ...data, name: e.target.value })
-                  }
+                  onChange={(e) => setData({ ...data, name: e.target.value })}
                   value={data.name}
                 />
               </div>
               <div style={{ marginBottom: "1rem" }}>
                 <label
                   htmlFor="email"
-                  style={{
-                    marginBottom: "0.5rem",
-                    fontSize: "0.875rem",
-                    fontWeight: "medium",
-                    color: "#111827",
-                  }}
+                  className="mb-1 text-sm font-bold text-gray-800"
                 >
                   Your email
                 </label>
@@ -195,35 +171,28 @@ const Register = () => {
                   type="email"
                   name="email"
                   id="email"
-                  style={{
-                    backgroundColor: "#f9fafb",
-                    border: "1px solid #d1d5db",
-                    color: "#111827",
-                    fontSize: "0.875rem",
-                    borderRadius: "0.375rem",
-                    padding: "0.625rem",
-                    width: "100%",
-                  }}
+                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
                   placeholder="name@company.com"
                   required
                   onChange={handleInputChange}
                   value={data.email}
                 />
-                 {errors.email && (
-          <p style={{ color: "red", fontSize: "0.75rem", marginTop: "0.25rem" }}>
-            {errors.email}
-          </p>
-        )}
+                {errors.email && (
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "0.75rem",
+                      marginTop: "0.25rem",
+                    }}
+                  >
+                    {errors.email}
+                  </p>
+                )}
               </div>
               <div style={{ marginBottom: "1rem" }}>
                 <label
                   htmlFor="password"
-                  style={{
-                    marginBottom: "0.5rem",
-                    fontSize: "0.875rem",
-                    fontWeight: "medium",
-                    color: "#111827",
-                  }}
+                  className="mb-1 text-sm font-bold text-gray-800"
                 >
                   Password
                 </label>
@@ -231,35 +200,28 @@ const Register = () => {
                   type="password"
                   name="password"
                   id="password"
-                  style={{
-                    backgroundColor: "#f9fafb",
-                    border: "1px solid #d1d5db",
-                    color: "#111827",
-                    fontSize: "0.875rem",
-                    borderRadius: "0.375rem",
-                    padding: "0.625rem",
-                    width: "100%",
-                  }}
+                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
                   placeholder="••••••••"
                   required
                   onChange={handleInputChange}
                   value={data.password}
                 />
                 {errors.password && (
-          <p style={{ color: "red", fontSize: "0.75rem", marginTop: "0.25rem" }}>
-            {errors.password}
-          </p>
-        )}
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "0.75rem",
+                      marginTop: "0.25rem",
+                    }}
+                  >
+                    {errors.password}
+                  </p>
+                )}
               </div>
               <div style={{ marginBottom: "1rem" }}>
                 <label
                   htmlFor="confirm-password"
-                  style={{
-                    marginBottom: "0.5rem",
-                    fontSize: "0.875rem",
-                    fontWeight: "medium",
-                    color: "#111827",
-                  }}
+                  className="mb-1 text-sm font-bold text-gray-800"
                 >
                   Confirm password
                 </label>
@@ -267,45 +229,29 @@ const Register = () => {
                   type="password"
                   name="confirmPassword"
                   id="confirm-password"
-                  style={{
-                    backgroundColor: "#f9fafb",
-                    border: "1px solid #d1d5db",
-                    color: "#111827",
-                    fontSize: "0.875rem",
-                    borderRadius: "0.375rem",
-                    padding: "0.625rem",
-                    width: "100%",
-                  }}
+                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
                   placeholder="••••••••"
                   required
                   onChange={handleInputChange}
                   value={data.confirmPassword}
                 />
-                   {errors.confirmPassword && (
-          <p style={{ color: "red", fontSize: "0.75rem", marginTop: "0.25rem" }}>
-            {errors.confirmPassword}
-          </p>
-        )}
+                {errors.confirmPassword && (
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "0.75rem",
+                      marginTop: "0.25rem",
+                    }}
+                  >
+                    {errors.confirmPassword}
+                  </p>
+                )}
               </div>
 
               <button
                 type="submit"
                 disabled={!isFormValid()}
-                style={{
-                  width: "100%",
-                  color: "#000",
-                  backgroundColor: "#fff",
-                  hoverBackgroundColor: "#e5e7eb",
-                  focusRingColor: "#6b7280",
-                  fontWeight: "medium",
-                  borderRadius: "0.375rem",
-                  fontSize: "0.875rem",
-                  padding: "0.625rem",
-                  textAlign: "center",
-                  boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-                  border: "none",
-                  outline: "none",
-                }}
+                className="w-full bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer"
               >
                 Create an account
               </button>
@@ -320,12 +266,8 @@ const Register = () => {
               >
                 Already have an account?{" "}
                 <a
-                  href="/login"
-                  style={{
-                    fontWeight: "medium",
-                    color: "#3b82f6",
-                    hoverColor: "#2563eb",
-                  }}
+                  className="font-bold text-black"
+                  href="/"
                 >
                   Login here
                 </a>
@@ -334,6 +276,7 @@ const Register = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </section>
   );
 };

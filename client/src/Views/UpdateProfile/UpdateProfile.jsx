@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../Redux/actions'
+import { useNavigate } from 'react-router-dom';
+import Profile from '../Profile/Profile';
 
-
-export default function UpdateProfile() {
+export default function UpdateProfile({ handleEditClose }) {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const id = user ? user.id : '';  
+  const id = user.id;
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: '',
@@ -16,121 +18,89 @@ export default function UpdateProfile() {
     perfilUrl: '',
   });
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}$/;
-
   const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateUser(id, formData));
+    navigate(`/profile/${id}`);
+    handleEditClose(); // Cerrar el modo de edición en Profile
   };
-  //const urlPattern = /^(http://www.|https://www.|http://|https://)?[a-zA-Z0-9]+([-.]{1}[a-zA-Z0-9]+).[a-zA-Z]{2,5}(:[0-9]{1,5})?(/.)?$/;
-
-  const isEmailValid = emailRegex.test(formData.email);
-  const isPasswordValid = passwordRegex.test(formData.password);
-  const isButtonDisabled = !isEmailValid || !isPasswordValid;
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <form className="w-80 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
-        <h2 className="text-2xl mb-4">Update Profile</h2>
+  <div className="min-h-screen flex flex-col items-center">
+    <div className="flex flex-col md:flex-row">
+      <form className="w-full md:w-80 bg-gray-300 shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+        <h2 className="text-xl font-bold mb-4 text-gray-800">Update Profile</h2>
         <div className="mb-4">
           <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">Name</label>
           <input
-            type="text"
-            name="name"
-            id="name"
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter your name"
-            value={formData.name}
-            onChange={handleChange}
+           type="text"
+           name="name"
+           id="name"
+           className="w-full p-2 border border-gray-300 rounded-[5rem] truncate"
+           placeholder="Enter your name"
+           value={formData.name}
+           onChange={handleChange}
           />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">Email</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter your email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-           {!isEmailValid && (
-            <p className="text-red-500 text-xs mt-1">Please enter a valid email address.</p>
-          )}
-
-        </div>
-        <div className="mb-4">
-          <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">Password</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-           {!isPasswordValid && (
-            <p className="text-red-500 text-xs mt-1">Please enter a password with at least 6 characters, including one uppercase letter and one special character.</p>
-          )}
-        </div>
-        <div className="mb-4">
-          <label htmlFor="image" className="block text-gray-700 text-sm font-bold mb-2">Image</label>
-          <input
-            type="text"
-            name="image"
-            id="image"
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter the image URL"
-            value={formData.image}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="perfilUrl" className="block text-gray-700 text-sm font-bold mb-2">Perfil URL</label>
-          <input
-            type="text"
-            name="perfilUrl"
-            id="perfilUrl"
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter the perfil URL"
-            value={formData.perfilUrl}
-            onChange={handleChange}
-          />
-        <div className="mb-4 mt-4">
-          <label htmlFor="description" className="block text-gray-700 text-sm font-bold mb-2">Description</label>
-          <textarea
-            name="description"
-            id="description"
-            rows="4"
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter a description"
-            value={formData.description}
-            onChange={handleChange}
-          />
-        </div>
-        </div>
-        <div className="flex items-center justify-center">
+          </div>
+          <div className="mb-4">
+            <label htmlFor="image" className="block text-gray-700 text-sm font-bold mb-2">Image</label>
+            <input
+             type="text"
+             name="image"
+             id="image"
+             className="w-full p-2 border border-gray-300 rounded-[5rem] truncate"
+             placeholder="Enter the image URL"
+             value={formData.image}
+             onChange={handleChange}
+             />
+             </div>
+             <div className="mb-4">
+        <label htmlFor="perfilUrl" className="block text-gray-700 text-sm font-bold mb-2">URL Profile</label>
+        <input
+          type="text"
+          name="perfilUrl"
+          id="perfilUrl"
+          className="w-full p-2 border border-gray-300 rounded-[5rem] truncate"
+          placeholder="Enter the perfil URL"
+          value={formData.perfilUrl}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="mb-4 mt-4">
+        <label htmlFor="description" className="block text-gray-700 text-sm font-bold mb-2">Description</label>
+        <textarea
+          name="description"
+          id="description"
+          rows="4"
+          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          placeholder="Enter a description"
+          value={formData.description}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="flex items-center justify-center">
         <button
-            type="submit"
-            className="bg-[#1f2937] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            disabled={isButtonDisabled}
-          >
-            Update
-          </button>
-        </div>
-      </form>
-    </div>
+          type="submit"
+          className="bg-black text-white border-none rounded-[5rem] p-3 text-l hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4 md:mt-0 md:ml-4"
+        >
+          Update
+        </button>
+        <button
+          className="bg-black text-white border-none rounded-[5rem] p-3 text-l hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4 md:mt-0 md:ml-4"
+          onClick={handleEditClose}
+        >
+          Close
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
   );
 }

@@ -1,14 +1,24 @@
 const { User, Game } = require("../db.js");
+const jwt = require("jsonwebtoken");
 
 async function getFavorites(req, res) {
-  const { userId } = req.params;
+  const { token } = req.params;
+  const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+  if (!decodedToken) {
+    return res.status(401).json({ error: "No autorizado" });
+  }
+
+  const userId = decodedToken.id;
+
   try {
     const user = await User.findByPk(userId, {
-      include: [{
-        model: Game,
-        attributes: ['id', 'name', 'thumbnail'], 
-        through: { attributes: [] } 
-      }]
+      include: [
+        {
+          model: Game,
+          attributes: ["id", "name", "thumbnail"],
+          through: { attributes: [] },
+        },
+      ],
     });
 
     if (!user) {
@@ -24,18 +34,24 @@ async function getFavorites(req, res) {
   }
 }
 
-
 async function createFavorite(req, res) {
-  const { user_id, game_id } = req.body;
+  const { token, id } = req.body;
   try {
-    const user = await User.findByPk(user_id);
-    const game = await Game.findByPk(game_id);
+    const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
 
+    if (!decodedToken) {
+      return res.status(401).json({ error: "No autorizado" });
+    }
+
+    const userId = decodedToken.id;
+
+    const user = await User.findByPk(userId.toString());
+    const game = await Game.findByPk(id);
     if (!user || !game) {
       return res.status(404).json({ error: "Usuario o juego no encontrado" });
     }
 
-    const favorite = await user.addGame(game);
+    await user.addGame(game);
     return res.status(200).json({ success: true });
   } catch (error) {
     console.error("Error al crear la relación favorita:", error);
@@ -44,8 +60,16 @@ async function createFavorite(req, res) {
 }
 
 async function removeFavoriteGame(req, res) {
-  const { userId, gameId } = req.params;
+  const { gameId, token } = req.query;
   try {
+    const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+
+    if (!decodedToken) {
+      return res.status(401).json({ error: "No autorizado" });
+    }
+
+    const userId = decodedToken.id;
+
     const user = await User.findByPk(userId);
 
     if (!user) {
@@ -66,10 +90,46 @@ async function removeFavoriteGame(req, res) {
     return res.status(500).json({ error: "Error interno del servidor" });
   }
 }
+const getAllFavorites = async (req, res) => {
+  try {
+    const users = await User.findAll({
+      attributes: { exclude: ["password"] },
+      include: [
+        {
+          model: Game,
+          attributes: ["id"],
+          through: { attributes: [] },
+        },
+      ],
+    });
 
+    const gameCounts = {};
+    
+    users.forEach(user => {
+      user.Games.forEach(game => {
+        if (gameCounts[game.id]) {
+          gameCounts[game.id]++;
+        } else {
+          gameCounts[game.id] = 1;
+        }
+      });
+    });
 
+    const allFavorites = Object.entries(gameCounts).map(([id, count]) => ({
+      gameId: id,
+      count: count
+    }));
+
+    return res.status(200).json(allFavorites);
+  } catch (error) {
+    console.error("Error al obtener los juegos favoritos:", error);
+    return res.status(500).json({ error: "Error interno del servidor" });
+  }
+};
 module.exports = {
   getFavorites,
+  getAllFavorites,
   createFavorite,
-  removeFavoriteGame,
+  getAllFavorites,
+  removeFavoriteGame
 };
