@@ -67,9 +67,9 @@ const PaymentComponent = ({ amount, type, currency, address }) => {
   };
 
   // listen for account changes
-  window.ethereum.on("accountsChanged", accountChangedHandler);
+  window.ethereum?.on("accountsChanged", accountChangedHandler);
 
-  window.ethereum.on("chainChanged", chainChangedHandler);
+  window.ethereum?.on("chainChanged", chainChangedHandler);
 
   const createPreference = async () => {
     initMercadoPago(REACT_APP_KEY);
