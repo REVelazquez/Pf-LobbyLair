@@ -4,12 +4,12 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import LobbyLogo from "../../Multimedia/Logo Lobbylair.gif";
 import { ToastContainer, toast } from "react-toastify";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const Register = () => {
-   const notifyError = (message) => toast.error(message);
-   const notify = (message) => toast.success(message);
+  const notifyError = (message) => toast.error(message);
+  const notify = (message) => toast.success(message);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [data, setData] = useState({
@@ -95,189 +95,140 @@ const Register = () => {
     );
   };
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
   return (
-    <section className="min-h-screen bg-gray-100 pt-9 flex flex-col items-center justify-center">
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "2rem",
-          height: "100vh",
-        }}
-      >
-        <a
-          href="/"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            marginBottom: "1.5rem",
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            color: "#111827",
-          }}
-        >
-          <img src={LobbyLogo} alt="LOBBYL" className="w-20 h-auto mt-4" />
-        </a>
-        <div
-          style={{
-            width: "100%",
-            backgroundColor: "#fff",
-            borderRadius: "0.375rem",
-            boxShadow:
-              "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-            maxWidth: "20rem",
-            padding: "1.5rem",
-          }}
-        >
-          <div
-            style={{
-              padding: "1rem",
-              marginBottom: "1.5rem",
-            }}
-          >
-            <h1 className="text-xl font-bold mb-4 text-gray-800"
-            >
-              Create an account
-            </h1>
-            <form onSubmit={handleRegister} style={{ marginTop: "1.5rem" }}>
-              <div style={{ marginBottom: "1rem" }}>
-                <label
-                  htmlFor="name"
-                  className="mb-1 text-sm font-bold text-gray-800"
-                >
-                  Your name
-                </label>
-                <input
-                  type="name"
-                  name="name"
-                  id="name"
-                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
-                  placeholder="name"
-                  required
-                  onChange={(e) => setData({ ...data, name: e.target.value })}
-                  value={data.name}
-                />
-              </div>
-              <div style={{ marginBottom: "1rem" }}>
-                <label
-                  htmlFor="email"
-                  className="mb-1 text-sm font-bold text-gray-800"
-                >
-                  Your email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
-                  placeholder="name@company.com"
-                  required
-                  onChange={handleInputChange}
-                  value={data.email}
-                />
-                {errors.email && (
-                  <p
-                    style={{
-                      color: "red",
-                      fontSize: "0.75rem",
-                      marginTop: "0.25rem",
-                    }}
-                  >
-                    {errors.email}
-                  </p>
-                )}
-              </div>
-              <div style={{ marginBottom: "1rem" }}>
-                <label
-                  htmlFor="password"
-                  className="mb-1 text-sm font-bold text-gray-800"
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
-                  placeholder="••••••••"
-                  required
-                  onChange={handleInputChange}
-                  value={data.password}
-                />
-                {errors.password && (
-                  <p
-                    style={{
-                      color: "red",
-                      fontSize: "0.75rem",
-                      marginTop: "0.25rem",
-                    }}
-                  >
-                    {errors.password}
-                  </p>
-                )}
-              </div>
-              <div style={{ marginBottom: "1rem" }}>
-                <label
-                  htmlFor="confirm-password"
-                  className="mb-1 text-sm font-bold text-gray-800"
-                >
-                  Confirm password
-                </label>
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  id="confirm-password"
-                  className="w-full p-2 border border-gray-300 rounded-[5rem]"
-                  placeholder="••••••••"
-                  required
-                  onChange={handleInputChange}
-                  value={data.confirmPassword}
-                />
-                {errors.confirmPassword && (
-                  <p
-                    style={{
-                      color: "red",
-                      fontSize: "0.75rem",
-                      marginTop: "0.25rem",
-                    }}
-                  >
-                    {errors.confirmPassword}
-                  </p>
-                )}
-              </div>
-
-              <button
-                type="submit"
-                disabled={!isFormValid()}
-                className="w-full bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer"
-              >
-                Create an account
-              </button>
-
-              <p
-                style={{
-                  marginTop: "1rem",
-                  fontSize: "0.875rem",
-                  fontWeight: "light",
-                  color: "#6b7280",
-                }}
-              >
-                Already have an account?{" "}
-                <a
-                  className="font-bold text-black"
-                  href="/"
-                >
-                  Login here
-                </a>
-              </p>
-            </form>
+<section className="flex flex-col lg:flex-row text-black bg-gray-100 h-screen">
+  <div className="lg:w-3/5">
+    <img
+      src="https://i.pinimg.com/originals/3f/30/0e/3f300e31f8c0b4754638f30dce4d75d9.jpg"
+      alt="img-register"
+      className="h-full w-3/4 object-cover object-right rounded-r-3xl"
+    />
+  </div>
+  <div className="flex flex-col items-center justify-center p-2 h-full">
+    <a href="/" className="flex items-center mb-6 text-2xl font-bold text-black">
+      <img src={LobbyLogo} alt="LOBBYL" className="w-20 h-auto mt-2" />
+    </a>
+    <div className="w-full bg-white rounded-lg shadow-lg max-w-sm p-6">
+      <div className=" mb-2">
+        <h1 className="text-xl font-bold mb-4 text-gray-800">Create an account</h1>
+        <form onSubmit={handleRegister} className="mt-6">
+          <div className="mb-4">
+            <label htmlFor="name" className="mb-1 text-sm font-bold text-gray-800">
+              Your name
+            </label>
+            <input
+              type="name"
+              name="name"
+              id="name"
+              className="w-full p-2 border border-gray-300 rounded-full"
+              placeholder="name"
+              required
+              onChange={(e) => setData({ ...data, name: e.target.value })}
+              value={data.name}
+            />
           </div>
-        </div>
+          <div className="mb-4">
+            <label htmlFor="email" className="mb-1 text-sm font-bold text-gray-800">
+              Your email
+            </label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              className="w-full p-2 border border-gray-300 rounded-full"
+              placeholder="name@company.com"
+              required
+              onChange={handleInputChange}
+              value={data.email}
+            />
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+            )}
+          </div>
+          <div className="mb-4">
+            <label htmlFor="password" className="mb-1 text-sm font-bold text-gray-800">
+              Password
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                id="password"
+                className="w-full p-2 border border-gray-300 rounded-full"
+                placeholder="••••••••"
+                required
+                onChange={handleInputChange}
+                value={data.password}
+              />
+              <span
+                className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? <FiEye /> : <FiEyeOff />}
+              </span>
+            </div>
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+            )}
+          </div>
+          <div className="mb-4">
+            <label htmlFor="confirm-password" className="mb-1 text-sm font-bold text-gray-800">
+              Confirm password
+            </label>
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                id="confirm-password"
+                className="w-full p-2 border border-gray-300 rounded-full"
+                placeholder="••••••••"
+                required
+                onChange={handleInputChange}
+                value={data.confirmPassword}
+              />
+              <span
+                className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
+                onClick={toggleConfirmPasswordVisibility}
+              >
+                {showConfirmPassword ? <FiEye /> : <FiEyeOff />}
+              </span>
+            </div>
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            disabled={!isFormValid()}
+            className="w-full bg-black text-white border-none rounded-full px-6 py-3 text-lg font-bold cursor-pointer"
+          >
+            Create an account
+          </button>
+
+          <p className="mt-4 text-xs font-light text-gray-600">
+            Already have an account?{" "}
+            <a className="font-bold text-black" href="/">
+              Login here
+            </a>
+          </p>
+        </form>
       </div>
-      <ToastContainer />
-    </section>
+    </div>
+  </div>
+  <ToastContainer />
+</section>
   );
 };
 
