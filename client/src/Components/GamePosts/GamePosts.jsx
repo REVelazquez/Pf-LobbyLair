@@ -1,10 +1,11 @@
-
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import queryString from "query-string";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostsWithPagination, createPost } from "../../Redux/actions";
 import { HiHeart } from "react-icons/hi";
+import Response from "../Response/Response";
+import { imageDef } from "../../Multimedia/imageDefault";
 
 
 const GamePosts = () => {
@@ -12,7 +13,8 @@ const GamePosts = () => {
   const { gameId, gameModeId } = queryString.parse(location.search);
   const dispatch = useDispatch();
   const stateUser = useSelector((state) => state.user);
-  const navigate= useNavigate()
+  const navigate = useNavigate();
+
 
   //------------------esto es para el form------------------------------//
   const [userId, setUserId] = useState(stateUser.id);
@@ -62,7 +64,7 @@ const GamePosts = () => {
     );
   }, [currentPage, dispatch, refresh]);
 
-  const user=useSelector(state=>state.user)
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     if (currentPage === 1) {
@@ -104,11 +106,6 @@ const GamePosts = () => {
   };
 
   //--------------------------------------reacciones---------------------------------
-  const [liked, setLiked] = useState(false);
-
-  const handleLike = (event) => {
-    setLiked(!liked);
-  };
 
   return (
     <div>
@@ -121,12 +118,12 @@ const GamePosts = () => {
                 type="text"
                 value={text}
                 onChange={(event) => setText(event.target.value)}
-                placeholder="Ingrese el texto del post"
+                placeholder="
+write the post"
               />
               <button
                 className="ml-2 bg-black text-white border-none rounded-full px-4 py-2 text-lg font-bold cursor-pointer"
-                type="submit"
-              >
+                type="submit">
                 Create Post
               </button>
             </form>
@@ -135,8 +132,7 @@ const GamePosts = () => {
           <button
             onClick={handlePrev}
             disabled={btnPrev}
-            className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2 text-sm"
-          >
+            className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2 text-sm">
             {" "}
             Prev{" "}
           </button>
@@ -148,74 +144,92 @@ const GamePosts = () => {
                 key={e}
                 value={e}
                 onClick={handleOnClick}
-                disabled={currentPage === e}
-              >
+                disabled={currentPage === e}>
                 {e}
               </button>
             ))}
           <button
             onClick={handleNext}
             disabled={btnNext}
-            className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2 text-sm"
-          >
+            className="bg-black text-white border-none rounded-[5rem] p-3 text-l font-bold cursor-pointer m-2 text-sm">
             {" "}
             Next{" "}
           </button>
 
           <div className="p-2">
-            
-            {pagedPosts?.map(({ id, createdAt, text, User }) => {
+            {pagedPosts?.map(({ id, createdAt, text, User, image, Game }) => {
               if (User) {
                 return (
-                  <div
-                    key={id}
-                    className="w-[80%] mx-auto border-2 border-crimson p-8 flex justify-between items-start mb-3"
-                    style={{
-                      boxShadow: "0 2px 10px rgba(0, 0, 0, 0.25)",
-                    }}
-                  >
+                  <div key={id}>
+                    <div className="w-[80%] mx-auto mt-2 border-2 border-crimson p-2 flex flex-col items-start mb-1 ml-auto">
+                    <div className="bg-gray-300 flex rounded-xl items-center justify-between shadow-md w-[100%]">
+  <div className="flex items-center">
+    <div className="rounded-full w-14 h-13">
+      {post.User && post.User.image?.length > 1 ? (
+        <img
+          src={post.User.image}
+          className={`rounded-full w-14 h-13`}
+          alt="user"
+        />
+      ) : (
+        <img
+          src={imageDef}
+          className={`rounded-full w-14 h-13`}
+          alt="user"
+        />
+      )}
+    </div>
+    <div className="">
+      <p className="text-black text-xs">Posted By:</p>
+      <button
+        onClick={() => {
+          if (User.id === user.id)
+            navigate(`/profile/${user.id}`);
+          else {
+            navigate(`/user/${User.id}`);
+          }
+        }}>
+        <p className=" text-black text-xs font-bold ">
+          {User?.name}
+        </p>
+      </button>
+      
+    </div>
+
+  </div>
+  <div className="items-end">
+  <h1 className="text-s font-bold">{Game?.name}</h1> 
+  </div>
+  
+  <div className="w-[20%]  p-4 flex flex-col items-end text-left">
+    <p className="text-xs text-black mr-4">
+      Created:{" "}
+      {createdAt
+        .slice(0, 10)
+        .split("-")
+        .reverse()
+        .join("-")}
+    </p>
+  </div>
+</div>
+
+                      <div className="flex flex-col w-[80%] items-start ml-2">
+                        {text}
+                        <div>
+                        
+
+                        </div>
+                        
+                        
+                        </div>
+                        
+                        <div className="w-[96%]  ml-2 flex flex-col items-end ">
+                
+                        </div>
+                    </div>
                     
-                    <div className="flex items-start ">
-                      
-                      <p className=" font-bold">Posted by:</p>
-                      <button onClick={
-                                  ()=>{
-                                    if(User.id === user.id) navigate(`/profile/${user.id}`)
-                                    else{navigate (`/user/${User.id}`)}
-                                  }}>
-
-                                  <p className=" text-black text-xs font-bold ">
-                                    {User?.name}
-                                  </p>
-                                </button>
-                    </div>
-
-                    <div className="flex items-center justify-center w-1/3">
-                      <h1 className=" font-bold">{text}</h1>
-                    </div>
-
-                    <div className="flex items-start justify-end w-1/3">
-                      <div style={{ display: "flex" }}>
-                        {liked === true ? (
-                          <HiHeart
-                            onClick={handleLike}
-                            style={{ cursor: "pointer", color: "crimson" }}
-                          />
-                        ) : (
-                          <HiHeart
-                            onClick={handleLike}
-                            style={{ cursor: "pointer" }}
-                          />
-                        )}
-                        <p style={{ marginLeft: "1em" }}>
-                          Created:{" "}
-                          {createdAt
-                            .slice(0, 10)
-                            .split("-")
-                            .reverse()
-                            .join("-")}
-                        </p>
-                      </div>
+                    <div>
+                      <Response postId={id} userId={stateUser.id} />
                     </div>
                   </div>
                 );
