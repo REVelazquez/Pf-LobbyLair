@@ -215,7 +215,7 @@ const reducer = (state = initialState, action) => {
           };
       case GET_ALL_FAVORITES:
         return{
-          state,
+          ...state,
           favoritesCount:action.payload
         }
     default:
