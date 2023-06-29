@@ -9,10 +9,7 @@ const PaymentComponent = ({ amount, type, currency, address }) => {
   const stateUser = useSelector((state) => state.user);
   const [selectedOption, setSelectedOption] = useState(null);
   const REACT_APP_KEY = window.env.REACT_APP_MERCADOPAGO_KEY;
-  const [errorMessage, setErrorMessage] = useState(null);
-  // const [defaultAccount, setDefaultAccount] = useState(null);
-  // const [userBalance, setUserBalance] = useState(null);
-  // const [connButtonText, setConnButtonText] = useState("Connect Wallet");
+  const [errorMessage, setErrorMessage] = useState(null)
   const [txs, setTxs] = useState([]);
   const startPayment = async ({ setErrorMessage, setTxs, ether, addr }) => {
     try {
