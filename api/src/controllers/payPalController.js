@@ -34,7 +34,7 @@ const createOrder = async (req, res) => {
       landing_page: "NO_PREFERENCE",
       shipping_preference: "NO_SHIPPING",
       user_action: "PAY_NOW",
-      return_url: `http://localhost:3000/feddback?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
+      return_url: `http://localhost:3001/capture-order?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
       cancel_url: "http://localhost:3001/cancel-order",
     },
   };
@@ -50,7 +50,6 @@ const createOrder = async (req, res) => {
   };
 
   try {
-    console.log("a");
     const {
       data: { access_token },
     } = await axios.post(`${API}/v1/oauth2/token`, params, { headers });
@@ -94,7 +93,6 @@ const captureOrder = async (req, res) => {
 
     return res.send("Payment successful");
   } catch (error) {
-    console.log(error);
     return res.status(500).json("Failed to capture order");
   }
 };

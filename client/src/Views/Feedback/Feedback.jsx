@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { FcApproval } from 'react-icons/fc';
+import React, { useState, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { FcApproval } from "react-icons/fc";
 import { motion } from "framer-motion";
+import axios from "axios";
 
 function Feedback() {
   const [typedText, setTypedText] = useState("");
@@ -13,8 +14,18 @@ function Feedback() {
   const amount = searchParams.get("amount");
   const currency = searchParams.get("currency");
   const type = searchParams.get("type");
-
+  const token = searchParams.get("token");
+  console.log(token);
   useEffect(() => {
+    if (token) {
+      axios(
+        `http://localhost:3001/capture-order?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}&token=${token}`
+      );
+    } else {
+      axios(
+        `http://localhost:3001/feedback?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`
+      );
+    }
     let currentText = "";
     let index = 0;
     const typingInterval = setInterval(() => {
@@ -45,10 +56,12 @@ function Feedback() {
                   <FcApproval className="text-[#0e0e0e] inline-block mr-2" />
                   {typedText}
                 </motion.h2>
-                <p>{userId}</p>
-                <p>{amount}</p>
-                <p>{currency}</p>
-                <p>{type}</p>
+                <p className="text-xl font-bold mt-4">
+                  you paid: {amount} {currency} for a {type} subscription
+                </p>
+                <NavLink to="/home" className="text-xl font-bold mt-4">
+                  Back to Home
+                </NavLink>
               </div>
             </div>
           </div>
