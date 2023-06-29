@@ -35,7 +35,6 @@ import SendEmail from "./Components/ForgotPassword/sendEmail";
 import ResetPassword from "./Components/ForgotPassword/resetPassword";
 import "react-toastify/dist/ReactToastify.css";
 import AdminNav from "./Components/AdminNav/AdminNav";
-
 function ProjectCursor() {
   const [cursorX, setCursorX] = useState();
   const [cursorY, setCursorY] = useState();
