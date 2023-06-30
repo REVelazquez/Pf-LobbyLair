@@ -138,8 +138,14 @@ const Response = ({ postId, userId }) => {
               ))}
             </div>
           </div>
-          {!showAllResponses && responses.length > 5 && (
-            <button className="text-xs font-bold" onClick={() => setShowAllResponses(true)}>See all responses</button>
+          {responses.length > 5 && (
+            <div className="mt-2">
+              {showAllResponses ? (
+                <button className="text-xs font-bold" onClick={() => setShowAllResponses(false)}>Show Less Responses</button>
+              ) : (
+                <button className="text-xs font-bold" onClick={() => setShowAllResponses(true)}>Show All Responses</button>
+              )}
+            </div>
           )}
         </Form>
       )}
@@ -148,3 +154,4 @@ const Response = ({ postId, userId }) => {
 };
 
 export default Response;
+
