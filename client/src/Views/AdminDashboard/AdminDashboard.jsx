@@ -17,18 +17,6 @@ const lineChartData = {
   ],
 };
 
-const pieChartData = {
-  labels: ['Usuarios Activos', 'Usuarios en la página', 'Usuarios Sancionados', 'Usuarios Premium', 'Usuarios Inactivos'],
-  datasets: [
-    {
-      label: 'Dataset',
-      data: [16, 25, 4, 9, 5],
-      backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#33FF77', '#8A2BE2'],
-      hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#33FF77', '#8A2BE2'],
-    },
-  ],
-};
-
 const barChartData = {
   labels: ['Valorant', 'Minecraft', 'Diablo4', 'Gta 5 Online', 'League of Legends', 'Apex Legends'],
   datasets: [
@@ -80,11 +68,30 @@ const AdminDashboard = () => {
     ]
   };
 
+  //datos usuario
+  const users = useSelector(state => state.otherUser);
+  const premiumUsers = users.filter(user => user.isPremium === true);
+  const numberPremiumUsers = premiumUsers.length;
+  const totalUsers = users.length;
+  const notPremiumUsers = totalUsers - premiumUsers.length;
+
+  const pieChartUserData = {
+    labels: ['Users', 'Premium Users', 'Number of Premium Users', 'Total Users', 'Not Premium Users'],
+    datasets: [
+      {
+        label: 'Dataset',
+        data: [users.length, premiumUsers.length, numberPremiumUsers, totalUsers, notPremiumUsers],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#33FF77', '#8A2BE2'],
+        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#33FF77', '#8A2BE2'],
+      },
+    ],
+  };
+
   return (
     <div className="flex flex-col w-full md:flex-row">
       <div className="w-full md:w-1/3 mt-5">
         <h1 className="text-center my-4">Estadisticas Generales Usuarios</h1>
-        <Pie data={pieChartData} options={options} />
+        <Pie data={pieChartUserData} options={options} />
       </div>
       <div className="w-full md:w-2/3 flex flex-col md:flex-row">
         <div className="w-full md:w-1/2">
@@ -99,4 +106,5 @@ const AdminDashboard = () => {
     </div>
   );
 };
+
 export default AdminDashboard;
