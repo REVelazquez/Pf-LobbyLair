@@ -7,15 +7,19 @@ import TxList from "./TxList";
 
 async function getEthereumPriceInUSD() {
   try {
-    const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd',{ timeout: 5000 });
+    const response = await axios.get(
+      "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd",
+      { timeout: 5000 }
+    );
     const { ethereum: { usd } } = response.data;
-    console.log('ethereum in dollars: ',{usd});
+    console.log('ethereum in dollars: ', { usd });
     return usd;
   } catch (error) {
     console.error('Error al obtener el precio de Ethereum:', error);
     throw error;
   }
 }
+
 const PaymentComponent = ({ amount, type, currency }) => {
   const [preferenceId, setPreferenceId] = useState(null);
   const stateUser = useSelector((state) => state.user);
@@ -24,12 +28,11 @@ const PaymentComponent = ({ amount, type, currency }) => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [txs, setTxs] = useState([]);
 
-  
   const startPayment = async ({ setErrorMessage, setTxs, ether, addr }) => {
     try {
       if (!window.ethereum)
         throw new Error("No crypto wallet found. Please install it.");
-  
+
       await window.ethereum.send("eth_requestAccounts");
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
@@ -45,20 +48,21 @@ const PaymentComponent = ({ amount, type, currency }) => {
       setErrorMessage(errorMessage);
     }
   };
-  
+
   const handleClick = async () => {
     // setErrorMessage();
-     // Obtener el precio actual de Ethereum en dólares
-     const ethPriceUSD = await getEthereumPriceInUSD();
-     // Calcular la cantidad equivalente en ETH
-     const cantidadETH = amount / ethPriceUSD;
-     console.log(cantidadETH)
+    // Obtener el precio actual de Ethereum en dólares
+    const ethPriceUSD = await getEthereumPriceInUSD();
+    // Calcular la cantidad equivalente en ETH
+    const cantidadETH = amount / ethPriceUSD;
+    console.log(cantidadETH)
     await startPayment({
       setErrorMessage,
       setTxs,
       ether: cantidadETH.toString(),
       addr: '0xC1ED30e08cDD9D6fb812D7fDa7a30201069722B5'
     });
+  };
 
   const createPreference = async () => {
     initMercadoPago(REACT_APP_KEY);
@@ -158,22 +162,22 @@ const PaymentComponent = ({ amount, type, currency }) => {
         </div>
       </div>
       <div
-          className={`p-4 border rounded-md shadow-md flex items-center ${
-            selectedOption === "mercadopago" ? "bg-orange-200" : "bg-white"
-          }`}
+        className={`p-4 border rounded-md shadow-md flex items-center ${
+          selectedOption === "metamask" ? "bg-orange-200" : "bg-white"
+        }`}
+        style={{ cursor: "pointer" }}
+        onClick={() => handleClick("metamask")}
+      >
+        <img
+          src="https://www.sketchappsources.com/resources/source-image/metamask-fox-logo.png"
+          alt="Metamask"
           style={{ cursor: "pointer" }}
-          onClick={() => handleClick("mercadopago")}
-          >
-          <img
-            src="https://www.sketchappsources.com/resources/source-image/metamask-fox-logo.png"
-            alt="Metamask"
-            style={{ cursor: "pointer" }}
-            className="w-12 h-12 mr-4 cursor-pointer"
-          />
-          <span className="font-bold text-black">Metamask</span>
-          <errorMessage message={errorMessage} />
-          <TxList txs={txs} />
-        </div>
+          className="w-12 h-12 mr-4 cursor-pointer"
+        />
+        <span className="font-bold text-black">Metamask</span>
+      </div>
+      <errorMessage message={errorMessage} />
+      <TxList txs={txs} />
     </div>
   );
 };
