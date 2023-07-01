@@ -4,13 +4,27 @@ import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import axios from "axios";
 import { ethers } from "ethers";
 import TxList from "./TxList";
-const PaymentComponent = ({ amount, type, currency, address }) => {
+
+async function getEthereumPriceInUSD() {
+  try {
+    const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd',{ timeout: 5000 });
+    const { ethereum: { usd } } = response.data;
+    console.log('ethereum in dollars: ',{usd});
+    return usd;
+  } catch (error) {
+    console.error('Error al obtener el precio de Ethereum:', error);
+    throw error;
+  }
+}
+const PaymentComponent = ({ amount, type, currency }) => {
   const [preferenceId, setPreferenceId] = useState(null);
   const stateUser = useSelector((state) => state.user);
   const [selectedOption, setSelectedOption] = useState(null);
   const REACT_APP_KEY = window.env.REACT_APP_MERCADOPAGO_KEY;
   const [errorMessage, setErrorMessage] = useState(null)
   const [txs, setTxs] = useState([]);
+
+  
   const startPayment = async ({ setErrorMessage, setTxs, ether, addr }) => {
     try {
       if (!window.ethereum)
@@ -31,15 +45,19 @@ const PaymentComponent = ({ amount, type, currency, address }) => {
       setErrorMessage(errorMessage);
     }
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    setErrorMessage();
+  
+  const handleClick = async () => {
+    // setErrorMessage();
+     // Obtener el precio actual de Ethereum en dólares
+     const ethPriceUSD = await getEthereumPriceInUSD();
+     // Calcular la cantidad equivalente en ETH
+     const cantidadETH = amount / ethPriceUSD;
+     console.log(cantidadETH)
     await startPayment({
       setErrorMessage,
       setTxs,
-      ether: data.get("ether"),
-      addr: data.get("addr")
+      ether: cantidadETH.toString(),
+      addr: '0xC1ED30e08cDD9D6fb812D7fDa7a30201069722B5'
     });
   };
   const createPreference = async () => {
@@ -99,7 +117,6 @@ const PaymentComponent = ({ amount, type, currency, address }) => {
   };
 
   return (
-    <>
     <div className="flex flex-col items-center mt-7 h-screen ">
       <h1 className="text-2xl font-bold mb-8">Choose a payment option:</h1>
 
@@ -140,45 +157,24 @@ const PaymentComponent = ({ amount, type, currency, address }) => {
           <span className="font-bold text-black">MercadoPago</span>
         </div>
       </div>
+      <div
+          className={`p-4 border rounded-md shadow-md flex items-center ${
+            selectedOption === "mercadopago" ? "bg-orange-200" : "bg-white"
+          }`}
+          style={{ cursor: "pointer" }}
+          onClick={() => handleClick("mercadopago")}
+          >
+          <img
+            src="https://www.sketchappsources.com/resources/source-image/metamask-fox-logo.png"
+            alt="Metamask"
+            style={{ cursor: "pointer" }}
+            className="w-12 h-12 mr-4 cursor-pointer"
+          />
+          <span className="font-bold text-black">Metamask</span>
+          <errorMessage message={errorMessage} />
+          <TxList txs={txs} />
+        </div>
     </div>
-    <form className="w-auto lg:w-1/2 sm:w-auto" onSubmit={handleSubmit}>
-  <div className="credit-card w-full shadow-lg mx-auto rounded-xl bg-white">
-    <main className="mt-4 p-12">
-      <h1 className="text-xl font-semibold text-gray-700 text-center">
-        Send ETH payment
-      </h1>
-      <div className="">
-        <div className="my-3">
-          <input
-            type="text"
-            name="addr"
-            className="input input-bordered block w-full focus:ring focus:outline-none"
-            placeholder="Recipient Address"
-          />
-        </div>
-        <div className="my-3">
-          <input
-            name="ether"
-            type="text"
-            className="input input-bordered block w-full focus:ring focus:outline-none"
-            placeholder="Amount in ETH"
-          />
-        </div>
-      </div>
-    </main>
-    <footer className="p-4">
-      <button
-        type="submit"
-        className="btn btn-primary submit-button focus:ring focus:outline-none w-full"
-      >
-        Pay now
-      </button>
-      <errorMessage message={errorMessage} />
-      <TxList txs={txs} />
-    </footer>
-  </div>
-</form>
-    </>
   );
 };
 
