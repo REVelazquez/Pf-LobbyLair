@@ -59,7 +59,7 @@ const PaymentComponent = ({ amount, type, currency }) => {
       ether: cantidadETH.toString(),
       addr: '0xC1ED30e08cDD9D6fb812D7fDa7a30201069722B5'
     });
-  };
+
   const createPreference = async () => {
     initMercadoPago(REACT_APP_KEY);
     try {

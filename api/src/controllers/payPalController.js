@@ -34,7 +34,7 @@ const createOrder = async (req, res) => {
       landing_page: "NO_PREFERENCE",
       shipping_preference: "NO_SHIPPING",
       user_action: "PAY_NOW",
-      return_url: `http://localhost:3000/feddback?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
+      return_url: `http://localhost:3000/feedback?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
       cancel_url: "http://localhost:3001/cancel-order",
     },
   };

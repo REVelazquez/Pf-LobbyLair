@@ -32,8 +32,8 @@ import {
   CREATE_RESPONSE,
   GET_RESPONSE,
   DELETE_RESPONSE,
-  GET_RESPONSE_BY_POST_ID
-
+  GET_RESPONSE_BY_POST_ID,
+  GET_ALL_FAVORITES
 } from "./action-types";
 import { ErrorMessage } from "formik";
 
@@ -473,3 +473,16 @@ export const getResponseByPostId = (postId) => ({
   type: GET_RESPONSE_BY_POST_ID,
   payload: postId,
 })
+export const getAllFavorites = ()=>{
+  return async (dispatch)=>{
+    try {
+      const allFavorites= await axios.get('http://localhost:3001/favorite')
+      return dispatch({
+        type:GET_ALL_FAVORITES,
+        payload:allFavorites.data
+      })
+    } catch (error) {
+      throw new Error(error)     
+    }
+  }
+}
