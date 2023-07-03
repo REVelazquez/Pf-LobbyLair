@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PaymentComponent from "../Payment/Payment";
 import { FcApproval } from 'react-icons/fc';
 import axios from 'axios';
@@ -15,10 +15,20 @@ const precioDolar = async () => {
 }
 
 const Subscription = async() => {
-  const plan1 = await precioDolar()*10;
-  const plan2 = await precioDolar()*20; 
-  const plan3 = await precioDolar()*40;
-  console.log(plan1,plan2,plan3);
+  const [plan1, setPlan1] = useState(0);
+  const [plan2, setPlan2] = useState(0);
+  const [plan3, setPlan3] = useState(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const price = await precioDolar();
+      setPlan1(price * 10);
+      setPlan2(price * 20);
+      setPlan3(price * 40);
+    };
+
+    fetchData();
+  }, []);
   const subscriptionPlans = [
     {
       title: "Basic",
