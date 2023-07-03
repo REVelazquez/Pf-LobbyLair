@@ -178,4 +178,6 @@ router.get("/response/:PostId", getResponse);
 
 router.delete("/response/:id", deleteResponse);
 
+router.get("/user/password/:id", getPassword);
+
 module.exports = router;

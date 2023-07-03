@@ -88,7 +88,7 @@ const ResetPassword = () => {
                   className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
                   onClick={togglePasswordVisibility}
                 >
-                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                  <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
                 </span>
               </div>
               <ErrorMessage
@@ -116,7 +116,7 @@ const ResetPassword = () => {
                   onClick={toggleConfirmPasswordVisibility}
                 >
                   <FontAwesomeIcon
-                    icon={showConfirmPassword ? faEyeSlash : faEye}
+                    icon={showConfirmPassword ? faEye : faEyeSlash}
                   />
                 </span>
               </div>
