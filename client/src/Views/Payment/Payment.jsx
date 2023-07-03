@@ -177,5 +177,5 @@ const PaymentComponent = ({ amount, type, currency }) => {
     </div>
   );
 };
-
+}
 export default PaymentComponent;
