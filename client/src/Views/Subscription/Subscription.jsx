@@ -1,32 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useEffect } from "react";
 import PaymentComponent from "../Payment/Payment";
 import { FcApproval } from 'react-icons/fc';
 import axios from 'axios';
-
-const Subscription = () => {
-  const [plan1, setPlan1] = useState(0);
-  const [plan2, setPlan2] = useState(0);
-  const [plan3, setPlan3] = useState(0);
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const [selectedCurrency, setSelectedCurrency] = useState("usd");
-  const [showPayment, setShowPayment] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('https://api.bluelytics.com.ar/v2/latest');
-        const blue = response.data.blue.value_avg;
-        console.log('Dolar Blue:', blue);
-        setPlan1(blue * 10);
-        setPlan2(blue * 20);
-        setPlan3(blue * 40);
-      } catch (error) {
-        console.error('Error fetching Dolar Blue price:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
+const precioDolar = async () => {
+  try {
+    const response = await axios.get('https://api.bluelytics.com.ar/v2/latest');
+    const blue = response.data.blue.value_avg;
+    console.log('Dolar Blue: ',{blue} );
+    return blue;
+  } catch (error) {
+    console.error('Error al obtener el precio del Dolar:', error);
+    throw error;
+  }
+}
 
   const subscriptionPlans = [
     {
@@ -52,6 +38,10 @@ const Subscription = () => {
     },
   ];
 
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [selectedCurrency, setSelectedCurrency] = useState("usd");
+  const [showPayment, setShowPayment] = useState(false);
+
   const handlePlanSelection = (index) => {
     if (selectedPlan === index) {
       setSelectedPlan(null);
@@ -59,12 +49,40 @@ const Subscription = () => {
     } else {
       setSelectedPlan(index);
       setShowPayment(true);
+
+      if (userId) {
+        try {
+          await axios.put(`/users/${userId}`, { isPremium: true });
+          console.log("User updated");
+        } catch (error) {
+          console.error("Error updating user:", error);
+        }
+      }
     }
   };
 
   const handleCurrencyChange = (event) => {
     setSelectedCurrency(event.target.value);
   };
+
+   useEffect(() => {
+    const createUser = async () => {
+      try {
+        const response = await axios.post("/users", {
+          name: "Your Name",
+          email: "your-email@example.com",
+          password: "YourPassword",
+          image: "YourImageURL",
+        });
+        const { userId } = response.data;
+        setUserId(userId);
+      } catch (error) {
+        console.error("Error creating user:", error);
+      }
+    };
+
+    createUser();
+  }, []);
 
   return (
     <div className="flex flex-col h-[200px] items-center mb-4 mt-4">
@@ -136,4 +154,3 @@ const Subscription = () => {
 };
 
 export default Subscription;
-

@@ -124,23 +124,61 @@ const PaymentComponent = ({ amount, type, currency }) => {
     <div className="flex flex-col items-center mt-7 h-screen ">
       <h1 className="text-2xl font-bold mb-8">Choose a payment option:</h1>
 
-      <div className="flex gap-4">
-        <div
-          className={`p-4 border rounded-md shadow-md flex items-center ${
-            selectedOption === "paypal" ? "bg-blue-400" : "bg-gray-100"
-          }`}
-          onClick={() => handlePayPal("paypal")}
-          style={{ cursor: "pointer" }}
-        >
-          <img
-            src="https://onx.la/c4cfc"
-            alt="PayPal"
+      {currency === "usd" ? (
+        <div className="flex gap-4">
+          <div
+            className={`p-4 border rounded-md shadow-md flex items-center ${
+              selectedOption === "paypal" ? "bg-blue-400" : "bg-gray-100"
+            }`}
+            onClick={() => handlePayPal("paypal")}
             style={{ cursor: "pointer" }}
-            className="w-12 h-12 mr-4 cursor-pointer"
-          />
-          <span className="font-bold text-black">PayPal</span>
-        </div>
+          >
+            <img
+              src="https://onx.la/c4cfc"
+              alt="PayPal"
+              style={{ cursor: "pointer" }}
+              className="w-12 h-12 mr-4 cursor-pointer"
+            />
+            <span className="font-bold text-black">PayPal</span>
+          </div>
 
+          <div
+            className={`p-4 border rounded-md shadow-md flex items-center ${
+              selectedOption === "mercadopago" ? "bg-green-200" : "bg-white"
+            }`}
+            style={{ cursor: "pointer" }}
+            onClick={() => handleMercadoPago("mercadopago")}
+          >
+            {preferenceId && (
+              <Wallet initialization={{ preferenceId: preferenceId }} />
+            )}
+
+            <img
+              src="https://onx.la/b301d"
+              alt="MercadoPago"
+              style={{ cursor: "pointer" }}
+              className="w-12 h-12 mr-4 cursor-pointer"
+            />
+            <span className="font-bold text-black">MercadoPago</span>
+          </div>
+
+          <div
+            className={`p-4 border rounded-md shadow-md flex items-center ${
+              selectedOption === "metamask" ? "bg-orange-200" : "bg-white"
+            }`}
+            style={{ cursor: "pointer" }}
+            onClick={() => handleClick("metamask")}
+          >
+            <img
+              src="https://www.sketchappsources.com/resources/source-image/metamask-fox-logo.png"
+              alt="Metamask"
+              style={{ cursor: "pointer" }}
+              className="w-12 h-12 mr-4 cursor-pointer"
+            />
+            <span className="font-bold text-black">Metamask</span>
+          </div>
+        </div>
+      ) : (
         <div
           className={`p-4 border rounded-md shadow-md flex items-center ${
             selectedOption === "mercadopago" ? "bg-green-200" : "bg-white"
@@ -160,25 +198,12 @@ const PaymentComponent = ({ amount, type, currency }) => {
           />
           <span className="font-bold text-black">MercadoPago</span>
         </div>
-      </div>
-      <div
-        className={`p-4 border rounded-md shadow-md flex items-center ${
-          selectedOption === "metamask" ? "bg-orange-200" : "bg-white"
-        }`}
-        style={{ cursor: "pointer" }}
-        onClick={() => handleClick("metamask")}
-      >
-        <img
-          src="https://www.sketchappsources.com/resources/source-image/metamask-fox-logo.png"
-          alt="Metamask"
-          style={{ cursor: "pointer" }}
-          className="w-12 h-12 mr-4 cursor-pointer"
-        />
-        <span className="font-bold text-black">Metamask</span>
-      </div>
+      )}
+
       <errorMessage message={errorMessage} />
       <TxList txs={txs} />
     </div>
   );
 };
+}
 export default PaymentComponent;
