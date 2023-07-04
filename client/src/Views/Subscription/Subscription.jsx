@@ -2,17 +2,32 @@ import React, { useState, useEffect } from "react";
 import PaymentComponent from "../Payment/Payment";
 import { FcApproval } from 'react-icons/fc';
 import axios from 'axios';
-const precioDolar = async () => {
-  try {
-    const response = await axios.get('https://api.bluelytics.com.ar/v2/latest');
-    const blue = response.data.blue.value_avg;
-    console.log('Dolar Blue: ',{blue} );
-    return blue;
-  } catch (error) {
-    console.error('Error al obtener el precio del Dolar:', error);
-    throw error;
-  }
-}
+
+const Subscription = () => {
+  const [plan1, setPlan1] = useState(0);
+  const [plan2, setPlan2] = useState(0);
+  const [plan3, setPlan3] = useState(0);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [selectedCurrency, setSelectedCurrency] = useState("usd");
+  const [showPayment, setShowPayment] = useState(false);
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://api.bluelytics.com.ar/v2/latest');
+        const blue = response.data.blue.value_avg;
+        console.log('Dolar Blue:', blue);
+        setPlan1(blue * 10);
+        setPlan2(blue * 20);
+        setPlan3(blue * 40);
+      } catch (error) {
+        console.error('Error fetching Dolar Blue price:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const subscriptionPlans = [
     {
@@ -37,10 +52,6 @@ const precioDolar = async () => {
       type: "premium",
     },
   ];
-
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const [selectedCurrency, setSelectedCurrency] = useState("usd");
-  const [showPayment, setShowPayment] = useState(false);
 
   const handlePlanSelection = async (index) => {
     if (selectedPlan === index) {
@@ -151,5 +162,6 @@ const precioDolar = async () => {
       )}
     </div>
   );
+};
 
 export default Subscription;
