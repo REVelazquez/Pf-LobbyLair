@@ -11,6 +11,7 @@ const Subscription = () => {
   const [selectedCurrency, setSelectedCurrency] = useState("usd");
   const [showPayment, setShowPayment] = useState(false);
   const [userId, setUserId] = useState(null);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -140,13 +141,14 @@ const Subscription = () => {
       </div>
 
       <div className="mt-6">
-        <label htmlFor="currency" className="text-black mr-2">
+        <label htmlFor="currency" className="mr-2">
           Select Currency:
         </label>
         <select
           id="currency"
           value={selectedCurrency}
           onChange={handleCurrencyChange}
+          className="text-black"
         >
           <option value="usd">USD</option>
           <option value="ars">ARS</option>
