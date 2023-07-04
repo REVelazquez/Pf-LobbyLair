@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PaymentComponent from "../Payment/Payment";
 import { FcApproval } from 'react-icons/fc';
 import axios from 'axios';
@@ -42,7 +42,7 @@ const precioDolar = async () => {
   const [selectedCurrency, setSelectedCurrency] = useState("usd");
   const [showPayment, setShowPayment] = useState(false);
 
-  const handlePlanSelection = (index) => {
+  const handlePlanSelection = async (index) => {
     if (selectedPlan === index) {
       setSelectedPlan(null);
       setShowPayment(false);
@@ -151,6 +151,5 @@ const precioDolar = async () => {
       )}
     </div>
   );
-};
 
 export default Subscription;
