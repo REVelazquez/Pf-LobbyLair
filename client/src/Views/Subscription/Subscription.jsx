@@ -1,50 +1,99 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PaymentComponent from "../Payment/Payment";
 import { FcApproval } from 'react-icons/fc';
+import axios from 'axios';
 
 const Subscription = () => {
+  const [plan1, setPlan1] = useState(0);
+  const [plan2, setPlan2] = useState(0);
+  const [plan3, setPlan3] = useState(0);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [selectedCurrency, setSelectedCurrency] = useState("usd");
+  const [showPayment, setShowPayment] = useState(false);
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://api.bluelytics.com.ar/v2/latest');
+        const blue = response.data.blue.value_avg;
+        console.log('Dolar Blue:', blue);
+        setPlan1(blue * 10);
+        setPlan2(blue * 20);
+        setPlan3(blue * 40);
+      } catch (error) {
+        console.error('Error fetching Dolar Blue price:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const subscriptionPlans = [
     {
       title: "Basic",
-      price: { usd: "$20", ars: "$5051" },
+      price: { usd: "$10", ars: plan1.toString() },
       features: ["Access the forum, view posts and discussions.", "Limited participation", "Advertisements and promotions"],
-      amount: { usd: 20, ars: 5051 },
+      amount: { usd: 10, ars: plan1 },
       type: "basic",
     },
     {
       title: "Standard",
-      price: { usd: "$80", ars: "20.222" },
+      price: { usd: "$20", ars: plan2.toString() },
       features: ["Full forum access", "Creation of new discussions", "Profile customization", "Ad-free experience"],
-      amount: { usd: 80, ars: 20.222 },
+      amount: { usd: 20, ars: plan2 },
       type: "standard",
     },
     {
       title: "Premium",
-      price: { usd: "$140", ars: "$35.365" },
+      price: { usd: "$40", ars: plan3.toString() },
       features: ["Exclusive access", "Unrestricted participation", "Ad-free experience", "Priority support"],
-      amount: { usd: 140, ars: 35.365 },
+      amount: { usd: 40, ars: plan3 },
       type: "premium",
     },
   ];
 
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const [selectedCurrency, setSelectedCurrency] = useState("usd");
-  const [showPayment, setShowPayment] = useState(false);
-
-  const handlePlanSelection = (index) => {
+  const handlePlanSelection = async (index) => {
     if (selectedPlan === index) {
-    
       setSelectedPlan(null);
       setShowPayment(false);
     } else {
       setSelectedPlan(index);
       setShowPayment(true);
+
+      if (userId) {
+        try {
+          await axios.put(`/users/${userId}`, { isPremium: true });
+          console.log("User updated");
+        } catch (error) {
+          console.error("Error updating user:", error);
+        }
+      }
     }
   };
 
   const handleCurrencyChange = (event) => {
     setSelectedCurrency(event.target.value);
   };
+
+   useEffect(() => {
+    const createUser = async () => {
+      try {
+        const response = await axios.post("/users", {
+          name: "Your Name",
+          email: "your-email@example.com",
+          password: "YourPassword",
+          image: "YourImageURL",
+        });
+        const { userId } = response.data;
+        setUserId(userId);
+      } catch (error) {
+        console.error("Error creating user:", error);
+      }
+    };
+
+    createUser();
+  }, []);
 
   return (
     <div className="flex flex-col h-[200px] items-center mb-4 mt-4">

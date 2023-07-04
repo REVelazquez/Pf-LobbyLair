@@ -2,7 +2,8 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { Payment, Subscriptions, User } = require("../db");
 const axios = require("axios");
-const { PAYPAL_API_SECRET, PAYPAL_API_CLIENT, PAYPAL_API, SECRET_KEY } = process.env;
+const { PAYPAL_API_SECRET, PAYPAL_API_CLIENT, PAYPAL_API, SECRET_KEY } =
+  process.env;
 const API = PAYPAL_API || "https://api-m.sandbox.paypal.com";
 
 const createOrder = async (req, res) => {
@@ -34,7 +35,7 @@ const createOrder = async (req, res) => {
       landing_page: "NO_PREFERENCE",
       shipping_preference: "NO_SHIPPING",
       user_action: "PAY_NOW",
-      return_url: `http://localhost:3001/capture-order?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
+      return_url: `http://localhost:3000/feedback?userId=${userId}&amount=${amount}&currency=${currency}&type=${type}`,
       cancel_url: "http://localhost:3001/cancel-order",
     },
   };

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 
@@ -84,7 +84,7 @@ const Home = () => {
                       <div className="bg-gray-300 flex rounded-xl items-center justify-between shadow-md w-[100%]">
                         <div className="flex items-center">
                           {
-                            post.User.image?.length >1 ? <img src={post.User.image} className={`rounded-[2rem] h-10 w-10`}/>
+                            post.User?.image?.length >1 ? <img src={post.User?.image} className={`rounded-[2rem] h-10 w-10`}/>
                             : <img src={imageDef} className={`rounded-[2rem] h-10 w-10`} />
                           }
                           <div className="">
@@ -106,7 +106,7 @@ const Home = () => {
                           </div>
                         </div>
                         <div>
-                          <h1>{post.Game.name}</h1>
+                          <h1>{post.Game?.name}</h1>
                         </div>
                         <div className="flex flex-col items-end">
                           <div className="text-black  text-xs mr-9 ">
@@ -143,13 +143,15 @@ const Home = () => {
             <p className="text-s text-black">
               Subscribe to unlock new features
             </p>
-            <motion.button
-              className="bg-black text-white rounded-[6.9px] px-3 py-2 mt-3"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              Subscribe
-            </motion.button>
+            <Link to="/subscription">
+          <motion.button
+            className="bg-black text-white rounded-[6.9px] px-3 py-2 mt-3"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            Subscribe
+          </motion.button>
+        </Link>
           </motion.div>
 
           <div className="flex flex-col items-center bg-gray-300 rounded-[3rem] w-[59%] justify-center mx-[6.9rem] mt-5 shadow-xl">

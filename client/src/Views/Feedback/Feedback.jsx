@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FcApproval } from "react-icons/fc";
 import { motion } from "framer-motion";
 import axios from "axios";
@@ -69,23 +69,38 @@ function Feedback() {
       <main className="h-screen">
         <div className="absolute w-full h-full bg-[#36353590] flex items-center justify-center z-30">
           <div className="bg-[#19a237] w-[40%] mx-auto h-[40%] mb-10 rounded-[2rem] p-4">
-            <div className="flex flex-col items-center justify-around bg-white h-full pt-4 pb-6 rounded-[1rem]">
+            <div className="flex flex-col items-center justify-around bg-white h-full pt-4 pb-6 rounded-[1rem] relative">
               <div>
                 <motion.h2
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="font-bold text-xl text-[#0e0e0e] mt-[1rem] text-center"
+                  className="font-bold text-xl text-[#0e0e0e] mt-[1rem] text-center italic font-serif"
                 >
                   <FcApproval className="text-[#0e0e0e] inline-block mr-2" />
                   {typedText}
                 </motion.h2>
-
-                <p className="text-xl font-bold mt-4">
-                  you paid: {amount} {currency} for a {type} subscription
+                <p className="italic font-serif tracking-wide">
+                  Summary of your subscription
                 </p>
-                <NavLink to="/home" className="text-xl font-bold mt-4">
+                <p className="italic font-serif tracking-wide">
+                  User Id: {userId}
+                </p>
+                <p className="italic font-serif tracking-wide">
+                  Amount: ${amount}
+                </p>
+                <p className="italic font-serif tracking-wide">
+                  Currency: {currency}
+                </p>
+                <p className="italic font-serif tracking-wide">Type: {type}</p>
+              </div>
+              {/* Botón para volver a la página de inicio */}
+              <div className="absolute right-4 bottom-4">
+                <Link
+                  to="/"
+                  className="px-4 py-2 bg-gray-400 italic font-serif rounded"
+                >
                   Back to Home
-                </NavLink>
+                </Link>
               </div>
             </div>
           </div>
