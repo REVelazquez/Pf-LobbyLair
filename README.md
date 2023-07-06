@@ -30,7 +30,7 @@ Instala las dependencias del cliente: npm install.
 Vuelve al directorio principal: cd ...
 Configura la conexión a la base de datos PostgreSQL en el archivo .env.
 Ejecuta el servidor y el cliente de forma simultánea: npm run dev.
-Abre tu navegador web y accede a http://localhost:3000 para ver LobbyLair en acción.
+Abre tu navegador web y accede a https://lobbylair-gkallisti.vercel.app/ para ver LobbyLair en acción.
                 Contribución
 
 
