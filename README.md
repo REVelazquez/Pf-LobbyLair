@@ -27,18 +27,19 @@ Unirse a partidas: los usuarios pueden buscar partidas existentes y chatear con 
 Chat en tiempo real: LobbyLair ofrece una funcionalidad de chat en tiempo real para que los jugadores puedan comunicarse fácilmente antes, durante y después de las partidas.
 
 
-## Tecnologías utilizadas
+## Tecnologías utilizadas:
+
 * [![HTMLl5][html5]][html-url][![CSS3][css3]][css-url][![Javascript][javascript]][js-url]
-* [![React][React.js]][React-url][![Redux][Redux-query]][Redux-url]
+* [![React][React.js]][React-url][![Redux][Redux-query]][Redux-url][![Tailwind][Tailwind-css]][Tailwind-url]
 * [![postgresql][PostgreSQL]][postgresql-url][![sequelize][Sequelize]][sequelize-url]
-* [![jsonwebtoken][jsonwebtoken]][jsonwebtoken-url][![Render][Render]][Render-url][![Vercel][Vercel]][Vercel-url]
+* [![firebase][firebase]][firebase-url][![Render][Render]][Render-url][![Vercel][Vercel]][Vercel-url]
 * [![Express][Express.js]][express-url][![Webpack][Webpack.js]][Webpack-url][![Node][Node.js]][Node-url][![NPM][npm]][npm-url]
-* [![Tailwind][Tailwind-css]][Tailwind-url]
+* [![socket.io][socket.io]][socket.io-url][![jsonwebtoken][jsonwebtoken]][jsonwebtoken-url]
 * [![Figma][Figma-des]][Figma-url][![Trello][trello]][trello-url]
 * [![Git][git]][git-url][![Github][github]][github-url]
-* Socket.IO: biblioteca que facilita la comunicación en tiempo real entre el servidor y el cliente.
 
-## Configuración del proyecto
+## Configuración del proyecto:
+
 Clona este repositorio en tu máquina local.
 Navega al directorio del proyecto: cd LobbyLair.
 Instala las dependencias del servidor: npm install.
@@ -61,7 +62,7 @@ Haz commit de tus cambios: git commit -m "Agrega nueva característica" o git co
 Envía tus cambios a tu repositorio remoto: git push origin feature/nueva-caracteristica.
 Abre un pull request en este repositorio y describe tus cambios en detalle.
 
-## Equipo
+## Equipo:
 
 * Elizabeth Ortiz - [![linkedin][linkedin]][linkedin-urleli]
 * Fernando Volpato - [![linkedin][linkedin]][linkedin-urlfer]
@@ -72,7 +73,8 @@ Abre un pull request en este repositorio y describe tus cambios en detalle.
 * Yeison Ramirez - [![linkedin][linkedin]][linkedin-urlyeison]
 
 
-Licencia
+## Licencia:
+
 Este proyecto está bajo la Licencia MIT.
 
 ¡Diviértete jugando y socializando en LobbyLair! Si tienes alguna pregunta o problema, no dudes en abrir un problema en este repositorio. ¡Esperamos tus contribuciones!
@@ -115,6 +117,12 @@ Este proyecto está bajo la Licencia MIT.
 [sequelize-url]: https://sequelize.org/
 [jsonwebtoken]: https://img.shields.io/badge/json%20web%20tokens-323330?style=for-the-badge&logo=json-web-tokens&logoColor=pink
 [jsonwebtoken-url]: https://jwt.io/
+[socket.io]: https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101
+[socket.io-url]: https://socket.io/
+[firebase]: https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white
+[firebase-url]: https://firebase.google.com/?hl=es
+
+<!--Linkedin -->
 [linkedin]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white
 [linkedin-urlfer]: https://www.linkedin.com/in/fernando-volpato-5bb718217/
 [linkedin-urleli]: https://www.linkedin.com/in/elizabeth-ortiz-rivas/
