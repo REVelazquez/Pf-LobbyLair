@@ -88,12 +88,12 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="flex flex-col w-full md:flex-row">
+    <div className="flex w-full md:flex-row bg-gray-200 text-black pt-10">
       <div className="w-full md:w-1/3 mt-5">
         <h1 className="text-center my-4">Estadisticas Generales Usuarios</h1>
         <Pie data={pieChartUserData} options={options} />
       </div>
-      <div className="w-full md:w-2/3 flex flex-col md:flex-row">
+      <div className="w-full md:w-2/3 flex md:flex-row">
         <div className="w-full md:w-1/2">
           <h1 className="text-center my-4">Usuarios ingresados el último semestre</h1>
           <Line data={lineChartData} options={options} />

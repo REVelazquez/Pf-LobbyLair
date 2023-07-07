@@ -145,7 +145,7 @@ const Home = () => {
             </p>
             <Link to="/subscription">
           <motion.button
-            className="bg-black text-white rounded-[6.9px] px-3 py-2 mt-3"
+            className="bg-gray-900 text-white rounded-[6.9px] px-3 py-2 mt-3"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
