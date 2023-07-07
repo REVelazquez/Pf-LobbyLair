@@ -10,7 +10,7 @@
 <p align="center">
 ¡Bienvenido a LobbyLair! Esta es una red social para gamers donde los jugadores pueden encontrarse en tiempo real, socializar y unirse a otras partidas. En LobbyLair, los jugadores pueden compartir experiencias de juego, encontrar nuevos compañeros de juego y mantenerse al tanto de las últimas novedades en el mundo de los videojuegos.
 
-<a href="https://lobbylair-gkallisti.vercel.app/">Accede para ver LobbyLair en acción</a>
+<a href="https://lobbylair-gkallisti.vercel.app/" style="background-color: #000000; width: 100%; padding: 1rem; border-radius: 9999px; color: white; font-weight: bold; outline: none; box-shadow: 0 0 0 3px rgba(00, 00, 00, 0.5); font-family: Franklin Gothic Medium;">Accede para ver LobbyLair en acción</a>
 </p>
 </div>
 
