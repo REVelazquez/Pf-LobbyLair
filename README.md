@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/REVelazquez/Pf-LobbyLair.git">
-    <img src="../Pf-LobbyLair/client/src/Multimedia/Logo%20Lobbylair.gif" alt="Logo" width="80" height="80">
+    <img src="https://firebasestorage.googleapis.com/v0/b/lobbylair-pf.appspot.com/o/Logo.webp?alt=media&token=ea0389a0-f0d5-4d8b-a9b4-c11af490c453" alt="Logo" width="150" height="120" style="border-radius: 5%">
   </a>
 
 <h3 align="center">Lobby Lair</h3>
