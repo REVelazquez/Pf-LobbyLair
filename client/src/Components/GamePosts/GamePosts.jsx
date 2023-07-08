@@ -198,7 +198,7 @@ write the post"
 
   </div>
   <div className="items-end">
-  <h1 className="text-s font-bold">{Game?.name}</h1> 
+  <h1 className="text-s font-bold text-black">{Game?.name}</h1> 
   </div>
   
   <div className="w-[20%]  p-4 flex flex-col items-end text-left">

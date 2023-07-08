@@ -198,11 +198,11 @@ const Login = () => {
               </button>
               <p className="mt-3 text-sm text-gray-800">
                 Don’t have an account yet?{" "}
-                <a href="/register" className="font-bold text-black">
+                <a href="/register" className="text-blue-500 hover:text-blue-700">
                   Sign up
                 </a>
               </p>
-              <a href="/sendEmail" className="font-bold text-black text-sm">
+              <a href="/sendEmail" className="text-blue-500 hover:text-blue-700 text-sm">
                 forgot your password?
               </a>
             </Form>
